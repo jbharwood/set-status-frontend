@@ -6,7 +6,7 @@ interface IMessage {
 
 interface IUser {
     id?: string;
-    name: string;
+    name?: string;
     current?: {
       name: input, 
       id: socket.id

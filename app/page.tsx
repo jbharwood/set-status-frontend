@@ -10,7 +10,7 @@ export default function Home() {
   const [typing, setTyping] = useState<string[]>([]);
   const [input, setInput] = useState("");
 
-  const user = useRef(null);
+  const user = useRef<IUser>(null);
 
   useEffect(() => {
     socket.on("receive_message", (msg) => {
@@ -51,6 +51,7 @@ export default function Home() {
       socket.off("new_user");
     };
   });
+
   return (
     <main className="h-screen max-h-screen max-w-screen mx-auto md:container md:p-20 md:pt-4">
       {user.current ? (

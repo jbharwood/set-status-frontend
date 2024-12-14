@@ -2,7 +2,7 @@ import { Socket } from "socket.io-client";
 import { DefaultEventsMap } from "socket.io";
 
 type SignUpProps = {
-  user: IUser;
+  user: IUser | null;
   socket: Socket<DefaultEventsMap, DefaultEventsMap>;
   input: string;
   setInput: React.Dispatch<React.SetStateAction<string>>;
@@ -10,9 +10,11 @@ type SignUpProps = {
 
 export default function SignUp({ user, socket, input, setInput }: SignUpProps) {
   function addUser() {
-    user.current = { name: input, id: socket.id };
-    socket.emit("new_user", { user: input });
-    setInput("");
+    if (user) {
+      user.current = { name: input, id: socket.id };
+      socket.emit("new_user", { user: input });
+      setInput("");
+    }
   }
 
   return (
