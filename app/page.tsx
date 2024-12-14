@@ -7,7 +7,7 @@ const socket = io("http://localhost:3001");
 
 export default function Home() {
   const [chat, setChat] = useState<IMessage[]>([]);
-  const [typing, setTyping] = useState<String[]>([]);
+  const [typing, setTyping] = useState<string[]>([]);
   const [input, setInput] = useState("");
 
   const user = useRef(null);
@@ -37,7 +37,11 @@ export default function Home() {
       if (!user.current) return;
       setChat((prev) => [
         ...prev,
-        { content: `${newUser} joined`, type: "server", user: "server" },
+        {
+          content: `${newUser} joined`,
+          type: "server",
+          user: { name: "server" },
+        },
       ]);
     });
 
