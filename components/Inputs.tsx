@@ -8,9 +8,15 @@ type InputsProps = {
   user: IUser;
   socket: Socket<DefaultEventsMap, DefaultEventsMap>;
   setChat: React.Dispatch<React.SetStateAction<IMessage[]>>;
+  setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
 };
 
-export default function Inputs({ user, socket, setChat }: InputsProps) {
+export default function Inputs({
+  user,
+  socket,
+  setChat,
+  setUser,
+}: InputsProps) {
   const [input, setInput] = useState("");
 
   const uploadInput = useRef<HTMLInputElement>(null);
@@ -65,7 +71,7 @@ export default function Inputs({ user, socket, setChat }: InputsProps) {
         onChange={(e) => handleImageUpload(e)}
       />
       <button
-        className="w-full py-2 px-3 bg-sky-400 text-white font-fold rounded-md text-xl gradient md:w-1/12 md:text-2xl"
+        className="w-full py-2 px-3 bg-sky-400 text-white font-fold rounded-md text-xl gradient md:w-1/12 md:text-2xl md:mr-3"
         onClick={sendMessage}
       >
         <Image
@@ -75,6 +81,12 @@ export default function Inputs({ user, socket, setChat }: InputsProps) {
           height={20}
           width={20}
         />
+      </button>
+      <button
+        className="w-full py-2 px-3 bg-sky-400 text-white font-fold rounded-md text-xl gradient md:w-2/12 md:text-2xl"
+        onClick={() => setUser(null)}
+      >
+        Logout
       </button>
     </div>
   );

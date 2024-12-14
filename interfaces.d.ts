@@ -8,7 +8,7 @@ interface IUser {
     id?: string;
     name?: string;
     current?: {
-      name: input, 
-      id: socket.id
+      name?: input, 
+      id?: socket.id
     }
 }

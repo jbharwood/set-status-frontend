@@ -9,18 +9,17 @@ export default function Home() {
   const [chat, setChat] = useState<IMessage[]>([]);
   const [typing, setTyping] = useState<string[]>([]);
   const [input, setInput] = useState("");
-
-  const user = useRef<IUser>(null);
+  const [user, setUser] = useState<IUser | null>({ name: "steve" });
 
   useEffect(() => {
     socket.on("receive_message", (msg) => {
-      if (!user.current) return;
+      if (user && !user.current) return;
 
       setChat((prev) => [...prev, msg]);
     });
 
     socket.on("user_typing", (data) => {
-      if (!user.current) return;
+      if (user && !user.current) return;
 
       setTyping((prev) => {
         if (typing.includes(data.user) && data.typing === true) return prev;
@@ -34,7 +33,7 @@ export default function Home() {
     });
 
     socket.on("new_user", (newUser) => {
-      if (!user.current) return;
+      if (user && !user.current) return;
       setChat((prev) => [
         ...prev,
         {
@@ -54,10 +53,15 @@ export default function Home() {
 
   return (
     <main className="h-screen max-h-screen max-w-screen mx-auto md:container md:p-20 md:pt-4">
-      {user.current ? (
+      {user?.current ? (
         <>
           <Chat user={user.current} chat={chat} typing={typing} />
-          <Inputs setChat={setChat} user={user.current} socket={socket} />
+          <Inputs
+            setChat={setChat}
+            user={user.current}
+            socket={socket}
+            setUser={setUser}
+          />
         </>
       ) : (
         <SignUp user={user} socket={socket} input={input} setInput={setInput} />
