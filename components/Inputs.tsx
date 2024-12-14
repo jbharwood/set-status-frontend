@@ -54,6 +54,11 @@ export default function Inputs({
     });
   }
 
+  function logout() {
+    socket.emit("logout", user);
+    setUser(null);
+  }
+
   return (
     <div className="w-full absolute bottom-0 text-xl grid grid-cols-5 gradient md:bg-none md:text-3xl md:flex md:justify-center md:relative">
       <input
@@ -84,7 +89,7 @@ export default function Inputs({
       </button>
       <button
         className="w-full py-2 px-3 bg-sky-400 text-white font-fold rounded-md text-xl gradient md:w-2/12 md:text-2xl"
-        onClick={() => setUser(null)}
+        onClick={logout}
       >
         Logout
       </button>

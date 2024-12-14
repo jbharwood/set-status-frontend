@@ -6,15 +6,20 @@ type SignUpProps = {
   socket: Socket<DefaultEventsMap, DefaultEventsMap>;
   input: string;
   setInput: React.Dispatch<React.SetStateAction<string>>;
+  setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
 };
 
-export default function SignUp({ user, socket, input, setInput }: SignUpProps) {
+export default function SignUp({
+  user,
+  socket,
+  input,
+  setInput,
+  setUser,
+}: SignUpProps) {
   function addUser() {
-    if (user) {
-      user.current = { name: input, id: socket.id };
-      socket.emit("new_user", { user: input });
-      setInput("");
-    }
+    setUser({ name: input, id: socket.id });
+    socket.emit("new_user", { user: input });
+    setInput("");
   }
 
   return (

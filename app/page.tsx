@@ -9,17 +9,18 @@ export default function Home() {
   const [chat, setChat] = useState<IMessage[]>([]);
   const [typing, setTyping] = useState<string[]>([]);
   const [input, setInput] = useState("");
-  const [user, setUser] = useState<IUser | null>({ name: "steve" });
+  const [user, setUser] = useState<IUser | null>(null);
+  // const user = useRef<IUser>(null);
 
   useEffect(() => {
     socket.on("receive_message", (msg) => {
-      if (user && !user.current) return;
+      if (!user) return;
 
       setChat((prev) => [...prev, msg]);
     });
 
     socket.on("user_typing", (data) => {
-      if (user && !user.current) return;
+      if (!user) return;
 
       setTyping((prev) => {
         if (typing.includes(data.user) && data.typing === true) return prev;
@@ -33,7 +34,8 @@ export default function Home() {
     });
 
     socket.on("new_user", (newUser) => {
-      if (user && !user.current) return;
+      if (!user) return;
+
       setChat((prev) => [
         ...prev,
         {
@@ -44,27 +46,45 @@ export default function Home() {
       ]);
     });
 
+    socket.on("logout", (newUser) => {
+      setChat((prev) => [
+        ...prev,
+        {
+          content: `${newUser.name} left`,
+          type: "server",
+          user: { name: "server" },
+        },
+      ]);
+    });
+
     return () => {
       socket.off("receive_message");
       socket.off("user_typing");
       socket.off("new_user");
+      socket.off("logout");
     };
   });
 
   return (
     <main className="h-screen max-h-screen max-w-screen mx-auto md:container md:p-20 md:pt-4">
-      {user?.current ? (
+      {user ? (
         <>
-          <Chat user={user.current} chat={chat} typing={typing} />
+          <Chat user={user} chat={chat} typing={typing} />
           <Inputs
             setChat={setChat}
-            user={user.current}
+            user={user}
             socket={socket}
             setUser={setUser}
           />
         </>
       ) : (
-        <SignUp user={user} socket={socket} input={input} setInput={setInput} />
+        <SignUp
+          user={user}
+          socket={socket}
+          input={input}
+          setInput={setInput}
+          setUser={setUser}
+        />
       )}
     </main>
   );
