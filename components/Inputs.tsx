@@ -3,20 +3,15 @@ import { send, upload } from "@/assets";
 import Image from "next/image";
 import { Socket } from "socket.io-client";
 import { DefaultEventsMap } from "socket.io";
+import { IMessage, IUser } from "@/types/interfaces";
 
 type InputsProps = {
   user: IUser;
   socket: Socket<DefaultEventsMap, DefaultEventsMap>;
-  setChat: React.Dispatch<React.SetStateAction<IMessage[]>>;
   setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
 };
 
-export default function Inputs({
-  user,
-  socket,
-  setChat,
-  setUser,
-}: InputsProps) {
+export default function Inputs({ user, socket, setUser }: InputsProps) {
   const [input, setInput] = useState("");
 
   const uploadInput = useRef<HTMLInputElement>(null);
@@ -25,10 +20,8 @@ export default function Inputs({
     if (input) {
       const msg: IMessage = { content: input, type: "text", user };
 
-      socket.emit("send_message", msg);
-      socket.emit("user_typing", { user: user.name, typing: false });
+      socket.emit("send_message", msg, user.room);
 
-      setChat((prev) => [...prev, msg]);
       setInput("");
     } else {
       uploadInput.current?.click();
@@ -41,17 +34,8 @@ export default function Inputs({
       const img = URL.createObjectURL(file);
       const msg: IMessage = { content: img, type: "image", user };
 
-      setChat((prev) => [...prev, msg]);
-      socket.emit("send_message", msg);
+      socket.emit("send_message", msg, user.room);
     }
-  }
-
-  function userTyping(e: React.ChangeEvent<HTMLInputElement>) {
-    setInput(e.target.value);
-    socket.emit("user_typing", {
-      user: user.name,
-      typing: e.target.value ? true : false,
-    });
   }
 
   function logout() {
@@ -66,7 +50,7 @@ export default function Inputs({
         type="text"
         placeholder="Enter your message"
         value={input}
-        onChange={(e) => userTyping(e)}
+        onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && sendMessage()}
       />
       <input

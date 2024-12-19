@@ -1,13 +1,13 @@
-import { Message, ServerMessage, Typing } from "./Messages";
+import { IMessage, IUser } from "@/types/interfaces";
+import { Message, ServerMessage } from "./Messages";
 import { useEffect, useRef } from "react";
 
 type ChatProps = {
   chat: Array<IMessage>;
   user: IUser;
-  typing: string[];
 };
 
-export default function Chat({ chat, user, typing }: ChatProps) {
+export default function Chat({ chat, user }: ChatProps) {
   const scroller = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -34,7 +34,6 @@ export default function Chat({ chat, user, typing }: ChatProps) {
             <Message key={index} {...messageOutput} />
           );
         })}
-        {typing[0] && <Typing user={typing[0]} />}
         <div ref={scroller} className="pb-2 md:pb-6" />
       </div>
     </div>

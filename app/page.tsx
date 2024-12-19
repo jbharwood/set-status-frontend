@@ -1,16 +1,16 @@
 "use client";
 import { io } from "socket.io-client";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Chat, Inputs, SignUp } from "@/components";
+import { IMessage, IUser } from "@/types/interfaces";
 
 const socket = io("http://localhost:3001");
 
 export default function Home() {
   const [chat, setChat] = useState<IMessage[]>([]);
-  const [typing, setTyping] = useState<string[]>([]);
-  const [input, setInput] = useState("");
+  const [userNameInput, setUserNameInput] = useState("");
+  const [roomInput, setRoomInput] = useState("");
   const [user, setUser] = useState<IUser | null>(null);
-  // const user = useRef<IUser>(null);
 
   useEffect(() => {
     socket.on("receive_message", (msg) => {
@@ -19,48 +19,35 @@ export default function Home() {
       setChat((prev) => [...prev, msg]);
     });
 
-    socket.on("user_typing", (data) => {
-      if (!user) return;
-
-      setTyping((prev) => {
-        if (typing.includes(data.user) && data.typing === true) return prev;
-
-        if (data.typing === false) {
-          return prev.filter((u) => u !== data.user);
-        } else {
-          return [...prev, data.user];
-        }
-      });
-    });
-
-    socket.on("new_user", (newUser) => {
+    socket.on("join_room", (data) => {
       if (!user) return;
 
       setChat((prev) => [
         ...prev,
         {
-          content: `${newUser} joined`,
+          content: `${data.user} joined ${data.room}`,
           type: "server",
           user: { name: "server" },
+          room: data.room,
         },
       ]);
     });
 
-    socket.on("logout", (newUser) => {
+    socket.on("logout", (newUser, room) => {
       setChat((prev) => [
         ...prev,
         {
           content: `${newUser.name} left`,
           type: "server",
           user: { name: "server" },
+          room,
         },
       ]);
     });
 
     return () => {
       socket.off("receive_message");
-      socket.off("user_typing");
-      socket.off("new_user");
+      socket.off("join_room");
       socket.off("logout");
     };
   });
@@ -69,20 +56,16 @@ export default function Home() {
     <main className="h-screen max-h-screen max-w-screen mx-auto md:container md:p-20 md:pt-4">
       {user ? (
         <>
-          <Chat user={user} chat={chat} typing={typing} />
-          <Inputs
-            setChat={setChat}
-            user={user}
-            socket={socket}
-            setUser={setUser}
-          />
+          <Chat user={user} chat={chat} />
+          <Inputs user={user} socket={socket} setUser={setUser} />
         </>
       ) : (
         <SignUp
-          user={user}
           socket={socket}
-          input={input}
-          setInput={setInput}
+          userNameInput={userNameInput}
+          setUserNameInput={setUserNameInput}
+          roomInput={roomInput}
+          setRoomInput={setRoomInput}
           setUser={setUser}
         />
       )}

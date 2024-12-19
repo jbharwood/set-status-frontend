@@ -1,3 +1,6 @@
+import React from "react";
+import { IMessage, IUser } from "../../types/interfaces";
+
 type MessageProps = {
   content: string;
   type: IMessage["type"];
@@ -14,7 +17,7 @@ export default function Message({ content, type, own, user }: MessageProps) {
             type === "text" ? "my-auto" : "max-h-12"
           }`}
         >
-          {user?.name.charAt(0).toUpperCase()}
+          {user.name && user.name.charAt(0).toUpperCase()}
         </span>
       )}
       <span
