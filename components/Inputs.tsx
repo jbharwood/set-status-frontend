@@ -39,11 +39,6 @@ export default function Inputs({
     }
   }
 
-  function logout() {
-    socket.emit("logout", currentUser);
-    setCurrentUser(null);
-  }
-
   return (
     <div className="mt-2 flex gap-2">
       <input
@@ -71,12 +66,6 @@ export default function Inputs({
           height={20}
           width={20}
         />
-      </button>
-      <button
-        className="w-full py-2 px-3 bg-sky-400 text-white font-fold rounded-md text-xl gradient md:w-2/12 md:text-2xl"
-        onClick={logout}
-      >
-        Logout
       </button>
     </div>
   );
