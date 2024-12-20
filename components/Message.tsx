@@ -10,7 +10,7 @@ type MessageProps = {
 
 export default function Message({ content, type, own, user }: MessageProps) {
   return (
-    <div className="bg-gray-100 border border-slate-200 rounded-md">
+    <div className="bg-gray-100 border border-slate-200 rounded-md break-words">
       {type === "text" ? (
         `${user.name} : ${content}`
       ) : (
