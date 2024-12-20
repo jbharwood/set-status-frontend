@@ -19,9 +19,7 @@ export default function Inputs({ user, socket, setUser }: InputsProps) {
   function sendMessage() {
     if (input) {
       const msg: IMessage = { content: input, type: "text", user };
-
       socket.emit("send_message", msg, user.room);
-
       setInput("");
     } else {
       uploadInput.current?.click();
@@ -44,11 +42,11 @@ export default function Inputs({ user, socket, setUser }: InputsProps) {
   }
 
   return (
-    <div className="w-full absolute bottom-0 text-xl grid grid-cols-5 gradient md:bg-none md:text-3xl md:flex md:justify-center md:relative">
+    <div className="mt-2 flex gap-2">
       <input
-        className="focus:outline-none rounded-2xl p-3 text-white placeholder-slate-200 col-span-4 gradient md:w-6/12 md:mr-3"
         type="text"
-        placeholder="Enter your message"
+        placeholder="Type your message..."
+        className="w-full border rounded p-2 focus:outline-none focus:ring focus:border-blue-300"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && sendMessage()}
@@ -60,7 +58,7 @@ export default function Inputs({ user, socket, setUser }: InputsProps) {
         onChange={(e) => handleImageUpload(e)}
       />
       <button
-        className="w-full py-2 px-3 bg-sky-400 text-white font-fold rounded-md text-xl gradient md:w-1/12 md:text-2xl md:mr-3"
+        className="w-full px-3 bg-sky-400 text-white font-fold rounded-md text-xl gradient md:w-1/12 md:text-2xl"
         onClick={sendMessage}
       >
         <Image
