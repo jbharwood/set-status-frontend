@@ -21,6 +21,7 @@ export default function Home() {
         name: user.fullName,
         id: user.id,
         room: "a",
+        image: user.imageUrl,
       });
       socket.emit("join_room", { user: user.fullName, room: "a" });
     }

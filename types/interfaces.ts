@@ -12,4 +12,5 @@ export interface IUser {
       id?: string
     }
     room?: string;
+    image?: string;
 }
