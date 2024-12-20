@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Chat, Inputs, SignUp } from "@/components";
 import { IMessage, IUser } from "@/types/interfaces";
 import NavBar from "@/components/NavBar";
+import ProductionRoleCaptureStatus from "@/components/ProductionRoleCaptureStatus";
 
 const socket = io("http://localhost:3001");
 
@@ -44,12 +45,16 @@ export default function Home() {
 
   return (
     <main className="h-screen w-screen max-h-screen max-w-screen mx-auto">
-      {user && <NavBar />}
       {user ? (
         <>
+          <NavBar />
           <div className="h-[95%] flex flex-col">
-            <div className="flex-grow-[7] bg-blue-500 flex items-center justify-center">
-              <h1 className="text-white text-xl">Top Container</h1>
+            <div className="flex-grow-[7] bg-blue-500 flex flex-col items-center justify-center">
+              <div className="flex flex-row items-center justify-center w-full h-full">
+                {Array.from({ length: 7 }).map((_, index) => (
+                  <ProductionRoleCaptureStatus key={index} />
+                ))}
+              </div>
             </div>
             <div className="flex items-center justify-center w-full">
               <div className="w-full bg-white rounded-lg shadow p-4 flex flex-col space-y-3 h-56">
