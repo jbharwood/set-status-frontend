@@ -11,11 +11,7 @@ type InputsProps = {
   setCurrentUser: React.Dispatch<React.SetStateAction<IUser | null>>;
 };
 
-export default function Inputs({
-  currentUser,
-  socket,
-  setCurrentUser,
-}: InputsProps) {
+export default function Inputs({ currentUser, socket }: InputsProps) {
   const [input, setInput] = useState("");
 
   const uploadInput = useRef<HTMLInputElement>(null);
