@@ -6,20 +6,24 @@ import { DefaultEventsMap } from "socket.io";
 import { IMessage, IUser } from "@/types/interfaces";
 
 type InputsProps = {
-  user: IUser;
+  currentUser: IUser;
   socket: Socket<DefaultEventsMap, DefaultEventsMap>;
-  setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
+  setCurrentUser: React.Dispatch<React.SetStateAction<IUser | null>>;
 };
 
-export default function Inputs({ user, socket, setUser }: InputsProps) {
+export default function Inputs({
+  currentUser,
+  socket,
+  setCurrentUser,
+}: InputsProps) {
   const [input, setInput] = useState("");
 
   const uploadInput = useRef<HTMLInputElement>(null);
 
   function sendMessage() {
     if (input) {
-      const msg: IMessage = { content: input, type: "text", user };
-      socket.emit("send_message", msg, user.room);
+      const msg: IMessage = { content: input, type: "text", user: currentUser };
+      socket.emit("send_message", msg, currentUser.room);
       setInput("");
     } else {
       uploadInput.current?.click();
@@ -30,15 +34,14 @@ export default function Inputs({ user, socket, setUser }: InputsProps) {
     const file = e.target.files?.[0];
     if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
       const img = URL.createObjectURL(file);
-      const msg: IMessage = { content: img, type: "image", user };
-
-      socket.emit("send_message", msg, user.room);
+      const msg: IMessage = { content: img, type: "image", user: currentUser };
+      socket.emit("send_message", msg, currentUser.room);
     }
   }
 
   function logout() {
-    socket.emit("logout", user);
-    setUser(null);
+    socket.emit("logout", currentUser);
+    setCurrentUser(null);
   }
 
   return (

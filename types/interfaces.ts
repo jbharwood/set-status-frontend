@@ -6,7 +6,7 @@ export interface IMessage {
 
 export interface IUser {
     id?: string;
-    name?: string;
+    name?: string | null;
     current?: {
       name?: string, 
       id?: string

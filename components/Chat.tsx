@@ -4,10 +4,10 @@ import { useEffect, useRef } from "react";
 
 type ChatProps = {
   chat: Array<IMessage>;
-  user: IUser;
+  currentUser: IUser;
 };
 
-export default function Chat({ chat, user }: ChatProps) {
+export default function Chat({ chat, currentUser }: ChatProps) {
   const scroller = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,7 +25,6 @@ export default function Chat({ chat, user }: ChatProps) {
       {chat.map((message, index) => {
         const messageOutput = {
           ...message,
-          own: message.user.id === user?.id,
         };
 
         return <Message key={index} {...messageOutput} />;

@@ -4,11 +4,10 @@ import { IMessage, IUser } from "../types/interfaces";
 type MessageProps = {
   content: string;
   type: IMessage["type"];
-  own: boolean;
   user: IUser;
 };
 
-export default function Message({ content, type, own, user }: MessageProps) {
+export default function Message({ content, type, user }: MessageProps) {
   return (
     <div className="bg-gray-100 border border-slate-200 rounded-md break-words">
       {type === "text" ? (
