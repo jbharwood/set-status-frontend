@@ -5,7 +5,8 @@ import {
   SignedOut,
 } from "@clerk/nextjs";
 import "./globals.css";
-import NavBar from "@/components/NavBar";
+import { NavBar } from "@/components";
+
 export default function RootLayout({
   children,
 }: {

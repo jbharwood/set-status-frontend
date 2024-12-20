@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef } from "react";
 import { send, upload } from "@/assets";
 import Image from "next/image";

@@ -1,9 +1,8 @@
 "use client";
 import { io } from "socket.io-client";
 import { useEffect, useState } from "react";
-import { Chat, Inputs } from "@/components";
+import { Chat, Inputs, ProductionRoleCaptureStatus } from "@/components";
 import { IMessage, IUser } from "@/types/interfaces";
-import ProductionRoleCaptureStatus from "@/components/ProductionRoleCaptureStatus";
 import { useUser } from "@clerk/nextjs";
 
 const socket = io("http://localhost:3001");

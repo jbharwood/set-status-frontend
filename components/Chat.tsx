@@ -1,13 +1,15 @@
+"use client";
+
 import { IMessage, IUser } from "@/types/interfaces";
-import { Message } from "./index";
 import { useEffect, useRef } from "react";
+import Message from "./Message";
 
 type ChatProps = {
   chat: Array<IMessage>;
   currentUser: IUser;
 };
 
-export default function Chat({ chat, currentUser }: ChatProps) {
+export default function Chat({ chat }: ChatProps) {
   const scroller = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
