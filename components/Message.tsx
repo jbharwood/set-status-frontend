@@ -13,7 +13,7 @@ export default function Message({ content, type, user }: MessageProps) {
       {type === "text" ? (
         <div className="flex gap-2 p-1">
           <img src={user.image} alt="user" className="rounded-full h-6 w-6" />
-          {user.name} : ${content}
+          {user.name} : {content}
         </div>
       ) : (
         <div className="flex gap-2 p-1">

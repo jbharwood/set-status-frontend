@@ -1,6 +1,6 @@
 import {
   ClerkProvider,
-  SignInButton,
+  RedirectToSignIn,
   SignedIn,
   SignedOut,
 } from "@clerk/nextjs";
@@ -16,7 +16,7 @@ export default function RootLayout({
       <html lang="en">
         <body className="h-screen w-screen max-h-screen max-w-screen mx-auto">
           <SignedOut>
-            <SignInButton />
+            <RedirectToSignIn />
           </SignedOut>
           <SignedIn>
             <NavBar />
