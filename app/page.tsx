@@ -1,7 +1,7 @@
 "use client";
 import { io } from "socket.io-client";
 import { useEffect, useState } from "react";
-import { Chat, Inputs, SignUp } from "@/components";
+import { Chat, Inputs } from "@/components";
 import { IMessage, IUser } from "@/types/interfaces";
 import ProductionRoleCaptureStatus from "@/components/ProductionRoleCaptureStatus";
 import { useUser } from "@clerk/nextjs";
