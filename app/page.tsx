@@ -11,7 +11,11 @@ export default function Home() {
   const [chat, setChat] = useState<IMessage[]>([]);
   const [userNameInput, setUserNameInput] = useState("");
   const [roomInput, setRoomInput] = useState("");
-  const [user, setUser] = useState<IUser | null>(null);
+  const [user, setUser] = useState<IUser | null>({
+    name: "test",
+    id: "test",
+    room: "a",
+  });
 
   useEffect(() => {
     socket.on("receive_message", (msg) => {
@@ -31,6 +35,12 @@ export default function Home() {
       socket.off("join_room");
     };
   });
+
+  useEffect(() => {
+    if (user?.name === "test") {
+      socket.emit("join_room", user);
+    }
+  }, [user]);
 
   return (
     <main className="h-screen w-screen max-h-screen max-w-screen mx-auto">

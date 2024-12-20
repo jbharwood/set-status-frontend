@@ -1,5 +1,5 @@
 import { IMessage, IUser } from "@/types/interfaces";
-import { Message, ServerMessage } from "./Messages";
+import { Message } from "./index";
 import { useEffect, useRef } from "react";
 
 type ChatProps = {
@@ -28,19 +28,7 @@ export default function Chat({ chat, user }: ChatProps) {
           own: message.user.id === user?.id,
         };
 
-        return (
-          <div
-            key={index}
-            className="bg-gray-100 border border-slate-200 rounded-md"
-          >
-            {message.user.name}: {message.content}
-          </div>
-        );
-        return messageOutput.type === "server" ? (
-          <ServerMessage key={index} {...message} />
-        ) : (
-          <Message key={index} {...messageOutput} />
-        );
+        return <Message key={index} {...messageOutput} />;
       })}
       <div ref={scroller} />
     </div>
