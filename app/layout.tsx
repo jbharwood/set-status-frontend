@@ -4,7 +4,6 @@ import {
   SignedIn,
   SignedOut,
 } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
 import "./globals.css";
 import { NavBar } from "@/components/index";
 import { ThemeProvider } from "@/components/ui/theme-provider";
@@ -15,11 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider
-      appearance={{
-        baseTheme: dark,
-      }}
-    >
+    <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body className="h-screen w-screen max-h-screen max-w-screen mx-auto">
           <ThemeProvider

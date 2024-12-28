@@ -7,7 +7,7 @@ export default function ProductionRoleCaptureStatus({
 }: ProductionCaptureStatusProps) {
   return (
     <div
-      className="flex flex-col items-center justify-center h-full w-36"
+      className="flex flex-col items-center justify-center h-full w-36 p-2"
       onClick={() => setIsEditModalOpen(true)}
     >
       <div className="border border-black bg-slate-500 h-[7.5%] w-36 flex items-center justify-center">
@@ -16,6 +16,7 @@ export default function ProductionRoleCaptureStatus({
       <div className="border border-black bg-green-500 h-[30%] w-36 cursor-pointer hover:bg-green-400" />
       <div className="border border-black bg-yellow-500 h-[30%] w-36 cursor-pointer hover:bg-yellow-400" />
       <div className="border border-black bg-red-500 h-[30%] w-36 cursor-pointer hover:bg-red-400" />
+      <div className="border border-black bg-slate-500 h-[30%] w-36" />
     </div>
   );
 }

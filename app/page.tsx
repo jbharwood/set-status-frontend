@@ -52,8 +52,8 @@ export default function Home() {
   return (
     <>
       {isSignedIn && currentUser && (
-        <div className="h-[95%] flex flex-col">
-          <div className="flex-grow-[7] bg-blue-500 flex flex-col items-center justify-center">
+        <div className="h-[95%] flex flex-col bg-blue-500">
+          <div className="flex-grow-[7] flex flex-col items-center justify-center">
             <div className="flex flex-row items-center justify-center w-full h-full">
               {Array.from({ length: 7 }).map((_, index) => (
                 <ProductionRoleCaptureStatus
@@ -63,7 +63,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="flex items-center justify-center w-full">
+          <div className="flex items-center justify-center w-full p-2">
             <div className="w-full bg-white rounded-lg shadow p-4 flex flex-col space-y-3 h-56">
               <Chat currentUser={currentUser} chat={chat} />
               <Inputs

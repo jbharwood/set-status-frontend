@@ -1,7 +1,12 @@
+"use client";
+
 import { UserButton } from "@clerk/nextjs";
 import { ModeToggle } from "./ModeToggle";
+import { useClerkTheme } from "@/hooks/index";
 
 export default function NavBar() {
+  const { clerkTheme } = useClerkTheme();
+
   return (
     <nav className="bg-gray-800 p-4 h-[5%]">
       <div className="flex items-center h-full">
@@ -22,7 +27,11 @@ export default function NavBar() {
             <ModeToggle />
           </div>
           <div className="mt-2">
-            <UserButton />
+            <UserButton
+              appearance={{
+                baseTheme: clerkTheme,
+              }}
+            />
           </div>
         </div>
       </div>
