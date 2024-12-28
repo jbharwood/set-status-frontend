@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -43,6 +44,7 @@ export default function EditModal({
           <Button type="submit">Save</Button>
         </DialogFooter>
       </DialogContent>
+      <DialogDescription>Edit Production Role Capture Status</DialogDescription>
     </Dialog>
   );
 }
