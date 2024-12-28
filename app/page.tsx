@@ -1,7 +1,12 @@
 "use client";
 import { io } from "socket.io-client";
 import { useEffect, useState } from "react";
-import { Chat, Inputs, ProductionRoleCaptureStatus } from "@/components";
+import {
+  Chat,
+  Inputs,
+  ProductionRoleCaptureStatus,
+  EditModal,
+} from "@/components/index";
 import { IMessage, IUser } from "@/types/interfaces";
 import { useUser } from "@clerk/nextjs";
 
@@ -9,10 +14,9 @@ const socket = io("http://localhost:3001");
 
 export default function Home() {
   const [chat, setChat] = useState<IMessage[]>([]);
-  const [userNameInput, setCurrentUserNameInput] = useState("");
-  const [roomInput, setRoomInput] = useState("");
   const [currentUser, setCurrentUser] = useState<IUser | null>(null);
   const { isSignedIn, user } = useUser();
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
     if (isSignedIn && user) {
@@ -52,7 +56,10 @@ export default function Home() {
           <div className="flex-grow-[7] bg-blue-500 flex flex-col items-center justify-center">
             <div className="flex flex-row items-center justify-center w-full h-full">
               {Array.from({ length: 7 }).map((_, index) => (
-                <ProductionRoleCaptureStatus key={index} />
+                <ProductionRoleCaptureStatus
+                  key={index}
+                  setIsEditModalOpen={setIsEditModalOpen}
+                />
               ))}
             </div>
           </div>
@@ -63,6 +70,10 @@ export default function Home() {
                 currentUser={currentUser}
                 socket={socket}
                 setCurrentUser={setCurrentUser}
+              />
+              <EditModal
+                isEditModalOpen={isEditModalOpen}
+                setisEditModalOpen={setIsEditModalOpen}
               />
             </div>
           </div>

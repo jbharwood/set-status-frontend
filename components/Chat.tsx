@@ -2,7 +2,7 @@
 
 import { IMessage, IUser } from "@/types/interfaces";
 import { useEffect, useRef } from "react";
-import { Message } from "@/components";
+import { Message } from "@/components/index";
 
 type ChatProps = {
   chat: Array<IMessage>;
