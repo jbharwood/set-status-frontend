@@ -9,12 +9,13 @@ export default function ProductionRoleCaptureStatus({
   productionRoleCaptureStatus,
   setIsEditModalOpen,
 }: ProductionCaptureStatusProps) {
-  const { id, capture_status_id, notes } = productionRoleCaptureStatus;
+  const { production_role_abbreviation, capture_status_id, notes } =
+    productionRoleCaptureStatus;
 
   return (
     <div className="flex flex-col items-center justify-center h-full w-36 p-2">
       <div className="border border-black bg-slate-700 h-[7.5%] w-36 flex items-center justify-center">
-        {id}
+        {production_role_abbreviation}
       </div>
       <div
         className={`border border-black ${capture_status_id === 1 ? "bg-green-500" : "bg-slate-500"} h-[30%] w-36 cursor-pointer hover:bg-green-400`}

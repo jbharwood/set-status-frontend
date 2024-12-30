@@ -30,20 +30,14 @@ export default function Home() {
 
   useEffect(() => {
     socket.on("receive_message", (msg) => {
-      if (!currentUser) return;
-
       setChat((prev) => [...prev, msg]);
     });
 
     socket.on("join_room", () => {
-      if (!currentUser) return;
-
       setChat([]);
     });
 
     socket.on("get_production_role_capture_statuses", (data) => {
-      if (!currentUser) return;
-
       setProductionRoleCaptureStatuses(data);
       console.log(data);
     });

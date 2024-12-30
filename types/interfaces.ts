@@ -7,6 +7,8 @@ export interface IMessage {
 export interface IProductionRoleCaptureStatus {
   id: number;
   production_role_id: number;
+  production_role_name: string;
+  production_role_abbreviation: string;
   capture_status_id: number;
   location_id: number;
   notes?: string;
@@ -14,6 +16,12 @@ export interface IProductionRoleCaptureStatus {
   create_time: string;
   last_modified_by: string;
   last_modified_time: string;
+}
+
+export interface IProductionRole {
+  id: number;
+  name: string;
+  abbreviation: string;
 }
 
 export interface IUser {
