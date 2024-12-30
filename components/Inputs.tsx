@@ -6,6 +6,8 @@ import Image from "next/image";
 import { Socket } from "socket.io-client";
 import { DefaultEventsMap } from "socket.io";
 import { IMessage, IUser } from "@/types/interfaces";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 type InputsProps = {
   currentUser: IUser;
@@ -38,11 +40,10 @@ export default function Inputs({ currentUser, socket }: InputsProps) {
   }
 
   return (
-    <div className="mt-2 flex gap-2">
-      <input
+    <div className="flex gap-2">
+      <Input
         type="text"
-        placeholder="Type your message..."
-        className="w-full border rounded p-2 focus:outline-none focus:ring focus:border-blue-300"
+        className="focus:outline-none focus:ring focus:border-blue-300"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && sendMessage()}
@@ -53,8 +54,8 @@ export default function Inputs({ currentUser, socket }: InputsProps) {
         ref={uploadInput}
         onChange={(e) => handleImageUpload(e)}
       />
-      <button
-        className="w-full px-3 bg-sky-400 text-white font-fold rounded-md text-xl gradient md:w-1/12 md:text-2xl"
+      <Button
+        className="w-full px-3 bg-blue-400 text-white font-fold rounded-md text-xl md:w-12 md:text-2xl"
         onClick={sendMessage}
       >
         <Image
@@ -64,7 +65,7 @@ export default function Inputs({ currentUser, socket }: InputsProps) {
           height={20}
           width={20}
         />
-      </button>
+      </Button>
     </div>
   );
 }

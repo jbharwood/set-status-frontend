@@ -64,7 +64,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex items-center justify-center w-full p-2">
-            <div className="w-full bg-white rounded-lg shadow p-4 flex flex-col space-y-3 h-56">
+            <div className="w-full bg-white dark:bg-slate-800 rounded-lg shadow p-2 flex flex-col space-y-3 h-56">
               <Chat currentUser={currentUser} chat={chat} />
               <Inputs
                 currentUser={currentUser}
