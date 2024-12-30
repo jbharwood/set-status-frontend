@@ -52,7 +52,7 @@ export default function Inputs({ socket }: InputsProps) {
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && sendMessage()}
       />
-      <input
+      <Input
         className="hidden"
         type="file"
         ref={uploadInput}

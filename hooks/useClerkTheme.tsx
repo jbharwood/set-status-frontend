@@ -18,11 +18,7 @@ export default function useClerkTheme() {
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    if (theme === "dark" || hasSystemDarkMode) {
-      setClerkTheme(dark);
-    } else {
-      setClerkTheme(undefined);
-    }
+    setClerkTheme(theme === "dark" || hasSystemDarkMode ? dark : undefined);
   }, [theme]);
 
   return { clerkTheme, setClerkTheme };

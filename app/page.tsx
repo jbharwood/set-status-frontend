@@ -1,7 +1,7 @@
 "use client";
 
 import { io } from "socket.io-client";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Chat,
   Inputs,
