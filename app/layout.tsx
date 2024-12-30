@@ -7,6 +7,7 @@ import {
 import "./globals.css";
 import { NavBar } from "@/components/index";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { UserProvider } from "@/context/UserContext";
 
 export default function RootLayout({
   children,
@@ -23,13 +24,15 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <SignedOut>
-              <RedirectToSignIn />
-            </SignedOut>
-            <SignedIn>
-              <NavBar />
-              {children}
-            </SignedIn>
+            <UserProvider>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+              <SignedIn>
+                <NavBar />
+                {children}
+              </SignedIn>
+            </UserProvider>
           </ThemeProvider>
         </body>
       </html>

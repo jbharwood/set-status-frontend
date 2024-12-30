@@ -1,24 +1,34 @@
 import React from "react";
-import { IMessage, IUser } from "../types/interfaces";
+import { IMessage } from "../types/interfaces";
+import { useCurrentUser } from "@/context/UserContext";
 
 type MessageProps = {
   content: string;
   type: IMessage["type"];
-  user: IUser;
 };
 
-export default function Message({ content, type, user }: MessageProps) {
+export default function Message({ content, type }: MessageProps) {
+  const { currentUser } = useCurrentUser();
+
   return (
     <div className="bg-slate-200 dark:bg-black border-slate-200 rounded-md break-words mt-1">
       {type === "text" ? (
         <div className="flex gap-2 p-1">
-          <img src={user.image} alt="user" className="rounded-full h-6 w-6" />
-          {user.name} : {content}
+          <img
+            src={currentUser?.image}
+            alt="user"
+            className="rounded-full h-6 w-6"
+          />
+          {currentUser?.name} : {content}
         </div>
       ) : (
         <div className="flex gap-2 p-1">
-          <img src={user.image} alt="user" className="rounded-full h-6 w-6" />
-          {user.name} :
+          <img
+            src={currentUser?.image}
+            alt="user"
+            className="rounded-full h-6 w-6"
+          />
+          {currentUser?.name} :
           <img
             src={content}
             className="rounded-md"

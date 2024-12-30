@@ -1,12 +1,11 @@
 "use client";
 
-import { IMessage, IUser } from "@/types/interfaces";
+import { IMessage } from "@/types/interfaces";
 import { useEffect, useRef } from "react";
 import { Message } from "@/components/index";
 
 type ChatProps = {
   chat: Array<IMessage>;
-  currentUser: IUser;
 };
 
 export default function Chat({ chat }: ChatProps) {
