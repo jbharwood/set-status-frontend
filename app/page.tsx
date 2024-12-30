@@ -8,7 +8,7 @@ import {
   ProductionRoleCaptureStatus,
   EditModal,
 } from "@/components/index";
-import { IMessage } from "@/types/interfaces";
+import { IMessage, IProductionRoleCaptureStatus } from "@/types/interfaces";
 import { useUser } from "@clerk/nextjs";
 import { useCurrentUser } from "@/context/UserContext";
 
@@ -16,6 +16,8 @@ const socket = io("http://localhost:3001");
 
 export default function Home() {
   const [chat, setChat] = useState<IMessage[]>([]);
+  const [productionRoleCaptureStatuses, setProductionRoleCaptureStatuses] =
+    useState<IProductionRoleCaptureStatus[]>([]);
   const { isSignedIn } = useUser();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { currentUser } = useCurrentUser();
@@ -39,9 +41,17 @@ export default function Home() {
       setChat([]);
     });
 
+    socket.on("get_production_role_capture_statuses", (data) => {
+      if (!currentUser) return;
+
+      setProductionRoleCaptureStatuses(data);
+      console.log(data);
+    });
+
     return () => {
       socket.off("receive_message");
       socket.off("join_room");
+      socket.off("get_production_role_capture_statuses");
     };
   });
 
@@ -51,9 +61,10 @@ export default function Home() {
         <div className="h-[95%] flex flex-col bg-blue-500">
           <div className="flex-grow-[7] flex flex-col items-center justify-center">
             <div className="flex flex-row items-center justify-center w-full h-full">
-              {Array.from({ length: 7 }).map((_, index) => (
+              {productionRoleCaptureStatuses.map((prcs) => (
                 <ProductionRoleCaptureStatus
-                  key={index}
+                  key={prcs.id}
+                  productionRoleCaptureStatus={prcs}
                   setIsEditModalOpen={setIsEditModalOpen}
                 />
               ))}
