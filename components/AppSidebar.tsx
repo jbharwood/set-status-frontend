@@ -2,6 +2,7 @@
 
 import {
   ChevronDown,
+  ChevronRight,
   ChevronsUpDown,
   Film,
   Home,
@@ -94,12 +95,12 @@ export function AppSidebar() {
         <Collapsible defaultOpen className="group/collapsible">
           <SidebarGroup>
             <SidebarGroupAction className="mr-6">
-              <Plus /> <span className="sr-only">Add Project</span>
+              <Plus /> <span className="sr-only">Add Stage</span>
             </SidebarGroupAction>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger>
                 Stages
-                <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
               </CollapsibleTrigger>
             </SidebarGroupLabel>
             <CollapsibleContent>
