@@ -90,3 +90,27 @@
     @apply bg-background text-foreground;
   }
 }
+
+.capture-status-text.green {
+  color: #10b981; /* Tailwind green-500 */
+}
+
+.capture-status-border.green {
+  border-color: #10b981; /* Tailwind green-500 */
+}
+
+.capture-status-text.yellow {
+  color: #f59e0b; /* Tailwind yellow-500 */
+}
+
+.capture-status-border.yellow {
+  border-color: #f59e0b; /* Tailwind yellow-500 */
+}
+
+.capture-status-text.red {
+  color: #ef4444; /* Tailwind red-500 */
+}
+
+.capture-status-border.red {
+  border-color: #ef4444; /* Tailwind red-500 */
+}
