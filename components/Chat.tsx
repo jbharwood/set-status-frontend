@@ -30,7 +30,7 @@ export default function Chat({ chat }: ChatProps) {
 
         return <Message key={index} {...messageOutput} />;
       })}
-      <div ref={scroller} />
+      <div ref={scroller} className="overflow-auto" />
     </div>
   );
 }
