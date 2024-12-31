@@ -8,12 +8,18 @@ import "./globals.css";
 import { NavBar } from "@/components/index";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { UserProvider } from "@/context/UserContext";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/AppSidebar";
+import { cookies } from "next/headers";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = await cookies();
+  const defaultOpen = cookieStore.get("sidebar:state")?.value === "true";
+
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
@@ -29,8 +35,12 @@ export default function RootLayout({
                 <RedirectToSignIn />
               </SignedOut>
               <SignedIn>
-                <NavBar />
-                {children}
+                <SidebarProvider defaultOpen={defaultOpen}>
+                  <AppSidebar />
+                  {/* <NavBar /> */}
+                  <SidebarTrigger />
+                  {children}
+                </SidebarProvider>
               </SignedIn>
             </UserProvider>
           </ThemeProvider>

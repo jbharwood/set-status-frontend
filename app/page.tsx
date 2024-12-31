@@ -71,8 +71,8 @@ export default function Home() {
   return (
     <>
       {isSignedIn && currentUser && (
-        <div className="h-[95%] flex flex-col bg-gradient-to-r from-green-300 to-green-400">
-          <div className="flex-grow-[7] flex flex-col items-center justify-center">
+        <div className="h-screen w-screen flex flex-col bg-gradient-to-r from-green-300 to-green-400">
+          <div className="flex-grow flex flex-col items-center justify-center overflow-auto">
             <div className="flex flex-row items-center justify-center w-full h-full">
               {productionRoleCaptureStatuses.map((prcs) => (
                 <ProductionRoleCaptureStatus
@@ -91,7 +91,7 @@ export default function Home() {
             <div className="w-full bg-white dark:bg-slate-800 rounded-lg shadow p-2 flex flex-col space-y-3 h-56">
               <Chat chat={chat} />
               <Inputs socket={socket} />
-              {selectedProductionRoleCaptureStatus && (
+              {selectedProductionRoleCaptureStatus && selectedCaptureStatus && (
                 <EditModal
                   isEditModalOpen={isEditModalOpen}
                   setIsEditModalOpen={setIsEditModalOpen}

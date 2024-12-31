@@ -10,7 +10,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import { captureStatusIdMap } from "@/lib/helpers";
+import {
+  captureStatusBorderMap,
+  captureStatusIdMap,
+  captureStatusTextMap,
+} from "@/lib/helpers";
 import {
   CaptureStatus,
   IProductionRoleCaptureStatus,
@@ -70,7 +74,11 @@ export default function EditModal({
             Edit {selectedProductionRoleCaptureStatus.production_role_name}{" "}
             <span
               className={
-                `text-` + selectedCaptureStatus?.toLowerCase() + `-500`
+                (selectedCaptureStatus &&
+                  captureStatusTextMap[
+                    selectedCaptureStatus.toLowerCase() as keyof typeof captureStatusTextMap
+                  ]) ||
+                ""
               }
             >
               {selectedCaptureStatus}
@@ -93,7 +101,7 @@ export default function EditModal({
                   e.currentTarget.value.length
                 )
               }
-              className={`col-span-3 w-full focus:border-${selectedCaptureStatus?.toLowerCase()}-500`}
+              className={`col-span-3 w-full ${selectedCaptureStatus ? captureStatusBorderMap[selectedCaptureStatus.toLowerCase() as keyof typeof captureStatusBorderMap] : ""}`}
               defaultValue={selectedProductionRoleCaptureStatus.notes}
               onChange={(e) => setNotes(e.target.value)}
             />

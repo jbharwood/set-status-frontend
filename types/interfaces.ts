@@ -26,6 +26,15 @@ export interface IProductionRole {
   abbreviation: string;
 }
 
+export interface ILocation {
+  id: number;
+  name: string;
+  street_address: string;
+  city: string;
+  state: string;
+  country: string;
+}
+
 export interface IUser {
   id?: string;
   name?: string | null;
