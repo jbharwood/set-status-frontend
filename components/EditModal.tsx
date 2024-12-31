@@ -86,6 +86,13 @@ export default function EditModal({
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-3 items-center gap-4">
             <Textarea
+              ref={(ref: HTMLTextAreaElement) => ref && ref.focus()}
+              onFocus={(e) =>
+                e.currentTarget.setSelectionRange(
+                  e.currentTarget.value.length,
+                  e.currentTarget.value.length
+                )
+              }
               className={`col-span-3 w-full focus:border-${selectedCaptureStatus?.toLowerCase()}-500`}
               defaultValue={selectedProductionRoleCaptureStatus.notes}
               onChange={(e) => setNotes(e.target.value)}
