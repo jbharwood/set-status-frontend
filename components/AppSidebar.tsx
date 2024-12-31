@@ -1,16 +1,15 @@
+"use client";
+
 import {
-  Calendar,
   ChevronDown,
-  ChevronUp,
+  ChevronsUpDown,
   Home,
-  Inbox,
-  MoreHorizontal,
+  LogOut,
   Plus,
   Search,
   Settings,
   User2,
 } from "lucide-react";
-
 import {
   Sidebar,
   SidebarContent,
@@ -21,7 +20,6 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSeparator,
@@ -38,8 +36,10 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Suspense } from "react";
-import Stages from "./Stages";
-import StagesSkeleton from "./StagesSkeleton";
+import { ChangeTheme, Stages, StagesSkeleton } from "@/components/index";
+import { useCurrentUser } from "@/context/UserContext";
+import { UserButton, useClerk } from "@clerk/nextjs";
+import { useClerkTheme } from "@/hooks";
 
 const items = [
   {
@@ -60,6 +60,10 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const { currentUser } = useCurrentUser();
+  const { clerkTheme } = useClerkTheme();
+  const { signOut } = useClerk();
+
   return (
     <Sidebar>
       <SidebarHeader>
@@ -129,22 +133,34 @@ export function AppSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  <User2 /> Username
-                  <ChevronUp className="ml-auto" />
+                  {currentUser ? (
+                    <UserButton
+                      appearance={{
+                        baseTheme: clerkTheme,
+                      }}
+                    />
+                  ) : (
+                    <User2 />
+                  )}
+                  <div className="flex-row">
+                    <div className="font-bold">{currentUser?.name}</div>
+                    <div className="text-[.7rem]/[1rem]">
+                      {currentUser?.email}
+                    </div>
+                  </div>
+                  <ChevronsUpDown className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                side="top"
+                side="right"
                 className="w-[--radix-popper-anchor-width]"
               >
+                <ChangeTheme />
                 <DropdownMenuItem>
-                  <span>Account</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Billing</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Sign out</span>
+                  <LogOut />
+                  <span onClick={() => signOut({ redirectUrl: "/" })}>
+                    Log out
+                  </span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

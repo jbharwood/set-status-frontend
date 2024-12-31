@@ -15,7 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
+import { Delete, Edit, MoreHorizontal } from "lucide-react";
 
 export default function Stages() {
   const [stages, setStages] = useState<ILocation[]>([]);
@@ -49,9 +49,11 @@ export default function Stages() {
             </DropdownMenuTrigger>
             <DropdownMenuContent side="right" align="start">
               <DropdownMenuItem>
+                <Edit />
                 <span>Edit Stage</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
+                <Delete />
                 <span>Delete Stage</span>
               </DropdownMenuItem>
             </DropdownMenuContent>

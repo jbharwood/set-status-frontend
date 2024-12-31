@@ -25,6 +25,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     if (isSignedIn && user) {
       setCurrentUser({
         name: user.fullName,
+        email: user.primaryEmailAddress?.emailAddress,
         id: user.id,
         room: "a",
         image: user.imageUrl,

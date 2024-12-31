@@ -23,9 +23,7 @@ export default function NavBar() {
               Contact
             </a>
           </div>
-          <div className="mt-1.5">
-            <ModeToggle />
-          </div>
+          <div className="mt-1.5">{/* <ModeToggle /> */}</div>
           <div className="mt-2">
             <UserButton
               appearance={{

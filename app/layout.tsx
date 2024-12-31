@@ -9,7 +9,7 @@ import { NavBar } from "@/components/index";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { UserProvider } from "@/context/UserContext";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/AppSidebar";
+import { AppSidebar } from "@/components/index";
 import { cookies } from "next/headers";
 
 export default async function RootLayout({

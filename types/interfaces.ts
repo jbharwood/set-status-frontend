@@ -44,4 +44,5 @@ export interface IUser {
   }
   room?: string;
   image?: string;
+  email?: string;
 }
