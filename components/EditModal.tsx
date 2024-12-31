@@ -48,8 +48,8 @@ export default function EditModal({
       const temp = { ...selectedProductionRoleCaptureStatus };
       temp.capture_status_id = captureStatusIdMap[selectedCaptureStatus];
       temp.notes = notes;
-      setSelectedProductionRoleCaptureStatus(temp);
       updateProductionRoleCaptureStatus(temp);
+      setSelectedProductionRoleCaptureStatus(null);
       setIsEditModalOpen(false);
     }
   }
