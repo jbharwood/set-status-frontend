@@ -73,7 +73,7 @@ export default function Home() {
       {isSignedIn && currentUser && (
         <div className="h-screen w-screen flex flex-col bg-gradient-to-r from-green-300 to-green-400">
           <div className="flex-grow flex flex-col items-center justify-center overflow-auto">
-            <div className="flex flex-row items-center justify-center w-full h-full">
+            <div className="flex flex-row items-center justify-center w-full h-full p-2">
               {productionRoleCaptureStatuses.map((prcs) => (
                 <ProductionRoleCaptureStatus
                   key={prcs.id}
