@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,14 +16,17 @@ import {
   IProductionRoleCaptureStatus,
 } from "@/types/interfaces";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 type EditModalProps = {
   isEditModalOpen: boolean;
   setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
   selectedCaptureStatus: CaptureStatus;
   setSelectedCaptureStatus: Dispatch<SetStateAction<CaptureStatus>>;
-  selectedProductionRoleCaptureStatus: IProductionRoleCaptureStatus | null;
+  selectedProductionRoleCaptureStatus: IProductionRoleCaptureStatus;
+  setSelectedProductionRoleCaptureStatus: Dispatch<
+    SetStateAction<IProductionRoleCaptureStatus | null>
+  >;
   updateProductionRoleCaptureStatus: (
     productionRoleCaptureStatus: IProductionRoleCaptureStatus
   ) => void;
@@ -33,27 +38,18 @@ export default function EditModal({
   selectedCaptureStatus,
   setSelectedCaptureStatus,
   selectedProductionRoleCaptureStatus,
+  setSelectedProductionRoleCaptureStatus,
   updateProductionRoleCaptureStatus,
 }: EditModalProps) {
-  function notes() {
-    return selectedCaptureStatus &&
-      selectedProductionRoleCaptureStatus?.capture_status_id ===
-        captureStatusIdMap[selectedCaptureStatus]
-      ? selectedProductionRoleCaptureStatus?.notes
-      : "";
-  }
-
-  function handleProductionRoleCaptureStatus(note: string) {
-    if (selectedProductionRoleCaptureStatus && selectedCaptureStatus) {
-      selectedProductionRoleCaptureStatus.capture_status_id =
-        captureStatusIdMap[selectedCaptureStatus];
-      selectedProductionRoleCaptureStatus.notes = note;
-    }
-  }
+  const [notes, setNotes] = useState(selectedProductionRoleCaptureStatus.notes);
 
   function handleSubmit() {
-    if (selectedProductionRoleCaptureStatus) {
-      updateProductionRoleCaptureStatus(selectedProductionRoleCaptureStatus);
+    if (selectedProductionRoleCaptureStatus && selectedCaptureStatus) {
+      const temp = { ...selectedProductionRoleCaptureStatus };
+      temp.capture_status_id = captureStatusIdMap[selectedCaptureStatus];
+      temp.notes = notes;
+      setSelectedProductionRoleCaptureStatus(temp);
+      updateProductionRoleCaptureStatus(temp);
       setIsEditModalOpen(false);
     }
   }
@@ -63,13 +59,15 @@ export default function EditModal({
       open={isEditModalOpen}
       onOpenChange={() => {
         setIsEditModalOpen(false);
+        setSelectedProductionRoleCaptureStatus(null);
         setSelectedCaptureStatus(null);
+        setNotes("");
       }}
     >
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>
-            Edit {selectedProductionRoleCaptureStatus?.production_role_name}{" "}
+            Edit {selectedProductionRoleCaptureStatus.production_role_name}{" "}
             <span
               className={
                 `text-` + selectedCaptureStatus?.toLowerCase() + `-500`
@@ -89,15 +87,22 @@ export default function EditModal({
           <div className="grid grid-cols-3 items-center gap-4">
             <Textarea
               className={`col-span-3 w-full focus:border-${selectedCaptureStatus?.toLowerCase()}-500`}
-              defaultValue={notes()}
-              onChange={(e) =>
-                handleProductionRoleCaptureStatus(e.target.value)
-              }
+              defaultValue={selectedProductionRoleCaptureStatus.notes}
+              onChange={(e) => setNotes(e.target.value)}
             />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={handleSubmit}>
+          <Button
+            type="submit"
+            onClick={handleSubmit}
+            disabled={
+              selectedProductionRoleCaptureStatus.notes !== "" &&
+              selectedProductionRoleCaptureStatus
+                ? selectedProductionRoleCaptureStatus.notes === notes
+                : false
+            }
+          >
             Save
           </Button>
         </DialogFooter>

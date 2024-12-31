@@ -71,7 +71,7 @@ export default function Home() {
   return (
     <>
       {isSignedIn && currentUser && (
-        <div className="h-[95%] flex flex-col bg-blue-500">
+        <div className="h-[95%] flex flex-col bg-gradient-to-r from-green-300 to-green-400">
           <div className="flex-grow-[7] flex flex-col items-center justify-center">
             <div className="flex flex-row items-center justify-center w-full h-full">
               {productionRoleCaptureStatuses.map((prcs) => (
@@ -91,18 +91,23 @@ export default function Home() {
             <div className="w-full bg-white dark:bg-slate-800 rounded-lg shadow p-2 flex flex-col space-y-3 h-56">
               <Chat chat={chat} />
               <Inputs socket={socket} />
-              <EditModal
-                isEditModalOpen={isEditModalOpen}
-                setIsEditModalOpen={setIsEditModalOpen}
-                selectedCaptureStatus={selectedCaptureStatus}
-                setSelectedCaptureStatus={setSelectedCaptureStatus}
-                selectedProductionRoleCaptureStatus={
-                  selectedProductionRoleCaptureStatus
-                }
-                updateProductionRoleCaptureStatus={
-                  updateProductionRoleCaptureStatus
-                }
-              />
+              {selectedProductionRoleCaptureStatus && (
+                <EditModal
+                  isEditModalOpen={isEditModalOpen}
+                  setIsEditModalOpen={setIsEditModalOpen}
+                  selectedCaptureStatus={selectedCaptureStatus}
+                  setSelectedCaptureStatus={setSelectedCaptureStatus}
+                  selectedProductionRoleCaptureStatus={
+                    selectedProductionRoleCaptureStatus
+                  }
+                  setSelectedProductionRoleCaptureStatus={
+                    setSelectedProductionRoleCaptureStatus
+                  }
+                  updateProductionRoleCaptureStatus={
+                    updateProductionRoleCaptureStatus
+                  }
+                />
+              )}
             </div>
           </div>
         </div>

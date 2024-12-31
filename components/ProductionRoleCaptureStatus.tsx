@@ -1,3 +1,4 @@
+import { captureStatusIdMap } from "@/lib/helpers";
 import {
   CaptureStatus,
   IProductionRoleCaptureStatus,
@@ -22,6 +23,17 @@ export default function ProductionRoleCaptureStatus({
   const { production_role_abbreviation, capture_status_id, notes } =
     productionRoleCaptureStatus;
 
+  function handleOnClick(captureStatus: CaptureStatus) {
+    setIsEditModalOpen(true);
+    const temp = { ...productionRoleCaptureStatus };
+    temp.notes =
+      captureStatus && capture_status_id === captureStatusIdMap[captureStatus]
+        ? notes
+        : "";
+    setSelectedProductionRoleCaptureStatus(temp);
+    setSelectedCaptureStatus(captureStatus);
+  }
+
   return (
     <div className="flex flex-col items-center justify-center h-full w-36 p-2">
       <div className="border border-black bg-slate-700 h-[7.5%] w-36 flex items-center justify-center">
@@ -29,27 +41,15 @@ export default function ProductionRoleCaptureStatus({
       </div>
       <div
         className={`border border-black ${capture_status_id === 1 ? "bg-green-500" : "bg-slate-500"} h-[30%] w-36 cursor-pointer hover:bg-green-400`}
-        onClick={() => {
-          setIsEditModalOpen(true);
-          setSelectedProductionRoleCaptureStatus(productionRoleCaptureStatus);
-          setSelectedCaptureStatus("Green");
-        }}
+        onClick={() => handleOnClick("Green")}
       />
       <div
         className={`border border-black ${capture_status_id === 2 ? "bg-yellow-500" : "bg-slate-500"} h-[30%] w-36 cursor-pointer hover:bg-yellow-400`}
-        onClick={() => {
-          setIsEditModalOpen(true);
-          setSelectedProductionRoleCaptureStatus(productionRoleCaptureStatus);
-          setSelectedCaptureStatus("Yellow");
-        }}
+        onClick={() => handleOnClick("Yellow")}
       />
       <div
         className={`border border-black ${capture_status_id === 3 ? "bg-red-500" : "bg-slate-500"} h-[30%] w-36 cursor-pointer hover:bg-red-400`}
-        onClick={() => {
-          setIsEditModalOpen(true);
-          setSelectedProductionRoleCaptureStatus(productionRoleCaptureStatus);
-          setSelectedCaptureStatus("Red");
-        }}
+        onClick={() => handleOnClick("Red")}
       />
       <div className="border border-black bg-slate-700 h-[30%] w-36 text-center">
         {notes}
