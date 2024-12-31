@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import { captureStatusColorMap, captureStatusIdMap } from "@/lib/helpers";
+import { captureStatusIdMap } from "@/lib/helpers";
 import {
   CaptureStatus,
   IProductionRoleCaptureStatus,
@@ -21,7 +21,10 @@ type EditModalProps = {
   setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
   selectedCaptureStatus: CaptureStatus;
   setSelectedCaptureStatus: Dispatch<SetStateAction<CaptureStatus>>;
-  selectedProductionRoleCaptureStatus: IProductionRoleCaptureStatus;
+  selectedProductionRoleCaptureStatus: IProductionRoleCaptureStatus | null;
+  updateProductionRoleCaptureStatus: (
+    productionRoleCaptureStatus: IProductionRoleCaptureStatus
+  ) => void;
 };
 
 export default function EditModal({
@@ -30,20 +33,29 @@ export default function EditModal({
   selectedCaptureStatus,
   setSelectedCaptureStatus,
   selectedProductionRoleCaptureStatus,
+  updateProductionRoleCaptureStatus,
 }: EditModalProps) {
-  const statusColor = selectedCaptureStatus
-    ? `text-${captureStatusColorMap[selectedCaptureStatus]}`
-    : "";
-  const borderColor = selectedCaptureStatus
-    ? `focus:border-${captureStatusColorMap[selectedCaptureStatus]}`
-    : "";
-
   function notes() {
     return selectedCaptureStatus &&
       selectedProductionRoleCaptureStatus?.capture_status_id ===
         captureStatusIdMap[selectedCaptureStatus]
       ? selectedProductionRoleCaptureStatus?.notes
       : "";
+  }
+
+  function handleProductionRoleCaptureStatus(note: string) {
+    if (selectedProductionRoleCaptureStatus && selectedCaptureStatus) {
+      selectedProductionRoleCaptureStatus.capture_status_id =
+        captureStatusIdMap[selectedCaptureStatus];
+      selectedProductionRoleCaptureStatus.notes = note;
+    }
+  }
+
+  function handleSubmit() {
+    if (selectedProductionRoleCaptureStatus) {
+      updateProductionRoleCaptureStatus(selectedProductionRoleCaptureStatus);
+      setIsEditModalOpen(false);
+    }
   }
 
   return (
@@ -58,8 +70,14 @@ export default function EditModal({
         <DialogHeader>
           <DialogTitle>
             Edit {selectedProductionRoleCaptureStatus?.production_role_name}{" "}
-            <span className={statusColor}>{selectedCaptureStatus}</span> Capture
-            Status
+            <span
+              className={
+                `text-` + selectedCaptureStatus?.toLowerCase() + `-500`
+              }
+            >
+              {selectedCaptureStatus}
+            </span>{" "}
+            Capture Status
           </DialogTitle>
         </DialogHeader>
         <VisuallyHidden.Root>
@@ -70,13 +88,18 @@ export default function EditModal({
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-3 items-center gap-4">
             <Textarea
-              className={`col-span-3 w-full ${borderColor}`}
+              className={`col-span-3 w-full focus:border-${selectedCaptureStatus?.toLowerCase()}-500`}
               defaultValue={notes()}
+              onChange={(e) =>
+                handleProductionRoleCaptureStatus(e.target.value)
+              }
             />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Save</Button>
+          <Button type="submit" onClick={handleSubmit}>
+            Save
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

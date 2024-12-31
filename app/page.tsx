@@ -14,6 +14,7 @@ import {
   IProductionRoleCaptureStatus,
 } from "@/types/interfaces";
 import { useUser } from "@clerk/nextjs";
+import axios from "axios";
 import { useCurrentUser } from "@/context/UserContext";
 
 const socket = io("http://localhost:3001");
@@ -31,6 +32,15 @@ export default function Home() {
   const { isSignedIn } = useUser();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { currentUser } = useCurrentUser();
+
+  function updateProductionRoleCaptureStatus(
+    productionRoleCaptureStatus: IProductionRoleCaptureStatus
+  ) {
+    axios.put(
+      `${process.env.NEXT_PUBLIC_API_URL}/productionRoleCaptureStatuses/${productionRoleCaptureStatus.id}`,
+      productionRoleCaptureStatus
+    );
+  }
 
   useEffect(() => {
     if (currentUser) {
@@ -88,6 +98,9 @@ export default function Home() {
                 setSelectedCaptureStatus={setSelectedCaptureStatus}
                 selectedProductionRoleCaptureStatus={
                   selectedProductionRoleCaptureStatus
+                }
+                updateProductionRoleCaptureStatus={
+                  updateProductionRoleCaptureStatus
                 }
               />
             </div>
