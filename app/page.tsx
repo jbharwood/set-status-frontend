@@ -8,7 +8,11 @@ import {
   ProductionRoleCaptureStatus,
   EditModal,
 } from "@/components/index";
-import { IMessage, IProductionRoleCaptureStatus } from "@/types/interfaces";
+import {
+  CaptureStatus,
+  IMessage,
+  IProductionRoleCaptureStatus,
+} from "@/types/interfaces";
 import { useUser } from "@clerk/nextjs";
 import { useCurrentUser } from "@/context/UserContext";
 
@@ -18,6 +22,12 @@ export default function Home() {
   const [chat, setChat] = useState<IMessage[]>([]);
   const [productionRoleCaptureStatuses, setProductionRoleCaptureStatuses] =
     useState<IProductionRoleCaptureStatus[]>([]);
+  const [
+    selectedProductionRoleCaptureStatus,
+    setSelectedProductionRoleCaptureStatus,
+  ] = useState<IProductionRoleCaptureStatus | null>(null);
+  const [selectedCaptureStatus, setSelectedCaptureStatus] =
+    useState<CaptureStatus>(null);
   const { isSignedIn } = useUser();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { currentUser } = useCurrentUser();
@@ -39,7 +49,6 @@ export default function Home() {
 
     socket.on("get_production_role_capture_statuses", (data) => {
       setProductionRoleCaptureStatuses(data);
-      console.log(data);
     });
 
     return () => {
@@ -60,6 +69,10 @@ export default function Home() {
                   key={prcs.id}
                   productionRoleCaptureStatus={prcs}
                   setIsEditModalOpen={setIsEditModalOpen}
+                  setSelectedProductionRoleCaptureStatus={
+                    setSelectedProductionRoleCaptureStatus
+                  }
+                  setSelectedCaptureStatus={setSelectedCaptureStatus}
                 />
               ))}
             </div>
@@ -70,7 +83,12 @@ export default function Home() {
               <Inputs socket={socket} />
               <EditModal
                 isEditModalOpen={isEditModalOpen}
-                setisEditModalOpen={setIsEditModalOpen}
+                setIsEditModalOpen={setIsEditModalOpen}
+                selectedCaptureStatus={selectedCaptureStatus}
+                setSelectedCaptureStatus={setSelectedCaptureStatus}
+                selectedProductionRoleCaptureStatus={
+                  selectedProductionRoleCaptureStatus
+                }
               />
             </div>
           </div>

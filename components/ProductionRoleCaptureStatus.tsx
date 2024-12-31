@@ -1,13 +1,23 @@
-import { IProductionRoleCaptureStatus } from "@/types/interfaces";
+import {
+  CaptureStatus,
+  IProductionRoleCaptureStatus,
+} from "@/types/interfaces";
+import { Dispatch, SetStateAction } from "react";
 
 type ProductionCaptureStatusProps = {
   productionRoleCaptureStatus: IProductionRoleCaptureStatus;
-  setIsEditModalOpen: (value: boolean) => void;
+  setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
+  setSelectedProductionRoleCaptureStatus: Dispatch<
+    SetStateAction<IProductionRoleCaptureStatus | null>
+  >;
+  setSelectedCaptureStatus: Dispatch<SetStateAction<CaptureStatus>>;
 };
 
 export default function ProductionRoleCaptureStatus({
   productionRoleCaptureStatus,
   setIsEditModalOpen,
+  setSelectedProductionRoleCaptureStatus,
+  setSelectedCaptureStatus,
 }: ProductionCaptureStatusProps) {
   const { production_role_abbreviation, capture_status_id, notes } =
     productionRoleCaptureStatus;
@@ -19,15 +29,27 @@ export default function ProductionRoleCaptureStatus({
       </div>
       <div
         className={`border border-black ${capture_status_id === 1 ? "bg-green-500" : "bg-slate-500"} h-[30%] w-36 cursor-pointer hover:bg-green-400`}
-        onClick={() => setIsEditModalOpen(true)}
+        onClick={() => {
+          setIsEditModalOpen(true);
+          setSelectedProductionRoleCaptureStatus(productionRoleCaptureStatus);
+          setSelectedCaptureStatus("Green");
+        }}
       />
       <div
         className={`border border-black ${capture_status_id === 2 ? "bg-yellow-500" : "bg-slate-500"} h-[30%] w-36 cursor-pointer hover:bg-yellow-400`}
-        onClick={() => setIsEditModalOpen(true)}
+        onClick={() => {
+          setIsEditModalOpen(true);
+          setSelectedProductionRoleCaptureStatus(productionRoleCaptureStatus);
+          setSelectedCaptureStatus("Yellow");
+        }}
       />
       <div
         className={`border border-black ${capture_status_id === 3 ? "bg-red-500" : "bg-slate-500"} h-[30%] w-36 cursor-pointer hover:bg-red-400`}
-        onClick={() => setIsEditModalOpen(true)}
+        onClick={() => {
+          setIsEditModalOpen(true);
+          setSelectedProductionRoleCaptureStatus(productionRoleCaptureStatus);
+          setSelectedCaptureStatus("Red");
+        }}
       />
       <div className="border border-black bg-slate-700 h-[30%] w-36 text-center">
         {notes}

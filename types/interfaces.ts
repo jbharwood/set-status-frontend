@@ -4,6 +4,8 @@ export interface IMessage {
   user: IUser;
 }
 
+export type CaptureStatus = "Red" | "Yellow" | "Green" | null;
+
 export interface IProductionRoleCaptureStatus {
   id: number;
   production_role_id: number;

@@ -7,27 +7,60 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { captureStatusColorMap, captureStatusIdMap } from "@/lib/helpers";
+import {
+  CaptureStatus,
+  IProductionRoleCaptureStatus,
+} from "@/types/interfaces";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import { Dispatch, SetStateAction } from "react";
 
 type EditModalProps = {
   isEditModalOpen: boolean;
-  setisEditModalOpen: (value: boolean) => void;
+  setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
+  selectedCaptureStatus: CaptureStatus;
+  setSelectedCaptureStatus: Dispatch<SetStateAction<CaptureStatus>>;
+  selectedProductionRoleCaptureStatus: IProductionRoleCaptureStatus;
 };
 
 export default function EditModal({
   isEditModalOpen,
-  setisEditModalOpen,
+  setIsEditModalOpen,
+  selectedCaptureStatus,
+  setSelectedCaptureStatus,
+  selectedProductionRoleCaptureStatus,
 }: EditModalProps) {
+  const statusColor = selectedCaptureStatus
+    ? `text-${captureStatusColorMap[selectedCaptureStatus]}`
+    : "";
+  const borderColor = selectedCaptureStatus
+    ? `focus:border-${captureStatusColorMap[selectedCaptureStatus]}`
+    : "";
+
+  function notes() {
+    return selectedCaptureStatus &&
+      selectedProductionRoleCaptureStatus?.capture_status_id ===
+        captureStatusIdMap[selectedCaptureStatus]
+      ? selectedProductionRoleCaptureStatus?.notes
+      : "";
+  }
+
   return (
     <Dialog
       open={isEditModalOpen}
-      onOpenChange={() => setisEditModalOpen(false)}
+      onOpenChange={() => {
+        setIsEditModalOpen(false);
+        setSelectedCaptureStatus(null);
+      }}
     >
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit Production Role Capture Status</DialogTitle>
+          <DialogTitle>
+            Edit {selectedProductionRoleCaptureStatus?.production_role_name}{" "}
+            <span className={statusColor}>{selectedCaptureStatus}</span> Capture
+            Status
+          </DialogTitle>
         </DialogHeader>
         <VisuallyHidden.Root>
           <DialogDescription>
@@ -35,14 +68,10 @@ export default function EditModal({
           </DialogDescription>
         </VisuallyHidden.Root>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
+          <div className="grid grid-cols-3 items-center gap-4">
             <Textarea
-              id="name"
-              defaultValue="Pedro Duarte"
-              className="col-span-3"
+              className={`col-span-3 w-full ${borderColor}`}
+              defaultValue={notes()}
             />
           </div>
         </div>
