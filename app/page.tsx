@@ -7,7 +7,6 @@ import {
   Inputs,
   ProductionRoleCaptureStatus,
   EditModal,
-  NavBar,
   TopBar,
 } from "@/components/index";
 import {
@@ -18,6 +17,7 @@ import {
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 import { useCurrentUser } from "@/context/UserContext";
+import useSelectedProductionRoleCaptureStatusStore from "@/stores/useSelectedProductionRoleCaptureStatusStore";
 
 const socket = io("http://localhost:3001");
 
@@ -25,15 +25,12 @@ export default function Home() {
   const [chat, setChat] = useState<IMessage[]>([]);
   const [productionRoleCaptureStatuses, setProductionRoleCaptureStatuses] =
     useState<IProductionRoleCaptureStatus[]>([]);
-  const [
-    selectedProductionRoleCaptureStatus,
-    setSelectedProductionRoleCaptureStatus,
-  ] = useState<IProductionRoleCaptureStatus | null>(null);
-  const [selectedCaptureStatus, setSelectedCaptureStatus] =
-    useState<CaptureStatus>(null);
   const { isSignedIn } = useUser();
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { currentUser } = useCurrentUser();
+  const selectedProductionRoleCaptureStatus =
+    useSelectedProductionRoleCaptureStatusStore(
+      (state) => state.selectedProductionRoleCaptureStatus
+    );
 
   function updateProductionRoleCaptureStatus(
     productionRoleCaptureStatus: IProductionRoleCaptureStatus
@@ -75,18 +72,12 @@ export default function Home() {
       {isSignedIn && currentUser && (
         <div className="h-screen w-screen flex flex-col bg-gradient-to-r from-green-300 to-green-400">
           <div className="flex-grow flex flex-col items-center justify-center overflow-auto">
-            {/* <NavBar /> */}
             <TopBar />
             <div className="flex flex-row items-center justify-center w-full h-full p-2">
               {productionRoleCaptureStatuses.map((prcs) => (
                 <ProductionRoleCaptureStatus
                   key={prcs.id}
                   productionRoleCaptureStatus={prcs}
-                  setIsEditModalOpen={setIsEditModalOpen}
-                  setSelectedProductionRoleCaptureStatus={
-                    setSelectedProductionRoleCaptureStatus
-                  }
-                  setSelectedCaptureStatus={setSelectedCaptureStatus}
                 />
               ))}
             </div>
@@ -95,18 +86,8 @@ export default function Home() {
             <div className="w-full bg-white dark:bg-slate-800 rounded-lg shadow p-2 flex flex-col space-y-3 h-56">
               <Chat chat={chat} />
               <Inputs socket={socket} />
-              {selectedProductionRoleCaptureStatus && selectedCaptureStatus && (
+              {selectedProductionRoleCaptureStatus && (
                 <EditModal
-                  isEditModalOpen={isEditModalOpen}
-                  setIsEditModalOpen={setIsEditModalOpen}
-                  selectedCaptureStatus={selectedCaptureStatus}
-                  setSelectedCaptureStatus={setSelectedCaptureStatus}
-                  selectedProductionRoleCaptureStatus={
-                    selectedProductionRoleCaptureStatus
-                  }
-                  setSelectedProductionRoleCaptureStatus={
-                    setSelectedProductionRoleCaptureStatus
-                  }
                   updateProductionRoleCaptureStatus={
                     updateProductionRoleCaptureStatus
                   }

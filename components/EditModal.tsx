@@ -11,37 +11,45 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { captureStatusIdMap } from "@/lib/helpers";
-import {
-  CaptureStatus,
-  IProductionRoleCaptureStatus,
-} from "@/types/interfaces";
+import useIsEditModalOpenStore from "@/stores/useIsEditModalOpenStore";
+import useSelectedCaptureStatusStore from "@/stores/useSelectedCaptureStatusStore";
+import useSelectedProductionRoleCaptureStatusStore from "@/stores/useSelectedProductionRoleCaptureStatusStore";
+import { IProductionRoleCaptureStatus } from "@/types/interfaces";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { Dispatch, SetStateAction, useState } from "react";
 
 type EditModalProps = {
-  isEditModalOpen: boolean;
-  setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
-  selectedCaptureStatus: CaptureStatus;
-  setSelectedCaptureStatus: Dispatch<SetStateAction<CaptureStatus>>;
-  selectedProductionRoleCaptureStatus: IProductionRoleCaptureStatus;
-  setSelectedProductionRoleCaptureStatus: Dispatch<
-    SetStateAction<IProductionRoleCaptureStatus | null>
-  >;
   updateProductionRoleCaptureStatus: (
     productionRoleCaptureStatus: IProductionRoleCaptureStatus
   ) => void;
 };
 
 export default function EditModal({
-  isEditModalOpen,
-  setIsEditModalOpen,
-  selectedCaptureStatus,
-  setSelectedCaptureStatus,
-  selectedProductionRoleCaptureStatus,
-  setSelectedProductionRoleCaptureStatus,
   updateProductionRoleCaptureStatus,
 }: EditModalProps) {
-  const [notes, setNotes] = useState(selectedProductionRoleCaptureStatus.notes);
+  const isEditModalOpen = useIsEditModalOpenStore(
+    (state) => state.isEditModalOpen
+  );
+  const setIsEditModalOpen = useIsEditModalOpenStore(
+    (state) => state.setIsEditModalOpen
+  );
+  const selectedCaptureStatus = useSelectedCaptureStatusStore(
+    (state) => state.selectedCaptureStatus
+  );
+  const setSelectedCaptureStatus = useSelectedCaptureStatusStore(
+    (state) => state.setSelectedCaptureStatus
+  );
+  const selectedProductionRoleCaptureStatus =
+    useSelectedProductionRoleCaptureStatusStore(
+      (state) => state.selectedProductionRoleCaptureStatus
+    );
+  const setSelectedProductionRoleCaptureStatus =
+    useSelectedProductionRoleCaptureStatusStore(
+      (state) => state.setSelectedProductionRoleCaptureStatus
+    );
+  const [notes, setNotes] = useState(
+    selectedProductionRoleCaptureStatus?.notes
+  );
 
   function handleSubmit() {
     if (selectedProductionRoleCaptureStatus && selectedCaptureStatus) {
@@ -67,7 +75,7 @@ export default function EditModal({
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>
-            Edit {selectedProductionRoleCaptureStatus.production_role_name}{" "}
+            Edit {selectedProductionRoleCaptureStatus?.production_role_name}{" "}
             <span
               className={`capture-status-text ${selectedCaptureStatus?.toLowerCase()}`}
             >
@@ -92,7 +100,7 @@ export default function EditModal({
                 )
               }
               className={`col-span-3 w-full capture-status-border ${selectedCaptureStatus?.toLowerCase()}`}
-              defaultValue={selectedProductionRoleCaptureStatus.notes}
+              defaultValue={selectedProductionRoleCaptureStatus?.notes}
               onChange={(e) => setNotes(e.target.value)}
             />
           </div>
@@ -102,7 +110,7 @@ export default function EditModal({
             type="submit"
             onClick={handleSubmit}
             disabled={
-              selectedProductionRoleCaptureStatus.notes !== "" &&
+              selectedProductionRoleCaptureStatus?.notes !== "" &&
               selectedProductionRoleCaptureStatus
                 ? selectedProductionRoleCaptureStatus.notes === notes
                 : false

@@ -3,25 +3,29 @@ import {
   CaptureStatus,
   IProductionRoleCaptureStatus,
 } from "@/types/interfaces";
-import { Dispatch, SetStateAction } from "react";
+import useIsEditModalOpenStore from "@/stores/useIsEditModalOpenStore";
+import useSelectedCaptureStatusStore from "@/stores/useSelectedCaptureStatusStore";
+import useSelectedProductionRoleCaptureStatusStore from "@/stores/useSelectedProductionRoleCaptureStatusStore";
 
 type ProductionCaptureStatusProps = {
   productionRoleCaptureStatus: IProductionRoleCaptureStatus;
-  setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
-  setSelectedProductionRoleCaptureStatus: Dispatch<
-    SetStateAction<IProductionRoleCaptureStatus | null>
-  >;
-  setSelectedCaptureStatus: Dispatch<SetStateAction<CaptureStatus>>;
 };
 
 export default function ProductionRoleCaptureStatus({
   productionRoleCaptureStatus,
-  setIsEditModalOpen,
-  setSelectedProductionRoleCaptureStatus,
-  setSelectedCaptureStatus,
 }: ProductionCaptureStatusProps) {
   const { production_role_abbreviation, capture_status_id, notes } =
     productionRoleCaptureStatus;
+  const setIsEditModalOpen = useIsEditModalOpenStore(
+    (state) => state.setIsEditModalOpen
+  );
+  const setSelectedCaptureStatus = useSelectedCaptureStatusStore(
+    (state) => state.setSelectedCaptureStatus
+  );
+  const setSelectedProductionRoleCaptureStatus =
+    useSelectedProductionRoleCaptureStatusStore(
+      (state) => state.setSelectedProductionRoleCaptureStatus
+    );
 
   function handleOnClick(captureStatus: CaptureStatus) {
     setIsEditModalOpen(true);
@@ -36,7 +40,7 @@ export default function ProductionRoleCaptureStatus({
 
   return (
     <div className="flex flex-col items-center justify-center h-full w-36 sm:w-36 md:w-36 lg:w-36 xl:w-36">
-      <div className="border border-black bg-slate-700 h-[7.5%] w-full flex items-center justify-center truncate">
+      <div className="border border-black bg-slate-500 h-[7.5%] w-full flex items-center justify-center truncate">
         {production_role_abbreviation}
       </div>
       <div
