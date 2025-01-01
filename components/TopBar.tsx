@@ -1,4 +1,10 @@
-import { Filter, RefreshCcw } from "lucide-react";
+import {
+  Filter,
+  MessageCircle,
+  MessageCircleOff,
+  RefreshCcw,
+  X,
+} from "lucide-react";
 import ButtonWithTooltip from "@/components/ButtonWithTooltip";
 
 export default function TobBar() {
@@ -9,6 +15,11 @@ export default function TobBar() {
         <ButtonWithTooltip
           icon={Filter}
           tooltipText="Filter Production Roles"
+        />
+        <ButtonWithTooltip
+          icon={MessageCircle}
+          toggleIcon={MessageCircleOff}
+          tooltipText="Show/Hide Chat"
         />
       </div>
     </div>
