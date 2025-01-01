@@ -10,16 +10,18 @@ import {
 } from "./ui/tooltip";
 import { useState } from "react";
 
-type IconButtonWithTooltipProps = {
+type ButtonWithTooltipProps = {
   icon?: LucideIcon;
   toggleIcon?: LucideIcon;
   tooltipText: string;
+  toggleTooltipText?: string;
 };
 
-const IconButtonWithTooltip: React.FC<IconButtonWithTooltipProps> = ({
+const ButtonWithTooltip: React.FC<ButtonWithTooltipProps> = ({
   icon: Icon,
   toggleIcon: ToggleIcon,
   tooltipText,
+  toggleTooltipText,
 }) => {
   const [toggled, setToggled] = useState(false);
 
@@ -35,11 +37,13 @@ const IconButtonWithTooltip: React.FC<IconButtonWithTooltipProps> = ({
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <p>{tooltipText}</p>
+          <p>
+            {toggled && toggleTooltipText ? toggleTooltipText : tooltipText}
+          </p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );
 };
 
-export default IconButtonWithTooltip;
+export default ButtonWithTooltip;

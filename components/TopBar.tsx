@@ -3,14 +3,15 @@ import {
   MessageCircle,
   MessageCircleOff,
   RefreshCcw,
-  X,
+  Pen,
+  PenOff,
 } from "lucide-react";
 import ButtonWithTooltip from "@/components/ButtonWithTooltip";
 
 export default function TobBar() {
   return (
     <div className="bg-white dark:bg-sidebar shadow h-10 w-full">
-      <div className="flex mt-2 gap-2 ml-9">
+      <div className="flex mt-2 gap-2 ml-4">
         <ButtonWithTooltip icon={RefreshCcw} tooltipText="Refresh Stage" />
         <ButtonWithTooltip
           icon={Filter}
@@ -19,7 +20,14 @@ export default function TobBar() {
         <ButtonWithTooltip
           icon={MessageCircle}
           toggleIcon={MessageCircleOff}
-          tooltipText="Show/Hide Chat"
+          tooltipText="Show Feed"
+          toggleTooltipText="Hide Feed"
+        />
+        <ButtonWithTooltip
+          icon={Pen}
+          toggleIcon={PenOff}
+          tooltipText="Edit Mode"
+          toggleTooltipText="Write Mode"
         />
       </div>
     </div>
