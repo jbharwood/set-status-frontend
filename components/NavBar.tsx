@@ -1,7 +1,6 @@
 "use client";
 
 import { UserButton } from "@clerk/nextjs";
-import { ModeToggle } from "./ModeToggle";
 import { useClerkTheme } from "@/hooks/index";
 
 export default function NavBar() {
@@ -23,7 +22,7 @@ export default function NavBar() {
               Contact
             </a>
           </div>
-          <div className="mt-1.5">{/* <ModeToggle /> */}</div>
+          <div className="mt-1.5"></div>
           <div className="mt-2">
             <UserButton
               appearance={{

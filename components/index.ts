@@ -8,5 +8,7 @@ import { ChangeTheme } from "./ChangeTheme"
 import { AppSidebar } from "./AppSidebar"
 import Stages from "./Stages"
 import StagesSkeleton from "./StagesSkeleton"
+import TopBar from "./TopBar"
+import ButtonWithTooltip from "./ButtonWithTooltip"
 
-export { Chat, Inputs, Message, ProductionRoleCaptureStatus, NavBar, EditModal, ChangeTheme, AppSidebar, Stages, StagesSkeleton }  
+export { Chat, Inputs, Message, ProductionRoleCaptureStatus, NavBar, EditModal, ChangeTheme, AppSidebar, Stages, StagesSkeleton, TopBar, ButtonWithTooltip }  

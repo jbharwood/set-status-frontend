@@ -5,7 +5,6 @@ import {
   SignedOut,
 } from "@clerk/nextjs";
 import "./globals.css";
-import { NavBar } from "@/components/index";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { UserProvider } from "@/context/UserContext";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -37,7 +36,6 @@ export default async function RootLayout({
               <SignedIn>
                 <SidebarProvider defaultOpen={defaultOpen}>
                   <AppSidebar />
-                  {/* <NavBar /> */}
                   <SidebarTrigger />
                   {children}
                 </SidebarProvider>

@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ChevronDown,
   ChevronRight,
   ChevronsUpDown,
   Film,
@@ -42,6 +41,7 @@ import { ChangeTheme, Stages, StagesSkeleton } from "@/components/index";
 import { useCurrentUser } from "@/context/UserContext";
 import { UserButton, useClerk } from "@clerk/nextjs";
 import { useClerkTheme } from "@/hooks";
+import "@/app/globals.css";
 
 const items = [
   {
