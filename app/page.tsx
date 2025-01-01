@@ -9,22 +9,17 @@ import {
   EditModal,
   TopBar,
 } from "@/components/index";
-import {
-  CaptureStatus,
-  IMessage,
-  IProductionRoleCaptureStatus,
-} from "@/types/interfaces";
+import { IMessage, IProductionRoleCaptureStatus } from "@/types/interfaces";
 import { useUser } from "@clerk/nextjs";
-import axios from "axios";
 import { useCurrentUser } from "@/context/UserContext";
 import useSelectedProductionRoleCaptureStatusStore from "@/stores/useSelectedProductionRoleCaptureStatusStore";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getProductionRoleCaptureStatuses } from "@/apiRequests";
 
 const socket = io("http://localhost:3001");
 
 export default function Home() {
   const [chat, setChat] = useState<IMessage[]>([]);
-  const [productionRoleCaptureStatuses, setProductionRoleCaptureStatuses] =
-    useState<IProductionRoleCaptureStatus[]>([]);
   const { isSignedIn } = useUser();
   const { currentUser } = useCurrentUser();
   const selectedProductionRoleCaptureStatus =
@@ -32,14 +27,11 @@ export default function Home() {
       (state) => state.selectedProductionRoleCaptureStatus
     );
 
-  function updateProductionRoleCaptureStatus(
-    productionRoleCaptureStatus: IProductionRoleCaptureStatus
-  ) {
-    axios.put(
-      `${process.env.NEXT_PUBLIC_API_URL}/productionRoleCaptureStatuses/${productionRoleCaptureStatus.id}`,
-      productionRoleCaptureStatus
-    );
-  }
+  const queryClient = useQueryClient();
+  const productionRoleCaptureStatuses = useQuery({
+    queryKey: ["productionRoleCaptureStatuses"],
+    queryFn: getProductionRoleCaptureStatuses,
+  });
 
   useEffect(() => {
     if (currentUser) {
@@ -57,7 +49,8 @@ export default function Home() {
     });
 
     socket.on("get_production_role_capture_statuses", (data) => {
-      setProductionRoleCaptureStatuses(data);
+      const queryKey = [...data, data.id].filter(Boolean);
+      queryClient.invalidateQueries({ queryKey });
     });
 
     return () => {
@@ -65,38 +58,34 @@ export default function Home() {
       socket.off("join_room");
       socket.off("get_production_role_capture_statuses");
     };
-  });
+  }, [queryClient]);
 
   return (
-    <>
+    <main>
       {isSignedIn && currentUser && (
         <div className="h-screen w-screen flex flex-col bg-gradient-to-r from-green-300 to-green-400">
           <div className="flex-grow flex flex-col items-center justify-center overflow-auto">
             <TopBar />
             <div className="flex flex-row items-center justify-center w-full h-full p-2">
-              {productionRoleCaptureStatuses.map((prcs) => (
-                <ProductionRoleCaptureStatus
-                  key={prcs.id}
-                  productionRoleCaptureStatus={prcs}
-                />
-              ))}
+              {productionRoleCaptureStatuses.data?.map(
+                (prcs: IProductionRoleCaptureStatus) => (
+                  <ProductionRoleCaptureStatus
+                    key={prcs.id}
+                    productionRoleCaptureStatus={prcs}
+                  />
+                )
+              )}
             </div>
           </div>
           <div className="flex items-center justify-center w-full p-2">
             <div className="w-full bg-white dark:bg-slate-800 rounded-lg shadow p-2 flex flex-col space-y-3 h-56">
               <Chat chat={chat} />
               <Inputs socket={socket} />
-              {selectedProductionRoleCaptureStatus && (
-                <EditModal
-                  updateProductionRoleCaptureStatus={
-                    updateProductionRoleCaptureStatus
-                  }
-                />
-              )}
+              {selectedProductionRoleCaptureStatus && <EditModal />}
             </div>
           </div>
         </div>
       )}
-    </>
+    </main>
   );
 }

@@ -10,6 +10,7 @@ import { UserProvider } from "@/context/UserContext";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/index";
 import { cookies } from "next/headers";
+import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
 
 export default async function RootLayout({
   children,
@@ -29,18 +30,20 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <UserProvider>
-              <SignedOut>
-                <RedirectToSignIn />
-              </SignedOut>
-              <SignedIn>
-                <SidebarProvider defaultOpen={defaultOpen}>
-                  <AppSidebar />
-                  <SidebarTrigger />
-                  {children}
-                </SidebarProvider>
-              </SignedIn>
-            </UserProvider>
+            <ReactQueryProvider>
+              <UserProvider>
+                <SignedOut>
+                  <RedirectToSignIn />
+                </SignedOut>
+                <SignedIn>
+                  <SidebarProvider defaultOpen={defaultOpen}>
+                    <AppSidebar />
+                    <SidebarTrigger />
+                    {children}
+                  </SidebarProvider>
+                </SignedIn>
+              </UserProvider>
+            </ReactQueryProvider>
           </ThemeProvider>
         </body>
       </html>

@@ -1,13 +1,9 @@
-"use client";
-
-import axios from "axios";
 import {
   SidebarMenu,
   SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "./ui/sidebar";
-import { useEffect, useState } from "react";
 import { ILocation } from "@/types/interfaces";
 import {
   DropdownMenu,
@@ -16,24 +12,18 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Delete, Edit, MoreHorizontal } from "lucide-react";
+import { getStages } from "@/apiRequests";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Stages() {
-  const [stages, setStages] = useState<ILocation[]>([]);
-
-  async function fetchStages() {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/locations`
-    );
-    setStages(response.data);
-  }
-
-  useEffect(() => {
-    fetchStages();
-  }, []);
+  const stages = useQuery({
+    queryKey: ["stages"],
+    queryFn: getStages,
+  });
 
   return (
     <SidebarMenu>
-      {stages.map((stage) => (
+      {stages.data?.map((stage: ILocation) => (
         <SidebarMenuItem key={stage.id}>
           <SidebarMenuButton asChild>
             <a href={stage.name}>

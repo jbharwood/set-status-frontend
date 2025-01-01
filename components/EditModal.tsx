@@ -1,5 +1,6 @@
 "use client";
 
+import { updateProductionRoleCaptureStatus } from "@/apiRequests";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,19 +15,11 @@ import { captureStatusIdMap } from "@/lib/helpers";
 import useIsEditModalOpenStore from "@/stores/useIsEditModalOpenStore";
 import useSelectedCaptureStatusStore from "@/stores/useSelectedCaptureStatusStore";
 import useSelectedProductionRoleCaptureStatusStore from "@/stores/useSelectedProductionRoleCaptureStatusStore";
-import { IProductionRoleCaptureStatus } from "@/types/interfaces";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
-type EditModalProps = {
-  updateProductionRoleCaptureStatus: (
-    productionRoleCaptureStatus: IProductionRoleCaptureStatus
-  ) => void;
-};
-
-export default function EditModal({
-  updateProductionRoleCaptureStatus,
-}: EditModalProps) {
+export default function EditModal() {
   const isEditModalOpen = useIsEditModalOpenStore(
     (state) => state.isEditModalOpen
   );
@@ -50,13 +43,23 @@ export default function EditModal({
   const [notes, setNotes] = useState(
     selectedProductionRoleCaptureStatus?.notes
   );
+  const queryClient = useQueryClient();
+
+  const productionRoleCaptureStatusMutation = useMutation({
+    mutationFn: updateProductionRoleCaptureStatus,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["productionRoleCaptureStatuses"],
+      });
+    },
+  });
 
   function handleSubmit() {
     if (selectedProductionRoleCaptureStatus && selectedCaptureStatus) {
       const temp = { ...selectedProductionRoleCaptureStatus };
       temp.capture_status_id = captureStatusIdMap[selectedCaptureStatus];
       temp.notes = notes;
-      updateProductionRoleCaptureStatus(temp);
+      productionRoleCaptureStatusMutation.mutate(temp);
       setSelectedProductionRoleCaptureStatus(null);
       setIsEditModalOpen(false);
     }
@@ -110,9 +113,8 @@ export default function EditModal({
             type="submit"
             onClick={handleSubmit}
             disabled={
-              selectedProductionRoleCaptureStatus?.notes !== "" &&
-              selectedProductionRoleCaptureStatus
-                ? selectedProductionRoleCaptureStatus.notes === notes
+              selectedProductionRoleCaptureStatus?.notes !== ""
+                ? selectedProductionRoleCaptureStatus?.notes === notes
                 : false
             }
           >

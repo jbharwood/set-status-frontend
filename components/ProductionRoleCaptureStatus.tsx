@@ -40,7 +40,7 @@ export default function ProductionRoleCaptureStatus({
 
   return (
     <div className="flex flex-col items-center justify-center h-full w-36 sm:w-36 md:w-36 lg:w-36 xl:w-36">
-      <div className="border border-black bg-slate-500 h-[7.5%] w-full flex items-center justify-center truncate">
+      <div className="border border-black bg-slate-700 h-[7.5%] w-full flex items-center justify-center truncate">
         {production_role_abbreviation}
       </div>
       <div
