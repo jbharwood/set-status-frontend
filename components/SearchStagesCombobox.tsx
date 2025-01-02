@@ -25,29 +25,39 @@ import {
   useSocketStore,
 } from "@/stores/index";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IStage } from "@/types/interfaces";
 
 export default function SearchStagesCombobox() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
+
+  const stages = useQuery({
+    queryKey: ["stages", "list", { company_id: 1 }],
+    queryFn: () => getStages(1),
+  });
+  const setSelectedStageID = useSelectedStageIDStore(
+    (state) => state.setSelectedStageID
+  );
+  const selectedStageID = useSelectedStageIDStore(
+    (state) => state.selectedStageID
+  );
   const isSearchModalOpen = useIsSearchModalOpenStore(
     (state) => state.isSearchModalOpen
   );
   const setIsSearchModalOpen = useIsSearchModalOpenStore(
     (state) => state.setIsSearchModalOpen
   );
-  const selectedStageID = useSelectedStageIDStore(
-    (state) => state.selectedStageID
-  );
-  const setSelectedStageID = useSelectedStageIDStore(
-    (state) => state.setSelectedStageID
-  );
+
   const socket = useSocketStore((state) => state.socket);
-  const stages = useQuery({
-    queryKey: ["stages", "list", { company_id: 1 }],
-    queryFn: () => getStages(1),
-  });
+
+  useEffect(() => {
+    if (selectedStageID) {
+      setValue(
+        stages.data?.find((stage: IStage) => stage.id === selectedStageID)?.name
+      );
+    }
+  }, [selectedStageID]);
 
   return (
     <Popover open={isSearchModalOpen} onOpenChange={setIsSearchModalOpen}>

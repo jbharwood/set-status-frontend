@@ -14,22 +14,32 @@ import {
 import { Delete, Edit, MoreHorizontal } from "lucide-react";
 import { getStages } from "@/apiRequests";
 import { useQuery } from "@tanstack/react-query";
+import { useSelectedStageIDStore } from "@/stores";
 
 export default function Stages() {
   const stages = useQuery({
     queryKey: ["stages", "list", { company_id: 1 }],
     queryFn: () => getStages(1),
   });
+  const selectedStageID = useSelectedStageIDStore(
+    (state) => state.selectedStageID
+  );
+  const setSelectedStageID = useSelectedStageIDStore(
+    (state) => state.setSelectedStageID
+  );
 
   return (
     <SidebarMenu>
       {stages.data?.map((stage: IStage) => (
-        <SidebarMenuItem key={stage.id}>
-          <SidebarMenuButton asChild>
-            <a href={stage.name}>
-              {/* <item.icon /> */}
-              <span>{stage.name}</span>
-            </a>
+        <SidebarMenuItem
+          key={stage.id}
+          className={selectedStageID === stage.id ? "bg-accent" : ""}
+        >
+          <SidebarMenuButton
+            asChild
+            onClick={() => setSelectedStageID(stage.id)}
+          >
+            <span>{stage.name}</span>
           </SidebarMenuButton>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
