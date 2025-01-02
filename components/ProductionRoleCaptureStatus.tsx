@@ -8,6 +8,8 @@ import {
   useSelectedCaptureStatusStore,
   useSelectedProductionRoleCaptureStatusStore,
 } from "@/stores/index";
+import ButtonWithTooltip from "./ButtonWithTooltip";
+import { X } from "lucide-react";
 
 type ProductionCaptureStatusProps = {
   productionRoleCaptureStatus: IProductionRoleCaptureStatus;
@@ -42,8 +44,16 @@ export default function ProductionRoleCaptureStatus({
 
   return (
     <div className="flex flex-col items-center justify-center h-full w-36 sm:w-36 md:w-36 lg:w-36 xl:w-36">
-      <div className="border border-black bg-slate-700 h-[7.5%] w-full flex items-center justify-center truncate">
+      <div className="border border-black bg-slate-700 h-[7.5%] w-full flex items-center justify-center truncate flex-nowrap">
         {production_role_abbreviation}
+        <div className="ml-auto mt-0.5 justify-center">
+          <ButtonWithTooltip
+            icon={X}
+            tooltipText={`Hide ${production_role_abbreviation}`}
+            height="h-full"
+            width="w-1"
+          />
+        </div>
       </div>
       <div
         className={`border border-black ${capture_status_id === 1 ? "bg-green-500" : "bg-slate-500"} h-[30%] w-full cursor-pointer hover:bg-green-400`}

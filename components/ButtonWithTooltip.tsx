@@ -16,6 +16,8 @@ type ButtonWithTooltipProps = {
   tooltipText: string;
   toggleTooltipText?: string;
   onClick?: () => void;
+  width?: string;
+  height?: string;
 };
 
 const ButtonWithTooltip: React.FC<ButtonWithTooltipProps> = ({
@@ -24,6 +26,8 @@ const ButtonWithTooltip: React.FC<ButtonWithTooltipProps> = ({
   tooltipText,
   toggleTooltipText,
   onClick,
+  width,
+  height,
 }) => {
   const [toggled, setToggled] = useState(false);
 
@@ -32,7 +36,7 @@ const ButtonWithTooltip: React.FC<ButtonWithTooltipProps> = ({
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
-            className="w-1 h-5 font-size text-xs"
+            className={`${width} ${height} font-size text-xs`}
             onClick={() => {
               setToggled(!toggled);
               if (onClick) onClick();

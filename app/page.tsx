@@ -43,9 +43,6 @@ export default function Home() {
         user: user.fullName,
         room: selectedStageID,
       });
-    } else {
-      // socket.emit("leave_room");
-      // console.log("left room"), selectedStageID;
     }
   }, [user, selectedStageID]);
 
@@ -64,7 +61,6 @@ export default function Home() {
     });
 
     socket.on("leave_room", () => {
-      console.log("left room", selectedStageID);
       setChat([]);
     });
 
