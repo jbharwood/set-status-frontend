@@ -19,23 +19,31 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { useIsSearchModalOpenStore } from "@/stores/index";
+import {
+  useIsSearchModalOpenStore,
+  useSelectedStageIDStore,
+  useSocketStore,
+} from "@/stores/index";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { ILocation } from "@/types/interfaces";
 
-export default function SearchModal() {
+export default function SearchStagesCombobox() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
-
   const isSearchModalOpen = useIsSearchModalOpenStore(
     (state) => state.isSearchModalOpen
   );
-
   const setIsSearchModalOpen = useIsSearchModalOpenStore(
     (state) => state.setIsSearchModalOpen
   );
-
+  const selectedStageID = useSelectedStageIDStore(
+    (state) => state.selectedStageID
+  );
+  const setSelectedStageID = useSelectedStageIDStore(
+    (state) => state.setSelectedStageID
+  );
+  const socket = useSocketStore((state) => state.socket);
   const stages = useQuery({
     queryKey: ["stages", "list"],
     queryFn: getStages,
@@ -68,7 +76,14 @@ export default function SearchModal() {
                   key={stage.id}
                   value={stage.name}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
+                    socket?.emit("leave_room", selectedStageID);
+                    if (currentValue === value) {
+                      setValue("");
+                      setSelectedStageID(null);
+                    } else {
+                      setValue(currentValue);
+                      setSelectedStageID(stage.id);
+                    }
                     setOpen(false);
                   }}
                 >

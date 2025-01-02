@@ -1,6 +1,6 @@
 import React from "react";
 import { IMessage } from "../types/interfaces";
-import { useCurrentUser } from "@/context/UserContext";
+import { useUser } from "@clerk/nextjs";
 
 type MessageProps = {
   content: string;
@@ -8,27 +8,27 @@ type MessageProps = {
 };
 
 export default function Message({ content, type }: MessageProps) {
-  const { currentUser } = useCurrentUser();
+  const { user } = useUser();
 
   return (
     <div className="bg-slate-200/80 dark:bg-black/50 border-slate-200 rounded-md break-words mt-1">
       {type === "text" ? (
         <div className="flex gap-2 p-1">
           <img
-            src={currentUser?.image}
+            src={user?.imageUrl}
             alt="user"
             className="rounded-full h-6 w-6"
           />
-          {currentUser?.name} : {content}
+          {user?.fullName} : {content}
         </div>
       ) : (
         <div className="flex gap-2 p-1">
           <img
-            src={currentUser?.image}
+            src={user?.imageUrl}
             alt="user"
             className="rounded-full h-6 w-6"
           />
-          {currentUser?.name} :
+          {user?.fullName} :
           <img
             src={content}
             className="rounded-md"

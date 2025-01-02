@@ -2,10 +2,14 @@ import useIsEditModalOpenStore from "./useIsEditModalOpenStore";
 import useSelectedCaptureStatusStore from "./useSelectedCaptureStatusStore";
 import useSelectedProductionRoleCaptureStatusStore from "./useSelectedProductionRoleCaptureStatusStore";
 import useIsSearchModalOpenStore from "./useIsSearchModalOpenStore";
+import useSelectedStageIDStore from "./useSelectedStageIDStore";
+import useSocketStore from "./useSocket";
 
 export {
   useIsEditModalOpenStore,
   useSelectedCaptureStatusStore,
   useSelectedProductionRoleCaptureStatusStore,
-  useIsSearchModalOpenStore
-}
+  useIsSearchModalOpenStore,
+  useSelectedStageIDStore,
+  useSocketStore,
+};

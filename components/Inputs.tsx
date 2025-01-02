@@ -8,22 +8,22 @@ import { DefaultEventsMap } from "socket.io";
 import { IMessage } from "@/types/interfaces";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useCurrentUser } from "@/context/UserContext";
+import { useUser } from "@clerk/nextjs";
+import { useSelectedStageIDStore, useSocketStore } from "@/stores";
 
-type InputsProps = {
-  socket: Socket<DefaultEventsMap, DefaultEventsMap>;
-};
-
-export default function Inputs({ socket }: InputsProps) {
+export default function Inputs() {
   const [input, setInput] = useState("");
-  const { currentUser } = useCurrentUser();
-
+  const { user } = useUser();
   const uploadInput = useRef<HTMLInputElement>(null);
+  const selectedStageID = useSelectedStageIDStore(
+    (state) => state.selectedStageID
+  );
+  const socket = useSocketStore((state) => state.socket);
 
   function sendMessage() {
-    if (input && currentUser) {
-      const msg: IMessage = { content: input, type: "text", user: currentUser };
-      socket.emit("send_message", msg, currentUser.room);
+    if (input && user) {
+      const msg: IMessage = { content: input, type: "text", user: user };
+      socket?.emit("send_message", msg, selectedStageID);
       setInput("");
     } else {
       uploadInput.current?.click();
@@ -35,11 +35,11 @@ export default function Inputs({ socket }: InputsProps) {
     if (
       file &&
       (file.type === "image/jpeg" || file.type === "image/png") &&
-      currentUser
+      user
     ) {
       const img = URL.createObjectURL(file);
-      const msg: IMessage = { content: img, type: "image", user: currentUser };
-      socket.emit("send_message", msg, currentUser.room);
+      const msg: IMessage = { content: img, type: "image", user: user };
+      socket?.emit("send_message", msg, selectedStageID);
     }
   }
 

@@ -38,8 +38,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Suspense } from "react";
 import { ChangeTheme, Stages, StagesSkeleton } from "@/components/index";
-import { useCurrentUser } from "@/context/UserContext";
-import { UserButton, useClerk } from "@clerk/nextjs";
+import { UserButton, useClerk, useUser } from "@clerk/nextjs";
 import { useClerkTheme } from "@/hooks";
 import "@/app/globals.css";
 import IconWithTooltip from "./IconWithTooltip";
@@ -63,7 +62,7 @@ const items = [
 ];
 
 export function AppSidebar() {
-  const { currentUser } = useCurrentUser();
+  const { user } = useUser();
   const { clerkTheme } = useClerkTheme();
   const { signOut } = useClerk();
 
@@ -120,7 +119,7 @@ export function AppSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  {currentUser ? (
+                  {user ? (
                     <UserButton
                       appearance={{
                         baseTheme: clerkTheme,
@@ -130,9 +129,9 @@ export function AppSidebar() {
                     <User2 />
                   )}
                   <div className="flex-row">
-                    <div className="font-bold">{currentUser?.name}</div>
+                    <div className="font-bold">{user?.fullName}</div>
                     <div className="text-[.7rem]/[1rem]">
-                      {currentUser?.email}
+                      {user?.primaryEmailAddress?.emailAddress}
                     </div>
                   </div>
                   <ChevronsUpDown className="ml-auto" />
