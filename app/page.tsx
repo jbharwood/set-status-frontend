@@ -26,10 +26,10 @@ export default function Home() {
     useSelectedProductionRoleCaptureStatusStore(
       (state) => state.selectedProductionRoleCaptureStatus
     );
-
   const queryClient = useQueryClient();
+
   const productionRoleCaptureStatuses = useQuery({
-    queryKey: ["productionRoleCaptureStatuses"],
+    queryKey: ["productionRoleCaptureStatuses", "list"],
     queryFn: getProductionRoleCaptureStatuses,
   });
 
@@ -63,7 +63,7 @@ export default function Home() {
   return (
     <main>
       {isSignedIn && currentUser && (
-        <div className="h-screen w-screen flex flex-col bg-gradient-to-r from-green-300 to-green-400">
+        <div className="h-screen w-[99vw] xl:w-[98vw] flex flex-col bg-gradient-to-r from-green-300 to-green-400">
           <div className="flex-grow flex flex-col items-center justify-center overflow-auto">
             <TopBar />
             <div className="flex flex-row items-center justify-center w-full h-full p-2">

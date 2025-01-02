@@ -12,7 +12,10 @@ export default function TobBar() {
   return (
     <div className="bg-white dark:bg-sidebar shadow h-10 w-full">
       <div className="flex mt-2 gap-2 ml-4">
-        <ButtonWithTooltip icon={RefreshCcw} tooltipText="Refresh Stage" />
+        <ButtonWithTooltip
+          icon={RefreshCcw}
+          tooltipText="Reset Stage Statuses"
+        />
         <ButtonWithTooltip
           icon={Filter}
           tooltipText="Filter Production Roles"
