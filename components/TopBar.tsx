@@ -21,7 +21,7 @@ export default function TobBar() {
           <SearchStagesCombobox />
         </div>
         {selectedStageID && (
-          <div className="flex gap-2 mt-2">
+          <div className="flex gap-2 mt-2.5">
             <ButtonWithTooltip
               icon={RefreshCcw}
               tooltipText="Reset Stage Statuses"

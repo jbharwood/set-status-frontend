@@ -4,7 +4,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "./ui/sidebar";
-import { ILocation } from "@/types/interfaces";
+import { IStage } from "@/types/interfaces";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,13 +17,13 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function Stages() {
   const stages = useQuery({
-    queryKey: ["stages", "list"],
-    queryFn: getStages,
+    queryKey: ["stages", "list", { company_id: 1 }],
+    queryFn: () => getStages(1),
   });
 
   return (
     <SidebarMenu>
-      {stages.data?.map((stage: ILocation) => (
+      {stages.data?.map((stage: IStage) => (
         <SidebarMenuItem key={stage.id}>
           <SidebarMenuButton asChild>
             <a href={stage.name}>

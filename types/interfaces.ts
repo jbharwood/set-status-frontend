@@ -1,7 +1,9 @@
+import { User } from "@clerk/nextjs/server";
+
 export interface IMessage {
   content: string;
   type: "text" | "image" | "server";
-  user: IUser;
+  user: User;
 }
 
 export type CaptureStatus = "Red" | "Yellow" | "Green" | null;
@@ -12,8 +14,9 @@ export interface IProductionRoleCaptureStatus {
   production_role_name: string;
   production_role_abbreviation: string;
   capture_status_id: number;
-  location_id: number;
+  stage_id: number;
   notes?: string;
+  is_active: boolean;
   created_by: string;
   create_time: string;
   last_modified_by: string;
@@ -26,23 +29,12 @@ export interface IProductionRole {
   abbreviation: string;
 }
 
-export interface ILocation {
+export interface IStage {
   id: number;
   name: string;
+  company_id: number;
   street_address: string;
   city: string;
   state: string;
   country: string;
-}
-
-export interface IUser {
-  id?: string;
-  name?: string | null;
-  current?: {
-    name?: string, 
-    id?: string
-  }
-  room?: string;
-  image?: string;
-  email?: string;
 }

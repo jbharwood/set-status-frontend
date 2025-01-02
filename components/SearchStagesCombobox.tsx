@@ -26,7 +26,7 @@ import {
 } from "@/stores/index";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { ILocation } from "@/types/interfaces";
+import { IStage } from "@/types/interfaces";
 
 export default function SearchStagesCombobox() {
   const [open, setOpen] = useState(false);
@@ -45,8 +45,8 @@ export default function SearchStagesCombobox() {
   );
   const socket = useSocketStore((state) => state.socket);
   const stages = useQuery({
-    queryKey: ["stages", "list"],
-    queryFn: getStages,
+    queryKey: ["stages", "list", { company_id: 1 }],
+    queryFn: () => getStages(1),
   });
 
   return (
@@ -59,8 +59,7 @@ export default function SearchStagesCombobox() {
           className="w-[200px] h-7 justify-between mt-0.5"
         >
           {value
-            ? stages.data?.find((stage: ILocation) => stage.name === value)
-                ?.name
+            ? stages.data?.find((stage: IStage) => stage.name === value)?.name
             : "Select Stage..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -71,7 +70,7 @@ export default function SearchStagesCombobox() {
           <CommandList>
             <CommandEmpty>No stage found.</CommandEmpty>
             <CommandGroup>
-              {stages.data?.map((stage: ILocation) => (
+              {stages.data?.map((stage: IStage) => (
                 <CommandItem
                   key={stage.id}
                   value={stage.name}

@@ -45,7 +45,7 @@ export default function ProductionRoleCaptureStatus({
   return (
     <div className="flex flex-col items-center justify-center h-full w-36 sm:w-36 md:w-36 lg:w-36 xl:w-36">
       <div className="border border-black bg-slate-700 h-[7.5%] w-full flex items-center justify-center truncate flex-nowrap">
-        {production_role_abbreviation}
+        <div className="ml-1">{production_role_abbreviation}</div>
         <div className="ml-auto mt-0.5 justify-center">
           <ButtonWithTooltip
             icon={X}
