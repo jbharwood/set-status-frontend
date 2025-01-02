@@ -10,5 +10,6 @@ import Stages from "./Stages"
 import StagesSkeleton from "./StagesSkeleton"
 import TopBar from "./TopBar"
 import ButtonWithTooltip from "./ButtonWithTooltip"
+import ButtonWithCommand from "./ButtonWithCommand"
 
-export { Chat, Inputs, Message, ProductionRoleCaptureStatus, NavBar, EditModal, ChangeTheme, AppSidebar, Stages, StagesSkeleton, TopBar, ButtonWithTooltip }  
+export { Chat, Inputs, Message, ProductionRoleCaptureStatus, NavBar, EditModal, ChangeTheme, AppSidebar, Stages, StagesSkeleton, TopBar, ButtonWithTooltip, ButtonWithCommand }  

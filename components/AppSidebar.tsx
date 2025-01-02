@@ -42,6 +42,7 @@ import { useCurrentUser } from "@/context/UserContext";
 import { UserButton, useClerk } from "@clerk/nextjs";
 import { useClerkTheme } from "@/hooks";
 import "@/app/globals.css";
+import IconWithTooltip from "./IconWithTooltip";
 
 const items = [
   {
@@ -50,7 +51,7 @@ const items = [
     icon: Home,
   },
   {
-    title: "Search",
+    title: "Search Stages",
     url: "#",
     icon: Search,
   },
@@ -94,8 +95,8 @@ export function AppSidebar() {
         <SidebarSeparator />
         <Collapsible defaultOpen className="group/collapsible">
           <SidebarGroup>
-            <SidebarGroupAction className="mr-6">
-              <Plus /> <span className="sr-only">Add Stage</span>
+            <SidebarGroupAction className="mr-6 gap-1">
+              <IconWithTooltip icon={Plus} tooltipText="Add Stage" />
             </SidebarGroupAction>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger>
