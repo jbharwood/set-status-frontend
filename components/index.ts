@@ -11,6 +11,7 @@ import StagesSkeleton from "./StagesSkeleton"
 import TopBar from "./TopBar"
 import ButtonWithTooltip from "./ButtonWithTooltip"
 import SearchStagesCombobox from "./SearchStagesCombobox"
+import ProductionRoleCaptureStatuses from "./ProductionRoleCaptureStatuses"
 
 export { 
   Chat, 
@@ -26,4 +27,5 @@ export {
   TopBar, 
   ButtonWithTooltip, 
   SearchStagesCombobox,
+  ProductionRoleCaptureStatuses
 }  

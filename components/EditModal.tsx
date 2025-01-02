@@ -68,7 +68,6 @@ export default function EditModal() {
       const temp = { ...selectedProductionRoleCaptureStatus };
       temp.capture_status_id = captureStatusIdMap[selectedCaptureStatus];
       temp.notes = data.notes;
-      console.log("Submitting data:", temp); // Debugging log
       productionRoleCaptureStatusMutation.mutate(temp);
       setSelectedProductionRoleCaptureStatus(null);
       setIsEditModalOpen(false);
