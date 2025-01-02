@@ -12,9 +12,11 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { captureStatusIdMap } from "@/lib/helpers";
-import useIsEditModalOpenStore from "@/stores/useIsEditModalOpenStore";
-import useSelectedCaptureStatusStore from "@/stores/useSelectedCaptureStatusStore";
-import useSelectedProductionRoleCaptureStatusStore from "@/stores/useSelectedProductionRoleCaptureStatusStore";
+import {
+  useIsEditModalOpenStore,
+  useSelectedCaptureStatusStore,
+  useSelectedProductionRoleCaptureStatusStore,
+} from "@/stores/index";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";

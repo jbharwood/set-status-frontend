@@ -3,9 +3,11 @@ import {
   CaptureStatus,
   IProductionRoleCaptureStatus,
 } from "@/types/interfaces";
-import useIsEditModalOpenStore from "@/stores/useIsEditModalOpenStore";
-import useSelectedCaptureStatusStore from "@/stores/useSelectedCaptureStatusStore";
-import useSelectedProductionRoleCaptureStatusStore from "@/stores/useSelectedProductionRoleCaptureStatusStore";
+import {
+  useIsEditModalOpenStore,
+  useSelectedCaptureStatusStore,
+  useSelectedProductionRoleCaptureStatusStore,
+} from "@/stores/index";
 
 type ProductionCaptureStatusProps = {
   productionRoleCaptureStatus: IProductionRoleCaptureStatus;

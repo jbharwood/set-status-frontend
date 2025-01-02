@@ -12,7 +12,7 @@ import {
 import { IMessage, IProductionRoleCaptureStatus } from "@/types/interfaces";
 import { useUser } from "@clerk/nextjs";
 import { useCurrentUser } from "@/context/UserContext";
-import useSelectedProductionRoleCaptureStatusStore from "@/stores/useSelectedProductionRoleCaptureStatusStore";
+import { useSelectedProductionRoleCaptureStatusStore } from "@/stores/index";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getProductionRoleCaptureStatuses } from "@/apiRequests";
 

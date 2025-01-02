@@ -17,7 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function Stages() {
   const stages = useQuery({
-    queryKey: ["stages"],
+    queryKey: ["stages", "list"],
     queryFn: getStages,
   });
 
