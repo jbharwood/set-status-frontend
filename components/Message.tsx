@@ -11,7 +11,7 @@ export default function Message({ content, type }: MessageProps) {
   const { currentUser } = useCurrentUser();
 
   return (
-    <div className="bg-slate-200 dark:bg-black border-slate-200 rounded-md break-words mt-1">
+    <div className="bg-slate-200/80 dark:bg-black/50 border-slate-200 rounded-md break-words mt-1">
       {type === "text" ? (
         <div className="flex gap-2 p-1">
           <img
