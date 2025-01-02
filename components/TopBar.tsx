@@ -30,7 +30,7 @@ export default function TobBar() {
           icon={Pen}
           toggleIcon={PenOff}
           tooltipText="Edit Mode"
-          toggleTooltipText="Write Mode"
+          toggleTooltipText="Read Mode"
         />
       </div>
     </div>
