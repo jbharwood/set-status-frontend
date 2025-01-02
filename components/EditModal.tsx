@@ -17,7 +17,8 @@ import useSelectedCaptureStatusStore from "@/stores/useSelectedCaptureStatusStor
 import useSelectedProductionRoleCaptureStatusStore from "@/stores/useSelectedProductionRoleCaptureStatusStore";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useRef } from "react";
+import { useForm, Controller } from "react-hook-form";
 
 export default function EditModal() {
   const isEditModalOpen = useIsEditModalOpenStore(
@@ -40,10 +41,16 @@ export default function EditModal() {
     useSelectedProductionRoleCaptureStatusStore(
       (state) => state.setSelectedProductionRoleCaptureStatus
     );
-  const [notes, setNotes] = useState(
-    selectedProductionRoleCaptureStatus?.notes
-  );
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const queryClient = useQueryClient();
+
+  const { control, handleSubmit, watch, reset } = useForm({
+    defaultValues: {
+      notes: selectedProductionRoleCaptureStatus?.notes || "",
+    },
+  });
+
+  const watchedNotes = watch("notes");
 
   const productionRoleCaptureStatusMutation = useMutation({
     mutationFn: updateProductionRoleCaptureStatus,
@@ -54,14 +61,16 @@ export default function EditModal() {
     },
   });
 
-  function handleSubmit() {
+  function onSubmit(data: { notes: string }) {
     if (selectedProductionRoleCaptureStatus && selectedCaptureStatus) {
       const temp = { ...selectedProductionRoleCaptureStatus };
       temp.capture_status_id = captureStatusIdMap[selectedCaptureStatus];
-      temp.notes = notes;
+      temp.notes = data.notes;
+      console.log("Submitting data:", temp); // Debugging log
       productionRoleCaptureStatusMutation.mutate(temp);
       setSelectedProductionRoleCaptureStatus(null);
       setIsEditModalOpen(false);
+      reset();
     }
   }
 
@@ -72,7 +81,7 @@ export default function EditModal() {
         setIsEditModalOpen(false);
         setSelectedProductionRoleCaptureStatus(null);
         setSelectedCaptureStatus(null);
-        setNotes("");
+        reset();
       }}
     >
       <DialogContent className="sm:max-w-[425px]">
@@ -92,35 +101,43 @@ export default function EditModal() {
             Edit Production Role Capture Status
           </DialogDescription>
         </VisuallyHidden.Root>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-3 items-center gap-4">
-            <Textarea
-              ref={(ref: HTMLTextAreaElement) => ref && ref.focus()}
-              onFocus={(e) =>
-                e.currentTarget.setSelectionRange(
-                  e.currentTarget.value.length,
-                  e.currentTarget.value.length
-                )
-              }
-              className={`col-span-3 w-full capture-status-border ${selectedCaptureStatus?.toLowerCase()}`}
-              defaultValue={selectedProductionRoleCaptureStatus?.notes}
-              onChange={(e) => setNotes(e.target.value)}
-            />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-3 items-center gap-4">
+              <Controller
+                name="notes"
+                control={control}
+                render={({ field }) => (
+                  <Textarea
+                    {...field}
+                    ref={(e) => {
+                      field.ref(e);
+                      inputRef.current = e;
+                    }}
+                    onFocus={(e) =>
+                      e.currentTarget.setSelectionRange(
+                        e.currentTarget.value.length,
+                        e.currentTarget.value.length
+                      )
+                    }
+                    className={`col-span-3 w-full capture-status-border ${selectedCaptureStatus?.toLowerCase()}`}
+                  />
+                )}
+              />
+            </div>
           </div>
-        </div>
-        <DialogFooter>
-          <Button
-            type="submit"
-            onClick={handleSubmit}
-            disabled={
-              selectedProductionRoleCaptureStatus?.notes !== ""
-                ? selectedProductionRoleCaptureStatus?.notes === notes
-                : false
-            }
-          >
-            Save
-          </Button>
-        </DialogFooter>
+          <DialogFooter>
+            <Button
+              type="submit"
+              disabled={
+                selectedProductionRoleCaptureStatus?.notes !== "" &&
+                watchedNotes === selectedProductionRoleCaptureStatus?.notes
+              }
+            >
+              Save
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );
