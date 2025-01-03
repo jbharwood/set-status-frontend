@@ -112,28 +112,30 @@ export default function TobBar() {
               onClick={() => setIsEditMode(!isEditMode)}
             />
             <ButtonWithTooltip
-              icon={Notebook}
-              toggleIcon={NotebookPen}
-              tooltipText="Capture Status Notes Disabled"
-              toggleTooltipText="Capture Status Notes Enabled"
-              width="w-1"
-              height="h-5"
-              onClick={() => setIsNotesEnabled(!isNotesEnabled)}
-            />
-            <ButtonWithTooltip
               icon={Filter}
               tooltipText="Filter Production Roles"
               width="w-1"
               height="h-5"
             />
             {isEditMode && (
-              <ButtonWithTooltip
-                icon={RefreshCcw}
-                tooltipText="Reset Stage Statuses"
-                width="w-1"
-                height="h-5"
-                onClick={handleResetStageStatuses}
-              />
+              <>
+                <ButtonWithTooltip
+                  icon={Notebook}
+                  toggleIcon={NotebookPen}
+                  tooltipText="Capture Status Notes Disabled"
+                  toggleTooltipText="Capture Status Notes Enabled"
+                  width="w-1"
+                  height="h-5"
+                  onClick={() => setIsNotesEnabled(!isNotesEnabled)}
+                />
+                <ButtonWithTooltip
+                  icon={RefreshCcw}
+                  tooltipText="Reset Stage Statuses"
+                  width="w-1"
+                  height="h-5"
+                  onClick={handleResetStageStatuses}
+                />
+              </>
             )}
           </div>
         )}

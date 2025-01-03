@@ -53,27 +53,29 @@ export default function ProductionRoleCaptureStatus({
   function handleCaptureStatusClick(captureStatus: CaptureStatus) {
     const temp = { ...productionRoleCaptureStatus };
 
-    if (!isNotesEnabled && captureStatus) {
-      temp.capture_status_id = captureStatusIdMap[captureStatus];
-      temp.notes = notes ? notes : `Production Role Capture Status updated`;
-      productionRoleCaptureStatusMutation.mutate(temp);
-    } else if (captureStatus) {
-      temp.notes =
-        captureStatus &&
-        capture_status_id === captureStatusIdMap[captureStatus] &&
-        notes !== "Production Role Capture Status updated"
-          ? notes
-          : "";
+    if (isEditMode) {
+      if (!isNotesEnabled && captureStatus) {
+        temp.capture_status_id = captureStatusIdMap[captureStatus];
+        temp.notes = notes ? notes : `Production Role Capture Status updated`;
+        productionRoleCaptureStatusMutation.mutate(temp);
+      } else if (captureStatus) {
+        temp.notes =
+          captureStatus &&
+          capture_status_id === captureStatusIdMap[captureStatus] &&
+          notes !== "Production Role Capture Status updated"
+            ? notes
+            : "";
 
-      setEditModalEvent({
-        productionRoleCaptureStatus: temp,
-        captureStatus: captureStatus,
-        cb: (prcs) => {
-          if (prcs) {
-            productionRoleCaptureStatusMutation.mutate(prcs);
-          }
-        },
-      });
+        setEditModalEvent({
+          productionRoleCaptureStatus: temp,
+          captureStatus: captureStatus,
+          cb: (prcs) => {
+            if (prcs) {
+              productionRoleCaptureStatusMutation.mutate(prcs);
+            }
+          },
+        });
+      }
     }
   }
 
@@ -110,15 +112,15 @@ export default function ProductionRoleCaptureStatus({
         )}
       </div>
       <div
-        className={`border border-black ${capture_status_id === 1 ? "bg-green-500" : "bg-slate-500"} h-[30%] w-full cursor-pointer hover:bg-green-400`}
+        className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${capture_status_id === 1 ? "bg-green-500" : "bg-slate-500"} h-[30%] w-full hover:bg-green-400`}
         onClick={() => handleCaptureStatusClick("Green")}
       />
       <div
-        className={`border border-black ${capture_status_id === 2 ? "bg-yellow-500" : "bg-slate-500"} h-[30%] w-full cursor-pointer hover:bg-yellow-400`}
+        className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${capture_status_id === 2 ? "bg-yellow-500" : "bg-slate-500"} h-[30%] w-full hover:bg-yellow-400`}
         onClick={() => handleCaptureStatusClick("Yellow")}
       />
       <div
-        className={`border border-black ${capture_status_id === 3 ? "bg-red-500" : "bg-slate-500"} h-[30%] w-full cursor-pointer hover:bg-red-400`}
+        className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${capture_status_id === 3 ? "bg-red-500" : "bg-slate-500"} h-[30%] w-full hover:bg-red-400`}
         onClick={() => handleCaptureStatusClick("Red")}
       />
       <div
