@@ -11,7 +11,8 @@ import {
   useIsShowChatStore,
   useSelectedStageIDStore,
   useIsEditModeStore,
-} from "@/stores";
+  useNotifyModalEventStore,
+} from "@/stores/index";
 import {
   getProductionRoleCaptureStatuses,
   updateProductionRoleCaptureStatus,
@@ -27,6 +28,9 @@ export default function TobBar() {
   const setIsShowChat = useIsShowChatStore((state) => state.setIsShowChat);
   const isEditMode = useIsEditModeStore((state) => state.isEditMode);
   const setIsEditMode = useIsEditModeStore((state) => state.setIsEditMode);
+  const setNotifyModalEvent = useNotifyModalEventStore(
+    (state) => state.setNotifyModalEvent
+  );
 
   const queryClient = useQueryClient();
   const productionRoleCaptureStatusMutation = useMutation({
@@ -37,6 +41,7 @@ export default function TobBar() {
       });
     },
   });
+
   const productionRoleCaptureStatuses = useQuery({
     queryKey: [
       "productionRoleCaptureStatuses",
@@ -54,15 +59,35 @@ export default function TobBar() {
   });
 
   const handleResetStageStatuses = () => {
-    productionRoleCaptureStatuses.data?.forEach(
-      (prcs: IProductionRoleCaptureStatus) => {
-        if (prcs.capture_status_id !== 2) {
-          const temp = { ...prcs };
-          temp.capture_status_id = 2;
-          productionRoleCaptureStatusMutation.mutate(temp);
-        }
-      }
-    );
+    setNotifyModalEvent({
+      eventName: "Reset Stage Statuses",
+      eventPrompt:
+        "Are you sure you want to reset all stage statuses to yellow status?",
+      cb: () => {
+        productionRoleCaptureStatuses.data?.forEach(
+          (prcs: IProductionRoleCaptureStatus) => {
+            if (prcs.capture_status_id !== 2) {
+              const temp = { ...prcs };
+              temp.capture_status_id = 2;
+              productionRoleCaptureStatusMutation.mutate(temp);
+            }
+          }
+        );
+      },
+    });
+
+    // Call the callback after setting the notify modal
+    // const { cb } = useNotifyModalEventStore.getState().notifyModal;
+    // if (cb) cb();
+    // productionRoleCaptureStatuses.data?.forEach(
+    //   (prcs: IProductionRoleCaptureStatus) => {
+    //     if (prcs.capture_status_id !== 2) {
+    //       const temp = { ...prcs };
+    //       temp.capture_status_id = 2;
+    //       productionRoleCaptureStatusMutation.mutate(temp);
+    //     }
+    //   }
+    // );
   };
 
   return (

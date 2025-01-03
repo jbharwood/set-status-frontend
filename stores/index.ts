@@ -6,6 +6,7 @@ import useSelectedStageIDStore from "./useSelectedStageIDStore";
 import useSocketStore from "./useSocket";
 import useIsShowChatStore from "./useIsShowChatStore";
 import useIsEditModeStore from "./useIsEditModeStore";
+import useNotifyModalEventStore from "./useNotifyModalEventStore";
 
 export {
   useIsEditModalOpenStore,
@@ -16,4 +17,5 @@ export {
   useSocketStore,
   useIsShowChatStore,
   useIsEditModeStore,
+  useNotifyModalEventStore,
 };

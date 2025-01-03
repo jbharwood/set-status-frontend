@@ -7,6 +7,7 @@ import {
   useIsEditModalOpenStore,
   useIsEditModeStore,
   useIsShowChatStore,
+  useNotifyModalEventStore,
   useSelectedCaptureStatusStore,
   useSelectedProductionRoleCaptureStatusStore,
 } from "@/stores/index";
@@ -22,8 +23,12 @@ type ProductionCaptureStatusProps = {
 export default function ProductionRoleCaptureStatus({
   productionRoleCaptureStatus,
 }: ProductionCaptureStatusProps) {
-  const { production_role_abbreviation, capture_status_id, notes } =
-    productionRoleCaptureStatus;
+  const {
+    production_role_abbreviation,
+    production_role_name,
+    capture_status_id,
+    notes,
+  } = productionRoleCaptureStatus;
   const setIsEditModalOpen = useIsEditModalOpenStore(
     (state) => state.setIsEditModalOpen
   );
@@ -36,6 +41,9 @@ export default function ProductionRoleCaptureStatus({
     );
   const isShowChat = useIsShowChatStore((state) => state.isShowChat);
   const isEditMode = useIsEditModeStore((state) => state.isEditMode);
+  const setNotifyModalEvent = useNotifyModalEventStore(
+    (state) => state.setNotifyModalEvent
+  );
 
   const queryClient = useQueryClient();
   const productionRoleCaptureStatusMutation = useMutation({
@@ -60,10 +68,16 @@ export default function ProductionRoleCaptureStatus({
 
   function handleHide(
     productionRoleCaptureStatus: IProductionRoleCaptureStatus
-  ): void {
-    const temp = { ...productionRoleCaptureStatus };
-    temp.is_active = false;
-    productionRoleCaptureStatusMutation.mutate(temp);
+  ) {
+    setNotifyModalEvent({
+      eventName: `Hide ${production_role_name}`,
+      eventPrompt: `Are you sure you want to hide ${production_role_name}?`,
+      cb: () => {
+        const temp = { ...productionRoleCaptureStatus };
+        temp.is_active = false;
+        productionRoleCaptureStatusMutation.mutate(temp);
+      },
+    });
   }
 
   return (

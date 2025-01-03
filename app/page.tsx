@@ -13,12 +13,14 @@ import { IMessage } from "@/types/interfaces";
 import { useUser } from "@clerk/nextjs";
 import {
   useIsEditModeStore,
+  useNotifyModalEventStore,
   useIsShowChatStore,
   useSelectedProductionRoleCaptureStatusStore,
   useSelectedStageIDStore,
   useSocketStore,
 } from "@/stores/index";
 import { useQueryClient } from "@tanstack/react-query";
+import NotifyModal from "@/components/NotifyModal";
 
 const socket = io("http://localhost:3001");
 
@@ -35,6 +37,9 @@ export default function Home() {
   const isShowChat = useIsShowChatStore((state) => state.isShowChat);
   const isEditMode = useIsEditModeStore((state) => state.isEditMode);
   const setSocket = useSocketStore((state) => state.setSocket);
+  const notifyModalEvent = useNotifyModalEventStore(
+    (state) => state.notifyModalEvent
+  );
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -94,6 +99,7 @@ export default function Home() {
                   </div>
                 )}
                 {selectedProductionRoleCaptureStatus && <EditModal />}
+                {notifyModalEvent && <NotifyModal />}
               </div>
             </>
           )}
