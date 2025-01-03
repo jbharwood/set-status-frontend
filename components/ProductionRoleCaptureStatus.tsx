@@ -4,12 +4,11 @@ import {
   IProductionRoleCaptureStatus,
 } from "@/types/interfaces";
 import {
-  useIsEditModalOpenStore,
+  useIsNotesEnabledStore,
   useIsEditModeStore,
   useIsShowChatStore,
   useNotifyModalEventStore,
-  useSelectedCaptureStatusStore,
-  useSelectedProductionRoleCaptureStatusStore,
+  useEditModalEventStore,
 } from "@/stores/index";
 import ButtonWithTooltip from "./ButtonWithTooltip";
 import { X } from "lucide-react";
@@ -29,20 +28,16 @@ export default function ProductionRoleCaptureStatus({
     capture_status_id,
     notes,
   } = productionRoleCaptureStatus;
-  const setIsEditModalOpen = useIsEditModalOpenStore(
-    (state) => state.setIsEditModalOpen
+  const isNotesEnabled = useIsNotesEnabledStore(
+    (state) => state.isNotesEnabled
   );
-  const setSelectedCaptureStatus = useSelectedCaptureStatusStore(
-    (state) => state.setSelectedCaptureStatus
-  );
-  const setSelectedProductionRoleCaptureStatus =
-    useSelectedProductionRoleCaptureStatusStore(
-      (state) => state.setSelectedProductionRoleCaptureStatus
-    );
   const isShowChat = useIsShowChatStore((state) => state.isShowChat);
   const isEditMode = useIsEditModeStore((state) => state.isEditMode);
   const setNotifyModalEvent = useNotifyModalEventStore(
     (state) => state.setNotifyModalEvent
+  );
+  const setEditModalEvent = useEditModalEventStore(
+    (state) => state.setEditModalEvent
   );
 
   const queryClient = useQueryClient();
@@ -56,14 +51,30 @@ export default function ProductionRoleCaptureStatus({
   });
 
   function handleCaptureStatusClick(captureStatus: CaptureStatus) {
-    setIsEditModalOpen(true);
     const temp = { ...productionRoleCaptureStatus };
-    temp.notes =
-      captureStatus && capture_status_id === captureStatusIdMap[captureStatus]
-        ? notes
-        : "";
-    setSelectedProductionRoleCaptureStatus(temp);
-    setSelectedCaptureStatus(captureStatus);
+
+    if (!isNotesEnabled && captureStatus) {
+      temp.capture_status_id = captureStatusIdMap[captureStatus];
+      temp.notes = notes ? notes : `Production Role Capture Status updated`;
+      productionRoleCaptureStatusMutation.mutate(temp);
+    } else if (captureStatus) {
+      temp.notes =
+        captureStatus &&
+        capture_status_id === captureStatusIdMap[captureStatus] &&
+        notes !== "Production Role Capture Status updated"
+          ? notes
+          : "";
+
+      setEditModalEvent({
+        productionRoleCaptureStatus: temp,
+        captureStatus: captureStatus,
+        cb: (prcs) => {
+          if (prcs) {
+            productionRoleCaptureStatusMutation.mutate(prcs);
+          }
+        },
+      });
+    }
   }
 
   function handleHide(
@@ -83,7 +94,7 @@ export default function ProductionRoleCaptureStatus({
   return (
     <div className="flex flex-col items-center justify-center h-full w-36 sm:w-36 md:w-36 lg:w-36 xl:w-36">
       <div className="border border-black bg-slate-700 h-[7.5%] w-full flex items-center justify-center truncate flex-nowrap">
-        <div className={`${isEditMode ? "ml-1" : ""}`}>
+        <div className={`truncate ${isEditMode ? "ml-1" : ""}`}>
           {production_role_abbreviation}
         </div>
         {isEditMode && (
@@ -111,7 +122,7 @@ export default function ProductionRoleCaptureStatus({
         onClick={() => handleCaptureStatusClick("Red")}
       />
       <div
-        className={`border border-black bg-slate-800/80 ${isShowChat ? "h-[30%]" : "h-[70%]"} w-full text-center`}
+        className={`border border-black bg-slate-800/80 ${isShowChat ? "h-[30%]" : "h-[70%]"} w-full text-center overflow-auto p-1`}
       >
         {notes}
       </div>

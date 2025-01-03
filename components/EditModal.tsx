@@ -1,6 +1,5 @@
 "use client";
 
-import { updateProductionRoleCaptureStatus } from "@/apiRequests";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,87 +11,74 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { captureStatusIdMap } from "@/lib/helpers";
-import {
-  useIsEditModalOpenStore,
-  useSelectedCaptureStatusStore,
-  useSelectedProductionRoleCaptureStatusStore,
-} from "@/stores/index";
+import { useEditModalEventStore } from "@/stores/index";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 export default function EditModal() {
-  const isEditModalOpen = useIsEditModalOpenStore(
-    (state) => state.isEditModalOpen
+  const editModalEvent = useEditModalEventStore(
+    (state) => state.editModalEvent
   );
-  const setIsEditModalOpen = useIsEditModalOpenStore(
-    (state) => state.setIsEditModalOpen
+  const setEditModalEvent = useEditModalEventStore(
+    (state) => state.setEditModalEvent
   );
-  const selectedCaptureStatus = useSelectedCaptureStatusStore(
-    (state) => state.selectedCaptureStatus
-  );
-  const setSelectedCaptureStatus = useSelectedCaptureStatusStore(
-    (state) => state.setSelectedCaptureStatus
-  );
-  const selectedProductionRoleCaptureStatus =
-    useSelectedProductionRoleCaptureStatusStore(
-      (state) => state.selectedProductionRoleCaptureStatus
-    );
-  const setSelectedProductionRoleCaptureStatus =
-    useSelectedProductionRoleCaptureStatusStore(
-      (state) => state.setSelectedProductionRoleCaptureStatus
-    );
+  const { productionRoleCaptureStatus, captureStatus, cb } = editModalEvent;
+
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const queryClient = useQueryClient();
 
   const { control, handleSubmit, watch, reset } = useForm({
     defaultValues: {
-      notes: selectedProductionRoleCaptureStatus?.notes || "",
+      notes: productionRoleCaptureStatus?.notes || "",
     },
   });
+
+  useEffect(() => {
+    reset({
+      notes: productionRoleCaptureStatus?.notes || "",
+    });
+  }, [productionRoleCaptureStatus, reset]);
 
   const watchedNotes = watch("notes");
 
-  const productionRoleCaptureStatusMutation = useMutation({
-    mutationFn: updateProductionRoleCaptureStatus,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["productionRoleCaptureStatuses", "list"],
-      });
-    },
-  });
-
   function onSubmit(data: { notes: string }) {
-    if (selectedProductionRoleCaptureStatus && selectedCaptureStatus) {
-      const temp = { ...selectedProductionRoleCaptureStatus };
-      temp.capture_status_id = captureStatusIdMap[selectedCaptureStatus];
-      temp.notes = data.notes;
-      productionRoleCaptureStatusMutation.mutate(temp);
-      setSelectedProductionRoleCaptureStatus(null);
-      setIsEditModalOpen(false);
+    if (captureStatus && productionRoleCaptureStatus) {
+      const temp = { ...productionRoleCaptureStatus };
+      temp.capture_status_id = captureStatusIdMap[captureStatus];
+      temp.notes = data.notes
+        ? data.notes
+        : "Production Role Capture Status updated";
+
+      cb(temp);
+      setEditModalEvent({
+        productionRoleCaptureStatus: null,
+        captureStatus: null,
+        cb: () => {},
+      });
       reset();
     }
   }
 
   return (
     <Dialog
-      open={isEditModalOpen}
+      open={productionRoleCaptureStatus !== null}
       onOpenChange={() => {
-        setIsEditModalOpen(false);
-        setSelectedProductionRoleCaptureStatus(null);
-        setSelectedCaptureStatus(null);
+        setEditModalEvent({
+          productionRoleCaptureStatus: null,
+          captureStatus: null,
+          cb: () => {},
+        });
         reset();
       }}
     >
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>
-            Edit {selectedProductionRoleCaptureStatus?.production_role_name}{" "}
+            Edit {productionRoleCaptureStatus?.production_role_name}
             <span
-              className={`capture-status-text ${selectedCaptureStatus?.toLowerCase()}`}
+              className={`capture-status-text ${captureStatus?.toLowerCase()}`}
             >
-              {selectedCaptureStatus}
+              {captureStatus}
             </span>{" "}
             Capture Status
           </DialogTitle>
@@ -121,7 +107,7 @@ export default function EditModal() {
                         e.currentTarget.value.length
                       )
                     }
-                    className={`col-span-3 w-full capture-status-border ${selectedCaptureStatus?.toLowerCase()}`}
+                    className={`col-span-3 w-full capture-status-border ${captureStatus?.toLowerCase()}`}
                   />
                 )}
               />
@@ -131,8 +117,8 @@ export default function EditModal() {
             <Button
               type="submit"
               disabled={
-                selectedProductionRoleCaptureStatus?.notes !== "" &&
-                watchedNotes === selectedProductionRoleCaptureStatus?.notes
+                productionRoleCaptureStatus?.notes !== "" &&
+                watchedNotes === productionRoleCaptureStatus?.notes
               }
             >
               Save

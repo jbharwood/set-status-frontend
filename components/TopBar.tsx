@@ -5,6 +5,8 @@ import {
   RefreshCcw,
   Pen,
   PenOff,
+  NotebookPen,
+  Notebook,
 } from "lucide-react";
 import { ButtonWithTooltip, SearchStagesCombobox } from "@/components/index";
 import {
@@ -12,6 +14,7 @@ import {
   useSelectedStageIDStore,
   useIsEditModeStore,
   useNotifyModalEventStore,
+  useIsNotesEnabledStore,
 } from "@/stores/index";
 import {
   getProductionRoleCaptureStatuses,
@@ -30,6 +33,12 @@ export default function TobBar() {
   const setIsEditMode = useIsEditModeStore((state) => state.setIsEditMode);
   const setNotifyModalEvent = useNotifyModalEventStore(
     (state) => state.setNotifyModalEvent
+  );
+  const isNotesEnabled = useIsNotesEnabledStore(
+    (state) => state.isNotesEnabled
+  );
+  const setIsNotesEnabled = useIsNotesEnabledStore(
+    (state) => state.setIsNotesEnabled
   );
 
   const queryClient = useQueryClient();
@@ -75,19 +84,6 @@ export default function TobBar() {
         );
       },
     });
-
-    // Call the callback after setting the notify modal
-    // const { cb } = useNotifyModalEventStore.getState().notifyModal;
-    // if (cb) cb();
-    // productionRoleCaptureStatuses.data?.forEach(
-    //   (prcs: IProductionRoleCaptureStatus) => {
-    //     if (prcs.capture_status_id !== 2) {
-    //       const temp = { ...prcs };
-    //       temp.capture_status_id = 2;
-    //       productionRoleCaptureStatusMutation.mutate(temp);
-    //     }
-    //   }
-    // );
   };
 
   return (
@@ -109,11 +105,20 @@ export default function TobBar() {
             <ButtonWithTooltip
               icon={Pen}
               toggleIcon={PenOff}
-              tooltipText="Edit Mode"
-              toggleTooltipText="Read Mode"
+              tooltipText="Edit Mode Enabled"
+              toggleTooltipText="Edit Mode Disabled"
               width="w-1"
               height="h-5"
               onClick={() => setIsEditMode(!isEditMode)}
+            />
+            <ButtonWithTooltip
+              icon={Notebook}
+              toggleIcon={NotebookPen}
+              tooltipText="Capture Status Notes Disabled"
+              toggleTooltipText="Capture Status Notes Enabled"
+              width="w-1"
+              height="h-5"
+              onClick={() => setIsNotesEnabled(!isNotesEnabled)}
             />
             <ButtonWithTooltip
               icon={Filter}

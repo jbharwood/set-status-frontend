@@ -15,9 +15,9 @@ import {
   useIsEditModeStore,
   useNotifyModalEventStore,
   useIsShowChatStore,
-  useSelectedProductionRoleCaptureStatusStore,
   useSelectedStageIDStore,
   useSocketStore,
+  useEditModalEventStore,
 } from "@/stores/index";
 import { useQueryClient } from "@tanstack/react-query";
 import NotifyModal from "@/components/NotifyModal";
@@ -27,10 +27,6 @@ const socket = io("http://localhost:3001");
 export default function Home() {
   const [chat, setChat] = useState<IMessage[]>([]);
   const { isSignedIn, user } = useUser();
-  const selectedProductionRoleCaptureStatus =
-    useSelectedProductionRoleCaptureStatusStore(
-      (state) => state.selectedProductionRoleCaptureStatus
-    );
   const selectedStageID = useSelectedStageIDStore(
     (state) => state.selectedStageID
   );
@@ -39,6 +35,9 @@ export default function Home() {
   const setSocket = useSocketStore((state) => state.setSocket);
   const notifyModalEvent = useNotifyModalEventStore(
     (state) => state.notifyModalEvent
+  );
+  const editModalEvent = useEditModalEventStore(
+    (state) => state.editModalEvent
   );
   const queryClient = useQueryClient();
 
@@ -98,7 +97,7 @@ export default function Home() {
                     {isEditMode && <Inputs />}
                   </div>
                 )}
-                {selectedProductionRoleCaptureStatus && <EditModal />}
+                {editModalEvent && <EditModal />}
                 {notifyModalEvent && <NotifyModal />}
               </div>
             </>
