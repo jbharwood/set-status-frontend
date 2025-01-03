@@ -7,12 +7,14 @@ import {
   PenOff,
 } from "lucide-react";
 import { ButtonWithTooltip, SearchStagesCombobox } from "@/components/index";
-import { useSelectedStageIDStore } from "@/stores";
+import { useIsShowChatStore, useSelectedStageIDStore } from "@/stores";
 
 export default function TobBar() {
   const selectedStageID = useSelectedStageIDStore(
     (state) => state.selectedStageID
   );
+  const isShowChat = useIsShowChatStore((state) => state.isShowChat);
+  const setIsShowChat = useIsShowChatStore((state) => state.setIsShowChat);
 
   return (
     <div className="bg-white dark:bg-sidebar shadow h-10 w-full">
@@ -38,9 +40,9 @@ export default function TobBar() {
               icon={MessageCircle}
               toggleIcon={MessageCircleOff}
               tooltipText="Show Feed"
-              toggleTooltipText="Hide Feed"
               width="w-1"
               height="h-5"
+              onClick={() => setIsShowChat(!isShowChat)}
             />
             <ButtonWithTooltip
               icon={Pen}

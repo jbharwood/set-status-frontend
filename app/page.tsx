@@ -12,6 +12,7 @@ import {
 import { IMessage } from "@/types/interfaces";
 import { useUser } from "@clerk/nextjs";
 import {
+  useIsShowChatStore,
   useSelectedProductionRoleCaptureStatusStore,
   useSelectedStageIDStore,
   useSocketStore,
@@ -30,6 +31,7 @@ export default function Home() {
   const selectedStageID = useSelectedStageIDStore(
     (state) => state.selectedStageID
   );
+  const isShowChat = useIsShowChatStore((state) => state.isShowChat);
   const setSocket = useSocketStore((state) => state.setSocket);
   const queryClient = useQueryClient();
 
@@ -83,11 +85,13 @@ export default function Home() {
                 <ProductionRoleCaptureStatuses />
               </div>
               <div className="flex items-center justify-center w-full p-2">
-                <div className="w-full bg-white/80 dark:bg-slate-800/80 rounded-lg shadow p-2 flex flex-col space-y-3 h-56">
-                  <Chat chat={chat} />
-                  <Inputs />
-                  {selectedProductionRoleCaptureStatus && <EditModal />}
-                </div>
+                {isShowChat && (
+                  <div className="w-full bg-white/80 dark:bg-slate-800/80 rounded-lg shadow p-2 flex flex-col space-y-3 h-56">
+                    <Chat chat={chat} />
+                    <Inputs />
+                  </div>
+                )}
+                {selectedProductionRoleCaptureStatus && <EditModal />}
               </div>
             </>
           )}

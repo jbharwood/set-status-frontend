@@ -5,6 +5,7 @@ import {
 } from "@/types/interfaces";
 import {
   useIsEditModalOpenStore,
+  useIsShowChatStore,
   useSelectedCaptureStatusStore,
   useSelectedProductionRoleCaptureStatusStore,
 } from "@/stores/index";
@@ -36,6 +37,7 @@ export default function ProductionRoleCaptureStatus({
     useSelectedProductionRoleCaptureStatusStore(
       (state) => state.setSelectedProductionRoleCaptureStatus
     );
+  const isShowChat = useIsShowChatStore((state) => state.isShowChat);
 
   const queryClient = useQueryClient();
   const productionRoleCaptureStatusMutation = useMutation({
@@ -92,7 +94,9 @@ export default function ProductionRoleCaptureStatus({
         className={`border border-black ${capture_status_id === 3 ? "bg-red-500" : "bg-slate-500"} h-[30%] w-full cursor-pointer hover:bg-red-400`}
         onClick={() => handleOnClick("Red")}
       />
-      <div className="border border-black bg-slate-700 h-[30%] w-full text-center">
+      <div
+        className={`border border-black bg-slate-700 ${isShowChat ? "h-[30%]" : "h-[70%]"} w-full text-center`}
+      >
         {notes}
       </div>
     </div>

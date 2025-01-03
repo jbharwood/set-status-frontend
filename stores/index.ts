@@ -4,6 +4,7 @@ import useSelectedProductionRoleCaptureStatusStore from "./useSelectedProduction
 import useIsSearchModalOpenStore from "./useIsSearchModalOpenStore";
 import useSelectedStageIDStore from "./useSelectedStageIDStore";
 import useSocketStore from "./useSocket";
+import useIsShowChatStore from "./useIsShowChatStore";
 
 export {
   useIsEditModalOpenStore,
@@ -12,4 +13,5 @@ export {
   useIsSearchModalOpenStore,
   useSelectedStageIDStore,
   useSocketStore,
+  useIsShowChatStore,
 };
