@@ -49,8 +49,6 @@ export default function EditModal() {
         ? data.notes
         : "Production Role Capture Status updated";
 
-      console.log(temp.notes);
-
       cb(temp);
       setEditModalEvent({
         productionRoleCaptureStatus: null,

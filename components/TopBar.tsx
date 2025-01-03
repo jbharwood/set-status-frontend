@@ -95,16 +95,16 @@ export default function TobBar() {
         {selectedStageID && (
           <div className="flex gap-2 mt-2.5">
             <ButtonWithTooltip
-              icon={MessageCircle}
-              toggleIcon={MessageCircleOff}
+              icon={isShowChat ? MessageCircle : MessageCircleOff}
+              toggleIcon={isShowChat ? MessageCircle : MessageCircleOff}
               tooltipText="Show Feed"
               width="w-1"
               height="h-5"
               onClick={() => setIsShowChat(!isShowChat)}
             />
             <ButtonWithTooltip
-              icon={Pen}
-              toggleIcon={PenOff}
+              icon={isEditMode ? Pen : PenOff}
+              toggleIcon={isEditMode ? Pen : PenOff}
               tooltipText="Edit Mode Enabled"
               toggleTooltipText="Edit Mode Disabled"
               width="w-1"
@@ -120,8 +120,8 @@ export default function TobBar() {
             {isEditMode && (
               <>
                 <ButtonWithTooltip
-                  icon={Notebook}
-                  toggleIcon={NotebookPen}
+                  icon={isNotesEnabled ? NotebookPen : Notebook}
+                  toggleIcon={isNotesEnabled ? NotebookPen : Notebook}
                   tooltipText="Capture Status Notes Disabled"
                   toggleTooltipText="Capture Status Notes Enabled"
                   width="w-1"
