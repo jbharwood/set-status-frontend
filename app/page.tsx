@@ -70,7 +70,7 @@ export default function Home() {
       socket.off("get_production_role_capture_statuses");
       socket.off("leave_room");
     };
-  }, [queryClient]);
+  });
 
   return (
     <main>

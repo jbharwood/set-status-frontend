@@ -10,6 +10,12 @@ import {
 } from "@/stores/index";
 import ButtonWithTooltip from "./ButtonWithTooltip";
 import { X } from "lucide-react";
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { updateProductionRoleCaptureStatus } from "@/apiRequests";
 
 type ProductionCaptureStatusProps = {
   productionRoleCaptureStatus: IProductionRoleCaptureStatus;
@@ -31,6 +37,16 @@ export default function ProductionRoleCaptureStatus({
       (state) => state.setSelectedProductionRoleCaptureStatus
     );
 
+  const queryClient = useQueryClient();
+  const productionRoleCaptureStatusMutation = useMutation({
+    mutationFn: updateProductionRoleCaptureStatus,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["productionRoleCaptureStatuses", "list"],
+      });
+    },
+  });
+
   function handleOnClick(captureStatus: CaptureStatus) {
     setIsEditModalOpen(true);
     const temp = { ...productionRoleCaptureStatus };
@@ -40,6 +56,14 @@ export default function ProductionRoleCaptureStatus({
         : "";
     setSelectedProductionRoleCaptureStatus(temp);
     setSelectedCaptureStatus(captureStatus);
+  }
+
+  function handleHide(
+    productionRoleCaptureStatus: IProductionRoleCaptureStatus
+  ): void {
+    const temp = { ...productionRoleCaptureStatus };
+    temp.is_active = false;
+    productionRoleCaptureStatusMutation.mutate(temp);
   }
 
   return (
@@ -52,6 +76,7 @@ export default function ProductionRoleCaptureStatus({
             tooltipText={`Hide ${production_role_abbreviation}`}
             height="h-full"
             width="w-1"
+            onClick={() => handleHide(productionRoleCaptureStatus)}
           />
         </div>
       </div>

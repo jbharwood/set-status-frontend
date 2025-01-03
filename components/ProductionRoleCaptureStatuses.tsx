@@ -8,6 +8,7 @@ export default function ProductionRoleCaptureStatuses() {
   const selectedStageID = useSelectedStageIDStore(
     (state) => state.selectedStageID
   );
+
   const productionRoleCaptureStatuses = useQuery({
     queryKey: [
       "productionRoleCaptureStatuses",

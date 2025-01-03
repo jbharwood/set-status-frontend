@@ -27,5 +27,5 @@ export {
   TopBar, 
   ButtonWithTooltip, 
   SearchStagesCombobox,
-  ProductionRoleCaptureStatuses
+  ProductionRoleCaptureStatuses,
 }  

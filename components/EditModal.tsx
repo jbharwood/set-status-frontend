@@ -58,7 +58,7 @@ export default function EditModal() {
     mutationFn: updateProductionRoleCaptureStatus,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["productionRoleCaptureStatuses"],
+        queryKey: ["productionRoleCaptureStatuses", "list"],
       });
     },
   });
