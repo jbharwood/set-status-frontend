@@ -87,7 +87,7 @@ export default function Home() {
           <TopBar />
           {selectedStageID && (
             <>
-              <div className="flex-grow flex flex-col items-center justify-center overflow-auto">
+              <div className="flex-grow overflow-auto">
                 <ProductionRoleCaptureStatuses />
               </div>
               <div className="flex items-center justify-center w-full p-2">
