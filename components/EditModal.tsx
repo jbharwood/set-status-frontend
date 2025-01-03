@@ -49,6 +49,8 @@ export default function EditModal() {
         ? data.notes
         : "Production Role Capture Status updated";
 
+      console.log(temp.notes);
+
       cb(temp);
       setEditModalEvent({
         productionRoleCaptureStatus: null,
@@ -74,7 +76,7 @@ export default function EditModal() {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>
-            Edit {productionRoleCaptureStatus?.production_role_name}
+            Edit {productionRoleCaptureStatus?.production_role_name}{" "}
             <span
               className={`capture-status-text ${captureStatus?.toLowerCase()}`}
             >

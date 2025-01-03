@@ -51,31 +51,30 @@ export default function ProductionRoleCaptureStatus({
   });
 
   function handleCaptureStatusClick(captureStatus: CaptureStatus) {
+    if (!isEditMode || !captureStatus) return;
+
     const temp = { ...productionRoleCaptureStatus };
 
-    if (isEditMode) {
-      if (!isNotesEnabled && captureStatus) {
-        temp.capture_status_id = captureStatusIdMap[captureStatus];
-        temp.notes = notes ? notes : `Production Role Capture Status updated`;
-        productionRoleCaptureStatusMutation.mutate(temp);
-      } else if (captureStatus) {
-        temp.notes =
-          captureStatus &&
-          capture_status_id === captureStatusIdMap[captureStatus] &&
-          notes !== "Production Role Capture Status updated"
-            ? notes
-            : "";
+    if (!isNotesEnabled) {
+      temp.capture_status_id = captureStatusIdMap[captureStatus];
+      temp.notes = `Production Role Capture Status updated`;
+      productionRoleCaptureStatusMutation.mutate(temp);
+    } else {
+      temp.notes =
+        capture_status_id === captureStatusIdMap[captureStatus] &&
+        notes !== "Production Role Capture Status updated"
+          ? notes
+          : "";
 
-        setEditModalEvent({
-          productionRoleCaptureStatus: temp,
-          captureStatus: captureStatus,
-          cb: (prcs) => {
-            if (prcs) {
-              productionRoleCaptureStatusMutation.mutate(prcs);
-            }
-          },
-        });
-      }
+      setEditModalEvent({
+        productionRoleCaptureStatus: temp,
+        captureStatus: captureStatus,
+        cb: (prcs) => {
+          if (prcs) {
+            productionRoleCaptureStatusMutation.mutate(prcs);
+          }
+        },
+      });
     }
   }
 
