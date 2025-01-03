@@ -47,7 +47,7 @@ export default function ProductionRoleCaptureStatus({
     },
   });
 
-  function handleOnClick(captureStatus: CaptureStatus) {
+  function handleCaptureStatusClick(captureStatus: CaptureStatus) {
     setIsEditModalOpen(true);
     const temp = { ...productionRoleCaptureStatus };
     temp.notes =
@@ -86,18 +86,18 @@ export default function ProductionRoleCaptureStatus({
       </div>
       <div
         className={`border border-black ${capture_status_id === 1 ? "bg-green-500" : "bg-slate-500"} h-[30%] w-full cursor-pointer hover:bg-green-400`}
-        onClick={() => handleOnClick("Green")}
+        onClick={() => handleCaptureStatusClick("Green")}
       />
       <div
         className={`border border-black ${capture_status_id === 2 ? "bg-yellow-500" : "bg-slate-500"} h-[30%] w-full cursor-pointer hover:bg-yellow-400`}
-        onClick={() => handleOnClick("Yellow")}
+        onClick={() => handleCaptureStatusClick("Yellow")}
       />
       <div
         className={`border border-black ${capture_status_id === 3 ? "bg-red-500" : "bg-slate-500"} h-[30%] w-full cursor-pointer hover:bg-red-400`}
-        onClick={() => handleOnClick("Red")}
+        onClick={() => handleCaptureStatusClick("Red")}
       />
       <div
-        className={`border border-black bg-slate-700 ${isShowChat ? "h-[30%]" : "h-[70%]"} w-full text-center`}
+        className={`border border-black bg-slate-800/80 ${isShowChat ? "h-[30%]" : "h-[70%]"} w-full text-center`}
       >
         {notes}
       </div>
