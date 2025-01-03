@@ -5,6 +5,7 @@ import useIsSearchModalOpenStore from "./useIsSearchModalOpenStore";
 import useSelectedStageIDStore from "./useSelectedStageIDStore";
 import useSocketStore from "./useSocket";
 import useIsShowChatStore from "./useIsShowChatStore";
+import useIsEditModeStore from "./useIsEditModeStore";
 
 export {
   useIsEditModalOpenStore,
@@ -14,4 +15,5 @@ export {
   useSelectedStageIDStore,
   useSocketStore,
   useIsShowChatStore,
+  useIsEditModeStore,
 };

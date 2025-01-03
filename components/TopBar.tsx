@@ -7,7 +7,11 @@ import {
   PenOff,
 } from "lucide-react";
 import { ButtonWithTooltip, SearchStagesCombobox } from "@/components/index";
-import { useIsShowChatStore, useSelectedStageIDStore } from "@/stores";
+import {
+  useIsShowChatStore,
+  useSelectedStageIDStore,
+  useIsEditModeStore,
+} from "@/stores";
 
 export default function TobBar() {
   const selectedStageID = useSelectedStageIDStore(
@@ -15,6 +19,8 @@ export default function TobBar() {
   );
   const isShowChat = useIsShowChatStore((state) => state.isShowChat);
   const setIsShowChat = useIsShowChatStore((state) => state.setIsShowChat);
+  const isEditMode = useIsEditModeStore((state) => state.isEditMode);
+  const setIsEditMode = useIsEditModeStore((state) => state.setIsEditMode);
 
   return (
     <div className="bg-white dark:bg-sidebar shadow h-10 w-full">
@@ -51,6 +57,7 @@ export default function TobBar() {
               toggleTooltipText="Read Mode"
               width="w-1"
               height="h-5"
+              onClick={() => setIsEditMode(!isEditMode)}
             />
           </div>
         )}

@@ -5,17 +5,14 @@ import {
 } from "@/types/interfaces";
 import {
   useIsEditModalOpenStore,
+  useIsEditModeStore,
   useIsShowChatStore,
   useSelectedCaptureStatusStore,
   useSelectedProductionRoleCaptureStatusStore,
 } from "@/stores/index";
 import ButtonWithTooltip from "./ButtonWithTooltip";
 import { X } from "lucide-react";
-import {
-  QueryClient,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateProductionRoleCaptureStatus } from "@/apiRequests";
 
 type ProductionCaptureStatusProps = {
@@ -38,6 +35,7 @@ export default function ProductionRoleCaptureStatus({
       (state) => state.setSelectedProductionRoleCaptureStatus
     );
   const isShowChat = useIsShowChatStore((state) => state.isShowChat);
+  const isEditMode = useIsEditModeStore((state) => state.isEditMode);
 
   const queryClient = useQueryClient();
   const productionRoleCaptureStatusMutation = useMutation({
@@ -71,16 +69,20 @@ export default function ProductionRoleCaptureStatus({
   return (
     <div className="flex flex-col items-center justify-center h-full w-36 sm:w-36 md:w-36 lg:w-36 xl:w-36">
       <div className="border border-black bg-slate-700 h-[7.5%] w-full flex items-center justify-center truncate flex-nowrap">
-        <div className="ml-1">{production_role_abbreviation}</div>
-        <div className="ml-auto mt-0.5 justify-center">
-          <ButtonWithTooltip
-            icon={X}
-            tooltipText={`Hide ${production_role_abbreviation}`}
-            height="h-full"
-            width="w-1"
-            onClick={() => handleHide(productionRoleCaptureStatus)}
-          />
+        <div className={`${isEditMode ? "ml-1" : ""}`}>
+          {production_role_abbreviation}
         </div>
+        {isEditMode && (
+          <div className="ml-auto mt-0.5 justify-center">
+            <ButtonWithTooltip
+              icon={X}
+              tooltipText={`Hide ${production_role_abbreviation}`}
+              height="h-full"
+              width="w-1"
+              onClick={() => handleHide(productionRoleCaptureStatus)}
+            />
+          </div>
+        )}
       </div>
       <div
         className={`border border-black ${capture_status_id === 1 ? "bg-green-500" : "bg-slate-500"} h-[30%] w-full cursor-pointer hover:bg-green-400`}

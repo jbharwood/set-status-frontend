@@ -12,6 +12,7 @@ import {
 import { IMessage } from "@/types/interfaces";
 import { useUser } from "@clerk/nextjs";
 import {
+  useIsEditModeStore,
   useIsShowChatStore,
   useSelectedProductionRoleCaptureStatusStore,
   useSelectedStageIDStore,
@@ -32,6 +33,7 @@ export default function Home() {
     (state) => state.selectedStageID
   );
   const isShowChat = useIsShowChatStore((state) => state.isShowChat);
+  const isEditMode = useIsEditModeStore((state) => state.isEditMode);
   const setSocket = useSocketStore((state) => state.setSocket);
   const queryClient = useQueryClient();
 
@@ -88,7 +90,7 @@ export default function Home() {
                 {isShowChat && (
                   <div className="w-full bg-white/80 dark:bg-slate-800/80 rounded-lg shadow p-2 flex flex-col space-y-3 h-56">
                     <Chat chat={chat} />
-                    <Inputs />
+                    {isEditMode && <Inputs />}
                   </div>
                 )}
                 {selectedProductionRoleCaptureStatus && <EditModal />}
