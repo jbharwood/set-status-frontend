@@ -3,13 +3,16 @@
 import { useState, useRef } from "react";
 import { send, upload } from "@/assets";
 import Image from "next/image";
-import { Socket } from "socket.io-client";
-import { DefaultEventsMap } from "socket.io";
-import { IMessage } from "@/types/interfaces";
+import { IProductionRoleCaptureStatus } from "@/types/interfaces";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useUser } from "@clerk/nextjs";
-import { useSelectedStageIDStore, useSocketStore } from "@/stores";
+import { useSelectedStageIDStore } from "@/stores";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  getProductionRoleCaptureStatuses,
+  updateProductionRoleCaptureStatus,
+} from "@/apiRequests";
 
 export default function Inputs() {
   const [input, setInput] = useState("");
@@ -18,12 +21,47 @@ export default function Inputs() {
   const selectedStageID = useSelectedStageIDStore(
     (state) => state.selectedStageID
   );
-  const socket = useSocketStore((state) => state.socket);
+
+  const queryClient = useQueryClient();
+  const productionRoleCaptureStatuses = useQuery({
+    queryKey: [
+      "productionRoleCaptureStatuses",
+      "list",
+      { company_id: 1, stage_id: selectedStageID, is_active: false },
+    ],
+    queryFn: () =>
+      selectedStageID !== null
+        ? getProductionRoleCaptureStatuses({
+            company_id: 1,
+            stage_id: selectedStageID,
+            is_active: false,
+          })
+        : Promise.resolve([]),
+  });
+
+  const productionRoleCaptureStatusMutation = useMutation({
+    mutationFn: updateProductionRoleCaptureStatus,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [
+          ["productionRoleCaptureStatuses", "list"],
+          ["productionRoleCaptureStatusesHistory", "list"],
+        ],
+      });
+    },
+  });
 
   function sendMessage() {
-    if (input && user) {
-      const msg: IMessage = { content: input, type: "text", user: user };
-      socket?.emit("send_message", msg, selectedStageID);
+    if (input && user && selectedStageID) {
+      const productionRoleCaptureStatus =
+        productionRoleCaptureStatuses.data?.find(
+          (prcs: IProductionRoleCaptureStatus) =>
+            prcs.production_role_name === "Server"
+        );
+      const temp = { ...productionRoleCaptureStatus };
+      temp.notes = input;
+
+      productionRoleCaptureStatusMutation.mutate(temp);
       setInput("");
     } else {
       uploadInput.current?.click();
@@ -37,9 +75,17 @@ export default function Inputs() {
       (file.type === "image/jpeg" || file.type === "image/png") &&
       user
     ) {
+      const productionRoleCaptureStatus =
+        productionRoleCaptureStatuses.data?.find(
+          (prcs: IProductionRoleCaptureStatus) =>
+            prcs.production_role_name === "Server"
+        );
+      const temp = { ...productionRoleCaptureStatus };
       const img = URL.createObjectURL(file);
-      const msg: IMessage = { content: img, type: "image", user: user };
-      socket?.emit("send_message", msg, selectedStageID);
+      temp.notes = img;
+
+      productionRoleCaptureStatusMutation.mutate(temp);
+      setInput("");
     }
   }
 

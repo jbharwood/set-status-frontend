@@ -46,7 +46,10 @@ export default function TobBar() {
     mutationFn: updateProductionRoleCaptureStatus,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["productionRoleCaptureStatuses", "list"],
+        queryKey: [
+          ["productionRoleCaptureStatuses", "list"],
+          ["productionRoleCaptureStatusesHistory", "list"],
+        ],
       });
     },
   });
@@ -75,11 +78,10 @@ export default function TobBar() {
       cb: () => {
         productionRoleCaptureStatuses.data?.forEach(
           (prcs: IProductionRoleCaptureStatus) => {
-            if (prcs.capture_status_id !== 2) {
-              const temp = { ...prcs };
-              temp.capture_status_id = 2;
-              productionRoleCaptureStatusMutation.mutate(temp);
-            }
+            const temp = { ...prcs };
+            temp.notes = "Production Role Capture Statuses reset";
+            temp.capture_status_id = 2;
+            productionRoleCaptureStatusMutation.mutate(temp);
           }
         );
       },
@@ -122,8 +124,8 @@ export default function TobBar() {
                 <ButtonWithTooltip
                   icon={isNotesEnabled ? NotebookPen : Notebook}
                   toggleIcon={isNotesEnabled ? NotebookPen : Notebook}
-                  tooltipText="Capture Status Notes Disabled"
-                  toggleTooltipText="Capture Status Notes Enabled"
+                  tooltipText="Capture Status Notes Enabled"
+                  toggleTooltipText="Capture Status Notes Disabled"
                   width="w-1"
                   height="h-5"
                   onClick={() => setIsNotesEnabled(!isNotesEnabled)}

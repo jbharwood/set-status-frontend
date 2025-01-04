@@ -1,36 +1,53 @@
 "use client";
 
-import { IMessage } from "@/types/interfaces";
+import { IProductionRoleCaptureStatusesHistory } from "@/types/interfaces";
 import { useEffect, useRef } from "react";
 import { Message } from "@/components/index";
+import { useSelectedStageIDStore } from "@/stores";
+import { useQuery } from "@tanstack/react-query";
+import { getProductionRoleCaptureStatusesHistory } from "@/apiRequests/stageStatus";
 
-type ChatProps = {
-  chat: Array<IMessage>;
-};
+export default function Chat() {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const selectedStageID = useSelectedStageIDStore(
+    (state) => state.selectedStageID
+  );
 
-export default function Chat({ chat }: ChatProps) {
-  const scroller = useRef<HTMLDivElement>(null);
+  const productionRoleCaptureStatusesHistory = useQuery({
+    queryKey: [
+      "productionRoleCaptureStatusesHistory",
+      "list",
+      { company_id: 1, stage_id: selectedStageID },
+    ],
+    queryFn: () =>
+      selectedStageID !== null
+        ? getProductionRoleCaptureStatusesHistory({
+            company_id: 1,
+            stage_id: selectedStageID,
+          })
+        : Promise.resolve([]),
+  });
 
   useEffect(() => {
-    if (!scroller.current) return;
-
-    scroller.current.scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-      inline: "nearest",
-    });
-  }, [chat]);
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
+    }
+  }, [productionRoleCaptureStatusesHistory.data?.length]);
 
   return (
-    <div className="flex flex-col overflow-y-auto h-full">
-      {chat.map((message, index) => {
-        const messageOutput = {
-          ...message,
-        };
-
-        return <Message key={index} {...messageOutput} />;
-      })}
-      <div ref={scroller} className="overflow-auto" />
+    <div className="flex flex-col overflow-y-auto h-full" ref={messagesEndRef}>
+      {productionRoleCaptureStatusesHistory.data?.map(
+        (prcsh: IProductionRoleCaptureStatusesHistory) => {
+          return (
+            <Message
+              key={prcsh.id}
+              content={prcsh}
+              type={prcsh && prcsh.notes?.includes("blob") ? "image" : "text"}
+            />
+          );
+        }
+      )}
+      <div ref={messagesEndRef} className="overflow-auto" />
     </div>
   );
 }

@@ -3,7 +3,6 @@ import { User } from "@clerk/nextjs/server";
 export interface IMessage {
   content: string;
   type: "text" | "image" | "server";
-  user: User;
 }
 
 export type CaptureStatus = "Red" | "Yellow" | "Green" | null;
@@ -21,6 +20,12 @@ export interface IProductionRoleCaptureStatus {
   create_time: string;
   last_modified_by: string;
   last_modified_time: string;
+}
+
+export interface IProductionRoleCaptureStatusesHistory extends IProductionRoleCaptureStatus {
+  id: number;
+  production_role_capture_status_id: number;
+  history_time: string;
 }
 
 export interface IProductionRole {

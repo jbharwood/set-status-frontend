@@ -1,14 +1,18 @@
 import React from "react";
-import { IMessage } from "../types/interfaces";
+import {
+  IMessage,
+  IProductionRoleCaptureStatusesHistory,
+} from "../types/interfaces";
 import { useUser } from "@clerk/nextjs";
 
 type MessageProps = {
-  content: string;
+  content: IProductionRoleCaptureStatusesHistory;
   type: IMessage["type"];
 };
 
 export default function Message({ content, type }: MessageProps) {
   const { user } = useUser();
+  const { last_modified_by, last_modified_time, notes } = content;
 
   return (
     <div className="bg-slate-200/80 dark:bg-black/50 border-slate-200 rounded-md break-words mt-1">
@@ -19,7 +23,7 @@ export default function Message({ content, type }: MessageProps) {
             alt="user"
             className="rounded-full h-6 w-6"
           />
-          {user?.fullName} : {content}
+          {last_modified_by} - {last_modified_time} : {notes}
         </div>
       ) : (
         <div className="flex gap-2 p-1">
@@ -30,10 +34,10 @@ export default function Message({ content, type }: MessageProps) {
           />
           {user?.fullName} :
           <img
-            src={content}
+            src={notes}
             className="rounded-md"
             alt="image"
-            key={content}
+            key={notes}
             width={500}
             height={500}
           />

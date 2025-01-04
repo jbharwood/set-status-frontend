@@ -32,6 +32,10 @@ export default function ProductionRoleCaptureStatuses() {
           <ProductionRoleCaptureStatus
             key={prcs.id}
             productionRoleCaptureStatus={prcs}
+            isFirst={prcs.id === productionRoleCaptureStatuses.data[0].id}
+            isLast={
+              prcs.id === productionRoleCaptureStatuses.data.slice(-1)[0].id
+            }
           />
         )
       )}
