@@ -51,6 +51,14 @@ export default function Home() {
   useEffect(() => {
     if (stageID && !isNaN(Number(stageID))) {
       setSelectedStageID(parseInt(stageID));
+    } else {
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.delete("stageID");
+      const newSearchString = newSearchParams.toString();
+      const newUrl = newSearchString
+        ? `?${newSearchString}`
+        : window.location.pathname;
+      window.history.replaceState(null, "", newUrl);
     }
   }, [stageID]);
 
