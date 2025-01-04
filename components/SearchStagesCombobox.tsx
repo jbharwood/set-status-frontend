@@ -27,6 +27,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { IStage } from "@/types/interfaces";
+import { useSearchParams } from "next/navigation";
 
 export default function SearchStagesCombobox() {
   const [open, setOpen] = useState(false);
@@ -50,6 +51,7 @@ export default function SearchStagesCombobox() {
   );
 
   const socket = useSocketStore((state) => state.socket);
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (selectedStageID) {
@@ -58,6 +60,24 @@ export default function SearchStagesCombobox() {
       );
     }
   }, [selectedStageID]);
+
+  function handleSelect(currentValue: string, stage: IStage) {
+    socket?.emit("leave_room", selectedStageID);
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+
+    if (currentValue === value) {
+      setValue("");
+      setSelectedStageID(null);
+      newSearchParams.delete("stageID");
+      window.history.replaceState(null, "", `?${newSearchParams.toString()}`);
+    } else {
+      setValue(currentValue);
+      setSelectedStageID(stage.id);
+      newSearchParams.set("stageID", stage.id.toString());
+      window.history.replaceState(null, "", `?${newSearchParams.toString()}`);
+    }
+    setOpen(false);
+  }
 
   return (
     <Popover open={isSearchModalOpen} onOpenChange={setIsSearchModalOpen}>
@@ -84,17 +104,7 @@ export default function SearchStagesCombobox() {
                 <CommandItem
                   key={stage.id}
                   value={stage.name}
-                  onSelect={(currentValue) => {
-                    socket?.emit("leave_room", selectedStageID);
-                    if (currentValue === value) {
-                      setValue("");
-                      setSelectedStageID(null);
-                    } else {
-                      setValue(currentValue);
-                      setSelectedStageID(stage.id);
-                    }
-                    setOpen(false);
-                  }}
+                  onSelect={(currentValue) => handleSelect(currentValue, stage)}
                 >
                   <Check
                     className={cn(

@@ -7,8 +7,6 @@ import {
   Home,
   LogOut,
   Plus,
-  Search,
-  Settings,
   User2,
 } from "lucide-react";
 import {
@@ -42,22 +40,13 @@ import { UserButton, useClerk, useUser } from "@clerk/nextjs";
 import { useClerkTheme } from "@/hooks";
 import "@/app/globals.css";
 import IconWithTooltip from "./IconWithTooltip";
+import Link from "next/link";
 
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/",
     icon: Home,
-  },
-  {
-    title: "Search Stages",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
   },
 ];
 
@@ -81,10 +70,10 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

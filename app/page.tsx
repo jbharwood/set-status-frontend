@@ -21,6 +21,7 @@ import {
 } from "@/stores/index";
 import { useQueryClient } from "@tanstack/react-query";
 import NotifyModal from "@/components/NotifyModal";
+import { useSearchParams } from "next/navigation";
 
 const socket = io("http://localhost:3001");
 
@@ -29,6 +30,9 @@ export default function Home() {
   const { isSignedIn, user } = useUser();
   const selectedStageID = useSelectedStageIDStore(
     (state) => state.selectedStageID
+  );
+  const setSelectedStageID = useSelectedStageIDStore(
+    (state) => state.setSelectedStageID
   );
   const isShowChat = useIsShowChatStore((state) => state.isShowChat);
   const isEditMode = useIsEditModeStore((state) => state.isEditMode);
@@ -40,6 +44,15 @@ export default function Home() {
     (state) => state.editModalEvent
   );
   const queryClient = useQueryClient();
+
+  const searchParams = useSearchParams();
+  const stageID = searchParams.get("stageID");
+
+  useEffect(() => {
+    if (stageID && !isNaN(Number(stageID))) {
+      setSelectedStageID(parseInt(stageID));
+    }
+  }, [stageID]);
 
   useEffect(() => {
     setSocket(socket);
@@ -90,16 +103,16 @@ export default function Home() {
               <div className="flex-grow overflow-auto">
                 <ProductionRoleCaptureStatuses />
               </div>
-              <div className="flex items-center justify-center w-full p-2">
-                {isShowChat && (
+              {isShowChat && (
+                <div className="flex items-center justify-center w-full p-2">
                   <div className="w-full bg-white/80 dark:bg-slate-800/80 rounded-lg shadow p-2 flex flex-col space-y-3 h-56">
                     <Chat chat={chat} />
                     {isEditMode && <Inputs />}
                   </div>
-                )}
-                {editModalEvent && <EditModal />}
-                {notifyModalEvent && <NotifyModal />}
-              </div>
+                </div>
+              )}
+              {editModalEvent && <EditModal />}
+              {notifyModalEvent && <NotifyModal />}
             </>
           )}
         </div>

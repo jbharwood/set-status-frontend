@@ -1,3 +1,5 @@
+"use client";
+
 import {
   SidebarMenu,
   SidebarMenuAction,
@@ -15,6 +17,7 @@ import { Delete, Edit, MoreHorizontal } from "lucide-react";
 import { getStages } from "@/apiRequests";
 import { useQuery } from "@tanstack/react-query";
 import { useSelectedStageIDStore } from "@/stores";
+import { useSearchParams } from "next/navigation";
 
 export default function Stages() {
   const stages = useQuery({
@@ -27,6 +30,14 @@ export default function Stages() {
   const setSelectedStageID = useSelectedStageIDStore(
     (state) => state.setSelectedStageID
   );
+  const searchParams = useSearchParams();
+
+  function handleClick(stageID: number) {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    setSelectedStageID(stageID);
+    newSearchParams.set("stageID", stageID.toString());
+    window.history.replaceState(null, "", `?${newSearchParams.toString()}`);
+  }
 
   return (
     <SidebarMenu>
@@ -35,10 +46,7 @@ export default function Stages() {
           key={stage.id}
           className={selectedStageID === stage.id ? "bg-accent" : ""}
         >
-          <SidebarMenuButton
-            asChild
-            onClick={() => setSelectedStageID(stage.id)}
-          >
+          <SidebarMenuButton asChild onClick={() => handleClick(stage.id)}>
             <span>{stage.name}</span>
           </SidebarMenuButton>
           <DropdownMenu>
