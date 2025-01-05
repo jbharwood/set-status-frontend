@@ -144,3 +144,9 @@
     #f87171
   ); /* Tailwind red-300 to red-400 */
 }
+
+@media all and (display-mode: fullscreen) {
+  .hidden-in-fullscreen {
+    display: none;
+  }
+}
