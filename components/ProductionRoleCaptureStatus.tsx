@@ -114,8 +114,7 @@ export default function ProductionRoleCaptureStatus({
             <ButtonWithTooltip
               icon={X}
               tooltipText={`Hide ${production_role_abbreviation}`}
-              height="h-full"
-              width="w-1"
+              className="h-full w-1"
               onClick={() => handleHide(productionRoleCaptureStatus)}
             />
           </div>

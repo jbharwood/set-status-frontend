@@ -101,8 +101,7 @@ export default function TobBar() {
               icon={isShowChat ? MessageCircle : MessageCircleOff}
               toggleIcon={isShowChat ? MessageCircle : MessageCircleOff}
               tooltipText="Show Feed"
-              width="w-1"
-              height="h-5"
+              className="w-1 h-5"
               onClick={() => setIsShowChat(!isShowChat)}
             />
             <ButtonWithTooltip
@@ -110,15 +109,13 @@ export default function TobBar() {
               toggleIcon={isEditMode ? Pen : PenOff}
               tooltipText="Edit Mode Enabled"
               toggleTooltipText="Edit Mode Disabled"
-              width="w-1"
-              height="h-5"
+              className="w-1 h-5"
               onClick={() => setIsEditMode(!isEditMode)}
             />
             <ButtonWithTooltip
               icon={Filter}
               tooltipText="Filter Production Roles"
-              width="w-1"
-              height="h-5"
+              className="w-1 h-5"
             />
             {isEditMode && (
               <>
@@ -127,15 +124,13 @@ export default function TobBar() {
                   toggleIcon={isNotesEnabled ? NotebookPen : Notebook}
                   tooltipText="Capture Status Notes Enabled"
                   toggleTooltipText="Capture Status Notes Disabled"
-                  width="w-1"
-                  height="h-5"
+                  className="w-1 h-5"
                   onClick={() => setIsNotesEnabled(!isNotesEnabled)}
                 />
                 <ButtonWithTooltip
                   icon={RefreshCcw}
                   tooltipText="Reset Stage Statuses"
-                  width="w-1"
-                  height="h-5"
+                  className="w-1 h-5"
                   onClick={handleResetStageStatuses}
                 />
               </>
