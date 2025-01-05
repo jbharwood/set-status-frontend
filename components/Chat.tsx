@@ -42,7 +42,9 @@ export default function Chat() {
             <Message
               key={prcsh.id}
               content={prcsh}
-              type={prcsh && prcsh.notes?.includes("blob") ? "image" : "text"}
+              type={
+                prcsh && prcsh.notes?.slice(0, 5) === "blob:" ? "image" : "text"
+              }
             />
           );
         }

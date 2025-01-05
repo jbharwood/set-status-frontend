@@ -122,15 +122,15 @@ export default function ProductionRoleCaptureStatus({
         )}
       </div>
       <div
-        className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${capture_status_id === 1 ? "bg-green-500" : "bg-slate-500"} h-[30%] w-full hover:bg-green-400`}
+        className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${capture_status_id === 2 ? "bg-green-500" : "bg-slate-500"} h-[30%] w-full hover:bg-green-400`}
         onClick={() => handleCaptureStatusClick("Green")}
       />
       <div
-        className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${capture_status_id === 2 ? "bg-yellow-500" : "bg-slate-500"} h-[30%] w-full hover:bg-yellow-400`}
+        className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${capture_status_id === 3 ? "bg-yellow-500" : "bg-slate-500"} h-[30%] w-full hover:bg-yellow-400`}
         onClick={() => handleCaptureStatusClick("Yellow")}
       />
       <div
-        className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${capture_status_id === 3 ? "bg-red-500" : "bg-slate-500"} h-[30%] w-full hover:bg-red-400`}
+        className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${capture_status_id === 4 ? "bg-red-500" : "bg-slate-500"} h-[30%] w-full hover:bg-red-400`}
         onClick={() => handleCaptureStatusClick("Red")}
       />
       <div

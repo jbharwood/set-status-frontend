@@ -36,6 +36,17 @@ export async function getStages(company_id?: number) {
   return response.data;
 }
 
+export async function getStageCaptureStatus(stage_id: number, company_id: number) {
+  const queryParams = new URLSearchParams();
+  queryParams.append("stage_id", stage_id.toString());
+  queryParams.append("company_id", company_id.toString());
+
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/stageCaptureStatuses?${queryParams.toString()}`
+  );
+  return response.data;
+}
+
 export async function updateProductionRoleCaptureStatus(
   productionRoleCaptureStatus: IProductionRoleCaptureStatus
 ) {
@@ -43,6 +54,5 @@ export async function updateProductionRoleCaptureStatus(
     `${process.env.NEXT_PUBLIC_API_URL}/productionRoleCaptureStatuses/${productionRoleCaptureStatus.id}`,
     productionRoleCaptureStatus
   );
-
   return response.data;
 }

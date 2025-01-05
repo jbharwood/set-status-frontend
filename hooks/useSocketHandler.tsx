@@ -16,19 +16,13 @@ export default function useSocketHandler() {
   }, [socket]);
 
   useEffect(() => {
-    socket.on("get_production_role_capture_statuses", (data) => {
-      const queryKey = [data.entity, data.id].filter(Boolean);
-      queryClient.invalidateQueries({ queryKey });
-    });
-
-    socket.on("get_production_role_capture_statuses_history", (data) => {
+    socket.on("production_role_capture_status_update", (data) => {
       const queryKey = [data.entity, data.id].filter(Boolean);
       queryClient.invalidateQueries({ queryKey });
     });
 
     return () => {
-      socket.off("get_production_role_capture_statuses");
-      socket.off("get_production_role_capture_statuses_history");
+      socket.off("production_role_capture_status_update");
     };
   });
 }

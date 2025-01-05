@@ -120,3 +120,27 @@
 .capture-status-border.red {
   --focus-color: #ef4444; /* Tailwind red-500 */
 }
+
+.status-gradient-green {
+  background: linear-gradient(
+    to right,
+    #86efac,
+    #4ade80
+  ); /* Tailwind green-300 to green-400 */
+}
+
+.status-gradient-yellow {
+  background: linear-gradient(
+    to right,
+    #fde68a,
+    #fbbf24
+  ); /* Tailwind yellow-300 to yellow-400 */
+}
+
+.status-gradient-red {
+  background: linear-gradient(
+    to right,
+    #fca5a5,
+    #f87171
+  ); /* Tailwind red-300 to red-400 */
+}

@@ -19,6 +19,8 @@ import {
 import NotifyModal from "@/components/NotifyModal";
 import { useSocketHandler, useSearchParamsHandler } from "@/hooks";
 import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getStageCaptureStatus } from "@/apiRequests/stageStatus";
 
 export default function Home() {
   const { isSignedIn, user } = useUser();
@@ -35,6 +37,24 @@ export default function Home() {
   );
   const socket = useSocketStore((state) => state.socket);
 
+  const stageCaptureStatus = useQuery({
+    queryKey: [
+      "stageCaptureStatus",
+      "single",
+      { stage_id: selectedStageID, company_id: 1 },
+    ],
+    queryFn: () =>
+      selectedStageID !== null
+        ? getStageCaptureStatus(selectedStageID, 1)
+        : Promise.resolve([]),
+  });
+
+  const getStatusGradientClass = () => {
+    if (stageCaptureStatus.data) {
+      return `status-gradient-${stageCaptureStatus.data.status}`;
+    }
+  };
+
   useSocketHandler();
   useSearchParamsHandler();
 
@@ -50,7 +70,9 @@ export default function Home() {
   return (
     <main>
       {isSignedIn && user && (
-        <div className="h-screen w-[98.5vw] xl:w-[98vw] flex flex-col bg-gradient-to-r from-green-300 to-green-400">
+        <div
+          className={`h-screen w-[98.5vw] xl:w-[98vw] flex flex-col ${stageCaptureStatus ? getStatusGradientClass() : ""}`}
+        >
           <TopBar />
           {selectedStageID && (
             <>

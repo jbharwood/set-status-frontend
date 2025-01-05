@@ -49,6 +49,7 @@ export default function TobBar() {
         queryKey: [
           ["productionRoleCaptureStatuses", "list"],
           ["productionRoleCaptureStatusesHistory", "list"],
+          ["stageCaptureStatus", "single"],
         ],
       });
     },
@@ -80,7 +81,7 @@ export default function TobBar() {
           (prcs: IProductionRoleCaptureStatus) => {
             const temp = { ...prcs };
             temp.notes = "Production Role Capture Statuses reset";
-            temp.capture_status_id = 2;
+            temp.capture_status_id = 3;
             productionRoleCaptureStatusMutation.mutate(temp);
           }
         );

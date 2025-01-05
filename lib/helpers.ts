@@ -1,5 +1,5 @@
 export const captureStatusIdMap = {
-  Green: 1,
-  Yellow: 2,
-  Red: 3,
+  Green: 2,
+  Yellow: 3,
+  Red: 4,
 };
