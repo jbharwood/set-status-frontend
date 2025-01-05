@@ -1,8 +1,6 @@
-import { User } from "@clerk/nextjs/server";
-
 export interface IMessage {
   content: string;
-  type: "text" | "image" | "server";
+  type: "text" | "server";
 }
 
 export type CaptureStatus = "Red" | "Yellow" | "Green" | null;

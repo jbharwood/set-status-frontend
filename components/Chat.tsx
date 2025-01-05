@@ -38,15 +38,7 @@ export default function Chat() {
     <div className="flex flex-col overflow-y-auto h-full" ref={messagesEndRef}>
       {productionRoleCaptureStatusesHistory.data?.map(
         (prcsh: IProductionRoleCaptureStatusesHistory) => {
-          return (
-            <Message
-              key={prcsh.id}
-              content={prcsh}
-              type={
-                prcsh && prcsh.notes?.slice(0, 5) === "blob:" ? "image" : "text"
-              }
-            />
-          );
+          return <Message key={prcsh.id} content={prcsh} type={"text"} />;
         }
       )}
       <div ref={messagesEndRef} className="overflow-auto" />

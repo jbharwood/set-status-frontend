@@ -84,7 +84,11 @@ export function AppSidebar() {
         <Collapsible defaultOpen className="group/collapsible">
           <SidebarGroup>
             <SidebarGroupAction className="mr-6 gap-1">
-              <IconWithTooltip icon={Plus} tooltipText="Add Stage" />
+              <IconWithTooltip
+                icon={Plus}
+                tooltipText="Add Stage"
+                color="text-gray-500"
+              />
             </SidebarGroupAction>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger>

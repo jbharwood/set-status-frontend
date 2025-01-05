@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { send, upload } from "@/assets";
-import Image from "next/image";
 import { IProductionRoleCaptureStatus } from "@/types/interfaces";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -13,6 +11,7 @@ import {
   getProductionRoleCaptureStatuses,
   updateProductionRoleCaptureStatus,
 } from "@/apiRequests";
+import { SendHorizonal } from "lucide-react";
 
 export default function Inputs() {
   const [input, setInput] = useState("");
@@ -68,27 +67,6 @@ export default function Inputs() {
     }
   }
 
-  function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (
-      file &&
-      (file.type === "image/jpeg" || file.type === "image/png") &&
-      user
-    ) {
-      const productionRoleCaptureStatus =
-        productionRoleCaptureStatuses.data?.find(
-          (prcs: IProductionRoleCaptureStatus) =>
-            prcs.production_role_name === "Server"
-        );
-      const temp = { ...productionRoleCaptureStatus };
-      const img = URL.createObjectURL(file);
-      temp.notes = img;
-
-      productionRoleCaptureStatusMutation.mutate(temp);
-      setInput("");
-    }
-  }
-
   return (
     <div className="flex gap-2">
       <Input
@@ -98,23 +76,11 @@ export default function Inputs() {
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && sendMessage()}
       />
-      <Input
-        className="hidden"
-        type="file"
-        ref={uploadInput}
-        onChange={(e) => handleImageUpload(e)}
-      />
       <Button
         className="w-full px-3 bg-blue-400 text-white font-fold rounded-md text-xl md:w-12 md:text-2xl"
         onClick={sendMessage}
       >
-        <Image
-          src={input ? send : upload}
-          className="w-6 md:w-12 mx-auto"
-          alt="send"
-          height={20}
-          width={20}
-        />
+        <SendHorizonal className="w-6 h-6" onClick={sendMessage} />
       </Button>
     </div>
   );
