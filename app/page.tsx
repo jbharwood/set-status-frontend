@@ -6,6 +6,7 @@ import {
   ProductionRoleCaptureStatuses,
   EditModal,
   TopBar,
+  FilterModal,
 } from "@/components/index";
 import { useUser } from "@clerk/nextjs";
 import {
@@ -15,6 +16,7 @@ import {
   useSelectedStageIDStore,
   useEditModalEventStore,
   useSocketStore,
+  useIsFilterModalOpenStore,
 } from "@/stores/index";
 import NotifyModal from "@/components/NotifyModal";
 import { useSocketHandler, useSearchParamsHandler } from "@/hooks";
@@ -34,6 +36,9 @@ export default function Home() {
   );
   const editModalEvent = useEditModalEventStore(
     (state) => state.editModalEvent
+  );
+  const isFilterModalOpen = useIsFilterModalOpenStore(
+    (state) => state.isFilterModalOpen
   );
   const socket = useSocketStore((state) => state.socket);
 
@@ -89,6 +94,7 @@ export default function Home() {
               )}
               {editModalEvent && <EditModal />}
               {notifyModalEvent && <NotifyModal />}
+              {isFilterModalOpen && <FilterModal />}
             </>
           )}
         </div>

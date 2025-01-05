@@ -94,6 +94,7 @@ export default function ProductionRoleCaptureStatus({
       cb: () => {
         const temp = { ...productionRoleCaptureStatus };
         temp.is_active = false;
+        temp.notes = "Production Role Capture Status is hidden";
         productionRoleCaptureStatusMutation.mutate(temp);
       },
     });

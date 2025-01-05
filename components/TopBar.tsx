@@ -15,6 +15,7 @@ import {
   useIsEditModeStore,
   useNotifyModalEventStore,
   useIsNotesEnabledStore,
+  useIsFilterModalOpenStore,
 } from "@/stores/index";
 import {
   getProductionRoleCaptureStatuses,
@@ -39,6 +40,9 @@ export default function TobBar() {
   );
   const setIsNotesEnabled = useIsNotesEnabledStore(
     (state) => state.setIsNotesEnabled
+  );
+  const setIsFilterModalOpen = useIsFilterModalOpenStore(
+    (state) => state.setIsFilterModalOpen
   );
 
   const queryClient = useQueryClient();
@@ -71,7 +75,7 @@ export default function TobBar() {
         : Promise.resolve([]),
   });
 
-  const handleResetStageStatuses = () => {
+  function handleResetStageStatuses() {
     setNotifyModalEvent({
       eventName: "Reset Stage Statuses",
       eventPrompt:
@@ -87,7 +91,7 @@ export default function TobBar() {
         );
       },
     });
-  };
+  }
 
   return (
     <div className="bg-white dark:bg-sidebar shadow h-10 w-full">
@@ -112,13 +116,14 @@ export default function TobBar() {
               className="w-1 h-5"
               onClick={() => setIsEditMode(!isEditMode)}
             />
-            <ButtonWithTooltip
-              icon={Filter}
-              tooltipText="Filter Production Roles"
-              className="w-1 h-5"
-            />
             {isEditMode && (
               <>
+                <ButtonWithTooltip
+                  icon={Filter}
+                  tooltipText="Filter Production Roles"
+                  className="w-1 h-5"
+                  onClick={() => setIsFilterModalOpen(true)}
+                />
                 <ButtonWithTooltip
                   icon={isNotesEnabled ? NotebookPen : Notebook}
                   toggleIcon={isNotesEnabled ? NotebookPen : Notebook}
@@ -135,6 +140,7 @@ export default function TobBar() {
                 />
               </>
             )}
+            <div className="mb-5"></div>
           </div>
         )}
       </div>

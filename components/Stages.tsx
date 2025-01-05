@@ -15,12 +15,12 @@ import {
 } from "./ui/dropdown-menu";
 import { Delete, Edit, MoreHorizontal } from "lucide-react";
 import { getStages } from "@/apiRequests";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { useSelectedStageIDStore } from "@/stores";
 import { useSearchParams } from "next/navigation";
 
 export default function Stages() {
-  const stages = useQuery({
+  const stages = useSuspenseQuery({
     queryKey: ["stages", "list", { company_id: 1 }],
     queryFn: () => getStages(1),
   });

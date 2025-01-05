@@ -12,6 +12,7 @@ import TopBar from "./TopBar"
 import ButtonWithTooltip from "./ButtonWithTooltip"
 import SearchStagesCombobox from "./SearchStagesCombobox"
 import ProductionRoleCaptureStatuses from "./ProductionRoleCaptureStatuses"
+import FilterModal from "./FilterModal"
 
 export { 
   Chat, 
@@ -28,4 +29,5 @@ export {
   ButtonWithTooltip, 
   SearchStagesCombobox,
   ProductionRoleCaptureStatuses,
+  FilterModal,
 }  

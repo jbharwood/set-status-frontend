@@ -6,6 +6,7 @@ import useIsEditModeStore from "./useIsEditModeStore";
 import useNotifyModalEventStore from "./useNotifyModalEventStore";
 import useIsNotesEnabledStore from "./useIsNotesEnabledStore";
 import useEditModalEventStore from "./useEditModalEventStore";
+import useIsFilterModalOpenStore from "./useIsFilterModalOpen";
 
 export {
   useIsSearchModalOpenStore,
@@ -15,5 +16,6 @@ export {
   useIsEditModeStore,
   useNotifyModalEventStore,
   useIsNotesEnabledStore,
-  useEditModalEventStore
+  useEditModalEventStore,
+  useIsFilterModalOpenStore,
 };

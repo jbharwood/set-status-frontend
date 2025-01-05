@@ -13,13 +13,20 @@ export async function getProductionRoleCaptureStatuses(params?: { company_id?: n
   return response.data;
 }
 
+export async function getProductionRoleCaptureStatusById(id: number) {
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/productionRoleCaptureStatuses/${id.toString()}`
+  );
+  return response.data;
+}
+
 export async function getProductionRoleCaptureStatusesHistory(params: { company_id: number, stage_id: number }) {
   const queryParams = new URLSearchParams();
   const { company_id, stage_id } = params;
 
   queryParams.append("company_id", company_id.toString());
   queryParams.append("stage_id", stage_id.toString());
-
+         
   const response = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/productionrolecapturestatuseshistory?${queryParams.toString()}`
   );

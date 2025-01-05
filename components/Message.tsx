@@ -23,8 +23,8 @@ export default function Message({ content, type }: MessageProps) {
         <div
           className={`capture-status-bg-${capture_status_name?.toLowerCase()} rounded-full h-6 w-6`}
         />
-        {last_modified_by} ({production_role_abbreviation}) -{" "}
-        {formatted_last_modified_time} : {notes}
+        {formatted_last_modified_time} {""}
+        {last_modified_by} ({production_role_abbreviation}): {notes}
       </div>
     </div>
   );

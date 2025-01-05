@@ -17,7 +17,6 @@ import ButtonWithTooltip from "./ButtonWithTooltip";
 export default function Inputs() {
   const [input, setInput] = useState("");
   const { user } = useUser();
-  const uploadInput = useRef<HTMLInputElement>(null);
   const selectedStageID = useSelectedStageIDStore(
     (state) => state.selectedStageID
   );
@@ -63,8 +62,6 @@ export default function Inputs() {
 
       productionRoleCaptureStatusMutation.mutate(temp);
       setInput("");
-    } else {
-      uploadInput.current?.click();
     }
   }
 

@@ -12,7 +12,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { captureStatusIdMap } from "@/lib/helpers";
 import { useEditModalEventStore } from "@/stores/index";
-import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useRef, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 
@@ -83,11 +83,11 @@ export default function EditModal() {
             Capture Status
           </DialogTitle>
         </DialogHeader>
-        <VisuallyHidden.Root>
+        <VisuallyHidden>
           <DialogDescription>
             Edit Production Role Capture Status
           </DialogDescription>
-        </VisuallyHidden.Root>
+        </VisuallyHidden>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-3 items-center gap-4">

@@ -45,6 +45,10 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --red-500: #ef4444;
+    --green-500: #10b981;
+    --yellow-500: #f59e0b;
+    --grey-500: #64748b;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -92,7 +96,7 @@
 }
 
 .capture-status-text.green {
-  color: #10b981; /* Tailwind green-500 */
+  color: var(--green-500);
 }
 
 .capture-status-border.green:focus,
@@ -102,63 +106,51 @@
 }
 
 .capture-status-border.green {
-  --focus-color: #10b981; /* Tailwind green-500 */
+  --focus-color: var(--green-500);
 }
 
 .capture-status-bg-green {
-  background-color: #10b981; /* Tailwind green-500 */
+  background-color: var(--green-500);
 }
 
 .capture-status-text.yellow {
-  color: #f59e0b; /* Tailwind yellow-500 */
+  color: var(--yellow-500);
 }
 
 .capture-status-border.yellow {
-  --focus-color: #f59e0b; /* Tailwind yellow-500 */
+  --focus-color: var(--yellow-500);
 }
 
 .capture-status-bg-yellow {
-  background-color: #f59e0b; /* Tailwind yellow-500 */
+  background-color: var(--yellow-500);
 }
 
 .capture-status-text.red {
-  color: #ef4444; /* Tailwind red-500 */
+  color: var(--red-500);
 }
 
 .capture-status-border.red {
-  --focus-color: #ef4444; /* Tailwind red-500 */
+  --focus-color: var(--red-500);
 }
 
 .capture-status-bg-red {
-  background-color: #ef4444; /* Tailwind red-500 */
+  background-color: var(--red-500);
 }
 
 .capture-status-bg-grey {
-  background-color: #64748b; /* Tailwind red-500 */
+  background-color: var(--grey-500);
 }
 
 .status-gradient-green {
-  background: linear-gradient(
-    to right,
-    #86efac,
-    #4ade80
-  ); /* Tailwind green-300 to green-400 */
+  background: linear-gradient(to right, #86efac, #4ade80);
 }
 
 .status-gradient-yellow {
-  background: linear-gradient(
-    to right,
-    #fde68a,
-    #fbbf24
-  ); /* Tailwind yellow-300 to yellow-400 */
+  background: linear-gradient(to right, #fde68a, #fbbf24);
 }
 
 .status-gradient-red {
-  background: linear-gradient(
-    to right,
-    #fca5a5,
-    #f87171
-  ); /* Tailwind red-300 to red-400 */
+  background: linear-gradient(to right, #fca5a5, #f87171);
 }
 
 @media all and (display-mode: fullscreen) {
