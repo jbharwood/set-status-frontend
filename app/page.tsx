@@ -17,12 +17,8 @@ import {
   useSocketStore,
 } from "@/stores/index";
 import NotifyModal from "@/components/NotifyModal";
-import {
-  useSocketHandler,
-  useSearchParamsHandler,
-  useFullScreen,
-} from "@/hooks";
-import { useEffect, useState } from "react";
+import { useSocketHandler, useSearchParamsHandler } from "@/hooks";
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getStageCaptureStatus } from "@/apiRequests/stageStatus";
 

@@ -81,7 +81,7 @@ export default function Inputs() {
         onClick={sendMessage}
         tooltipText="Send Message"
         icon={SendHorizonal}
-        className="w-full px-3 bg-blue-400 text-white font-fold rounded-md text-xl md:w-12 md:text-2xl"
+        className="w-full px-3 bg-blue-400 font-fold rounded-md text-xl md:w-12 md:text-2xl"
       />
     </div>
   );

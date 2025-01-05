@@ -105,6 +105,10 @@
   --focus-color: #10b981; /* Tailwind green-500 */
 }
 
+.capture-status-bg-green {
+  background-color: #10b981; /* Tailwind green-500 */
+}
+
 .capture-status-text.yellow {
   color: #f59e0b; /* Tailwind yellow-500 */
 }
@@ -113,12 +117,24 @@
   --focus-color: #f59e0b; /* Tailwind yellow-500 */
 }
 
+.capture-status-bg-yellow {
+  background-color: #f59e0b; /* Tailwind yellow-500 */
+}
+
 .capture-status-text.red {
   color: #ef4444; /* Tailwind red-500 */
 }
 
 .capture-status-border.red {
   --focus-color: #ef4444; /* Tailwind red-500 */
+}
+
+.capture-status-bg-red {
+  background-color: #ef4444; /* Tailwind red-500 */
+}
+
+.capture-status-bg-grey {
+  background-color: #64748b; /* Tailwind red-500 */
 }
 
 .status-gradient-green {

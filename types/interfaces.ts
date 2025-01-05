@@ -3,7 +3,7 @@ export interface IMessage {
   type: "text" | "server";
 }
 
-export type CaptureStatus = "Red" | "Yellow" | "Green" | null;
+export type CaptureStatus = "Red" | "Yellow" | "Green" | "Grey" | null;
 
 export interface IProductionRoleCaptureStatus {
   id: number;
@@ -24,6 +24,8 @@ export interface IProductionRoleCaptureStatusesHistory extends IProductionRoleCa
   id: number;
   production_role_capture_status_id: number;
   history_time: string;
+  formatted_last_modified_time: string;
+  capture_status_name: CaptureStatus;
 }
 
 export interface IProductionRole {
