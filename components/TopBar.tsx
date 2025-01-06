@@ -29,6 +29,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { IProductionRoleCaptureStatus } from "@/types/interfaces";
 import { useSearchParams } from "next/navigation";
+import { Separator } from "./ui/separator";
 
 export default function TobBar() {
   const selectedStageID = useSelectedStageIDStore(
@@ -146,12 +147,7 @@ export default function TobBar() {
             />
             {isEditMode && (
               <>
-                <ButtonWithTooltip
-                  icon={Filter}
-                  tooltipText="Filter Production Roles"
-                  className="w-1 h-5"
-                  onClick={() => setIsFilterModalOpen(true)}
-                />
+                <Separator orientation="vertical" className="bg-gray-500" />
                 <ButtonWithTooltip
                   icon={isNotesEnabled ? NotebookPen : Notebook}
                   toggleIcon={isNotesEnabled ? NotebookPen : Notebook}
@@ -167,6 +163,12 @@ export default function TobBar() {
                   }
                   className="w-1 h-5"
                   onClick={() => setIsNotesEnabled(!isNotesEnabled)}
+                />
+                <ButtonWithTooltip
+                  icon={Filter}
+                  tooltipText="Filter Production Roles"
+                  className="w-1 h-5"
+                  onClick={() => setIsFilterModalOpen(true)}
                 />
                 <ButtonWithTooltip
                   icon={RefreshCcw}

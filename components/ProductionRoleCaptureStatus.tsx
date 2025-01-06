@@ -112,9 +112,9 @@ export default function ProductionRoleCaptureStatus({
     return (
       <div className={`flex flex-row w-full`}>
         <div
-          className={`w-full h-32 flex capture-status-bg ${capture_status_name.toLowerCase()} border-2 rounded`}
+          className={`w-full h-32 flex capture-status-bg ${capture_status_name.toLowerCase()} border-2 border-black rounded`}
         >
-          <div className="flex w-full h-full ml-auto p-2 justify-center items-center">
+          <div className="flex w-full h-full ml-auto p-2 justify-center items-center text-black">
             <div className="truncate text-9xl">
               {production_role_abbreviation}
             </div>{" "}
