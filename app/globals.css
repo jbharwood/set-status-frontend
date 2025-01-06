@@ -93,52 +93,48 @@
   body {
     @apply bg-background text-foreground;
   }
-}
 
-.capture-status-text.green {
-  color: var(--green-500);
-}
+  .capture-status-text {
+    &.green {
+      color: var(--green-500);
+    }
+    &.yellow {
+      color: var(--yellow-500);
+    }
+    &.red {
+      color: var(--red-500);
+    }
+  }
 
-.capture-status-border.green:focus,
-.capture-status-border.yellow:focus,
-.capture-status-border.red:focus {
-  border-color: var(--focus-color);
-}
+  .capture-status-border {
+    &:focus {
+      border-color: var(--focus-color);
+    }
+    &.green {
+      --focus-color: var(--green-500);
+    }
+    &.yellow {
+      --focus-color: var(--yellow-500);
+    }
+    &.red {
+      --focus-color: var(--red-500);
+    }
+  }
 
-.capture-status-border.green {
-  --focus-color: var(--green-500);
-}
-
-.capture-status-bg-green {
-  background-color: var(--green-500);
-}
-
-.capture-status-text.yellow {
-  color: var(--yellow-500);
-}
-
-.capture-status-border.yellow {
-  --focus-color: var(--yellow-500);
-}
-
-.capture-status-bg-yellow {
-  background-color: var(--yellow-500);
-}
-
-.capture-status-text.red {
-  color: var(--red-500);
-}
-
-.capture-status-border.red {
-  --focus-color: var(--red-500);
-}
-
-.capture-status-bg-red {
-  background-color: var(--red-500);
-}
-
-.capture-status-bg-grey {
-  background-color: var(--grey-500);
+  .capture-status-bg {
+    &.green {
+      background-color: var(--green-500);
+    }
+    &.yellow {
+      background-color: var(--yellow-500);
+    }
+    &.red {
+      background-color: var(--red-500);
+    }
+    &.grey {
+      background-color: var(--grey-500);
+    }
+  }
 }
 
 .status-gradient-green {

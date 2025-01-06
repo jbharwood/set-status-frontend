@@ -7,6 +7,7 @@ import useNotifyModalEventStore from "./useNotifyModalEventStore";
 import useIsNotesEnabledStore from "./useIsNotesEnabledStore";
 import useEditModalEventStore from "./useEditModalEventStore";
 import useIsFilterModalOpenStore from "./useIsFilterModalOpen";
+import useIsWebViewStore from "./useIsWebViewStore";
 
 export {
   useIsSearchModalOpenStore,
@@ -18,4 +19,5 @@ export {
   useIsNotesEnabledStore,
   useEditModalEventStore,
   useIsFilterModalOpenStore,
+  useIsWebViewStore,
 };

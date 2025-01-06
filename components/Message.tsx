@@ -21,7 +21,7 @@ export default function Message({ content, type }: MessageProps) {
     <div className="bg-slate-200/80 dark:bg-black/50 border-slate-200 rounded-md break-words mt-1">
       <div className="flex gap-2 p-1">
         <div
-          className={`capture-status-bg-${capture_status_name?.toLowerCase()} rounded-full h-6 w-6`}
+          className={`capture-status-bg ${capture_status_name?.toLowerCase()} rounded-full h-6 w-6`}
         />
         {formatted_last_modified_time} {""}
         {last_modified_by} ({production_role_abbreviation}): {notes}

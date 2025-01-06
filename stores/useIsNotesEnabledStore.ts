@@ -12,7 +12,7 @@ type Action = {
 const useIsNotesEnabledStore = create<State & Action, [["zustand/persist", Partial<State & Action>]]>(
   persist<State & Action>(
     (set) => ({
-      isNotesEnabled: false, // initial state
+      isNotesEnabled: false,
       setIsNotesEnabled: (isNotesEnabled) => set({ isNotesEnabled }),
     }),
     {

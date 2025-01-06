@@ -2,12 +2,13 @@ import { IProductionRoleCaptureStatus } from "@/types/interfaces";
 import ProductionRoleCaptureStatus from "./ProductionRoleCaptureStatus";
 import { useQuery } from "@tanstack/react-query";
 import { getProductionRoleCaptureStatuses } from "@/apiRequests";
-import { useSelectedStageIDStore } from "@/stores";
+import { useIsWebViewStore, useSelectedStageIDStore } from "@/stores";
 
 export default function ProductionRoleCaptureStatuses() {
   const selectedStageID = useSelectedStageIDStore(
     (state) => state.selectedStageID
   );
+  const isWebView = useIsWebViewStore((state) => state.isWebView);
 
   const productionRoleCaptureStatuses = useQuery({
     queryKey: [
@@ -26,7 +27,13 @@ export default function ProductionRoleCaptureStatuses() {
   });
 
   return (
-    <div className="flex flex-row items-center justify-center w-full h-full p-2">
+    <div
+      className={
+        isWebView
+          ? "flex items-center justify-center w-full h-full p-2"
+          : "flex-row items-center justify-center w-full h-full p-10"
+      }
+    >
       {productionRoleCaptureStatuses?.data?.map(
         (prcs: IProductionRoleCaptureStatus) => (
           <ProductionRoleCaptureStatus
