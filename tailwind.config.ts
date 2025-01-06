@@ -67,7 +67,11 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
       fontFamily: {
-        sans: ['FF Mark', 'sans-serif'],
+        markPro: ['var--markPro'],
+				markProRegular: ['var--markProRegular', 'Arial', 'sans-serif'],
+				markProMedium: ['var--markProMedium', 'Arial', 'sans-serif'],
+				markProHeavy: ['var--markProHeavy', 'Arial', 'sans-serif'],
+				markProBold: ['var--markProBold', 'Arial', 'sans-serif'],
       },
   	}
   },

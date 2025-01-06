@@ -59,6 +59,9 @@ export default function Home() {
   const getStatusGradientClass = () => {
     if (stageCaptureStatus.data) {
       return `status-gradient-${stageCaptureStatus.data.status}`;
+    } else {
+      // return "bg-gradient-to-r from-[#0f172a] to-[#334155]";
+      // bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-[#57534e] via-[#a8a29e] to-[#e7e5e4]
     }
   };
 
@@ -75,7 +78,7 @@ export default function Home() {
   }, [user, selectedStageID]);
 
   return (
-    <main>
+    <main className="font-markProRegular">
       {isSignedIn && user && (
         <div
           className={`${stageCaptureStatus ? getStatusGradientClass() : ""} h-screen w-[98.5vw] xl:w-[98vw] flex flex-col`}

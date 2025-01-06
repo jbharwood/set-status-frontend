@@ -124,6 +124,7 @@ export default function TobBar() {
               tooltipText={isWebView ? "Web View" : "Stage View"}
               toggleTooltipText={isWebView ? "Web View" : "Stage View"}
               className="w-1 h-5"
+              variant="secondary"
               onClick={handleWebView}
             />
             <ButtonWithTooltip
@@ -131,6 +132,7 @@ export default function TobBar() {
               tooltipText={isShowChat ? "Show Feed" : "Hide Feed"}
               toggleTooltipText={isShowChat ? "Show Feed" : "Hide Feed"}
               className="w-1 h-5"
+              variant="secondary"
               onClick={() => setIsShowChat(!isShowChat)}
             />
             <ButtonWithTooltip
@@ -147,6 +149,7 @@ export default function TobBar() {
                   : "Capture Status Notes Disabled"
               }
               className="w-1 h-5"
+              variant="secondary"
               onClick={() => setIsNotesEnabled(!isNotesEnabled)}
             />
             <ButtonWithTooltip
@@ -159,6 +162,7 @@ export default function TobBar() {
                 isEditMode ? "Edit Mode Enabled" : "Edit Mode Disabled"
               }
               className="w-1 h-5"
+              variant="secondary"
               onClick={() => setIsEditMode(!isEditMode)}
             />
             {isEditMode && (
@@ -168,12 +172,14 @@ export default function TobBar() {
                   icon={Filter}
                   tooltipText="Filter Production Roles"
                   className="w-1 h-5"
+                  variant="secondary"
                   onClick={() => setIsFilterModalOpen(true)}
                 />
                 <ButtonWithTooltip
                   icon={RefreshCcw}
                   tooltipText="Reset Stage Statuses"
                   className="w-1 h-5"
+                  variant="secondary"
                   onClick={handleResetStageStatuses}
                 />
               </>
