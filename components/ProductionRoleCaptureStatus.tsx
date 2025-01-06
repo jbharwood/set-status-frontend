@@ -133,7 +133,7 @@ export default function ProductionRoleCaptureStatus({
         <div
           className={`${isFirst ? "rounded-tl" : ""} ${isLast ? "rounded-tr" : ""} border border-black bg-slate-700 ${isWebView ? "h-[7.5%]" : "h-[30%]"} w-full flex items-center justify-center truncate flex-nowrap`}
         >
-          <div className={`truncate ${isEditMode ? "ml-1" : ""}`}>
+          <div className={`text-white truncate ${isEditMode ? "ml-1" : ""}`}>
             {production_role_abbreviation}
           </div>
           {isEditMode && (
@@ -141,7 +141,8 @@ export default function ProductionRoleCaptureStatus({
               <ButtonWithTooltip
                 icon={X}
                 tooltipText={`Hide ${production_role_abbreviation}`}
-                className="h-full w-1 bg-red-500"
+                className="h-full w-1"
+                variant={"destructive"}
                 onClick={() => handleHide(productionRoleCaptureStatus)}
               />
             </div>
@@ -160,7 +161,7 @@ export default function ProductionRoleCaptureStatus({
           onClick={() => handleCaptureStatusClick("Red")}
         />
         <div
-          className={`${isFirst ? "rounded-bl" : ""} ${isLast ? "rounded-br" : ""} border border-black bg-slate-800/80 ${isShowChat ? "h-[30%]" : "h-[70%]"} w-full text-center overflow-auto p-1`}
+          className={`${isFirst ? "rounded-bl" : ""} ${isLast ? "rounded-br" : ""} border border-black bg-slate-800/80 ${isShowChat ? "h-[30%]" : "h-[70%]"} w-full text-center text-white overflow-auto p-1`}
         >
           {notes}
         </div>

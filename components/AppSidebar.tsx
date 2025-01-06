@@ -61,11 +61,12 @@ export function AppSidebar() {
     <div className={`${!isWebView ? "hidden-in-fullscreen" : ""}`}>
       <Sidebar>
         <SidebarHeader>
-          <div className="font-bold flex gap-1">
-            <Film />
+          <div className="font-bold flex gap-1 text-2xl items-center">
+            <Film height={30} width={30} />
             Stage Status
           </div>
         </SidebarHeader>
+        <SidebarSeparator />
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupContent>
@@ -109,6 +110,7 @@ export function AppSidebar() {
             </SidebarGroup>
           </Collapsible>
         </SidebarContent>
+        <SidebarSeparator />
         <SidebarFooter>
           <SidebarMenu>
             <SidebarMenuItem>

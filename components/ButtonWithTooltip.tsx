@@ -17,6 +17,14 @@ type ButtonWithTooltipProps = {
   toggleTooltipText?: string;
   onClick?: () => void;
   className?: string;
+  variant?:
+    | "link"
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | null;
 };
 
 const ButtonWithTooltip: React.FC<ButtonWithTooltipProps> = ({
@@ -26,6 +34,7 @@ const ButtonWithTooltip: React.FC<ButtonWithTooltipProps> = ({
   toggleTooltipText,
   onClick,
   className,
+  variant = null,
 }) => {
   const [toggled, setToggled] = useState(false);
 
@@ -34,6 +43,7 @@ const ButtonWithTooltip: React.FC<ButtonWithTooltipProps> = ({
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
+            variant={variant}
             className={className}
             onClick={() => {
               setToggled(!toggled);
