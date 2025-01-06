@@ -153,7 +153,7 @@ export default function ProductionRoleCaptureStatus({
           onClick={() => handleCaptureStatusClick("Green")}
         />
         <div
-          className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${capture_status_id === 3 ? "bg-yellow-500" : "bg-slate-500"} h-[30%] w-full hover:bg-yellow-400`}
+          className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${capture_status_id === 3 ? "bg-amber-500" : "bg-slate-500"} h-[30%] w-full hover:bg-amber-400`}
           onClick={() => handleCaptureStatusClick("Yellow")}
         />
         <div

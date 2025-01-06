@@ -134,6 +134,22 @@ export default function TobBar() {
               onClick={() => setIsShowChat(!isShowChat)}
             />
             <ButtonWithTooltip
+              icon={isNotesEnabled ? NotebookPen : Notebook}
+              toggleIcon={isNotesEnabled ? NotebookPen : Notebook}
+              tooltipText={
+                isNotesEnabled
+                  ? "Capture Status Notes Enabled"
+                  : "Capture Status Notes Disabled"
+              }
+              toggleTooltipText={
+                isNotesEnabled
+                  ? "Capture Status Notes Enabled"
+                  : "Capture Status Notes Disabled"
+              }
+              className="w-1 h-5"
+              onClick={() => setIsNotesEnabled(!isNotesEnabled)}
+            />
+            <ButtonWithTooltip
               icon={isEditMode ? Pen : PenOff}
               toggleIcon={isEditMode ? Pen : PenOff}
               tooltipText={
@@ -148,22 +164,6 @@ export default function TobBar() {
             {isEditMode && (
               <>
                 <Separator orientation="vertical" className="bg-gray-500" />
-                <ButtonWithTooltip
-                  icon={isNotesEnabled ? NotebookPen : Notebook}
-                  toggleIcon={isNotesEnabled ? NotebookPen : Notebook}
-                  tooltipText={
-                    isNotesEnabled
-                      ? "Capture Status Notes Enabled"
-                      : "Capture Status Notes Disabled"
-                  }
-                  toggleTooltipText={
-                    isNotesEnabled
-                      ? "Capture Status Notes Enabled"
-                      : "Capture Status Notes Disabled"
-                  }
-                  className="w-1 h-5"
-                  onClick={() => setIsNotesEnabled(!isNotesEnabled)}
-                />
                 <ButtonWithTooltip
                   icon={Filter}
                   tooltipText="Filter Production Roles"

@@ -45,9 +45,9 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-    --red-500: #ef4444;
-    --green-500: #10b981;
-    --yellow-500: #f59e0b;
+    --red: #ef4444;
+    --green: #10b981;
+    --yellow: #f59e0b;
     --grey-500: #64748b;
   }
   .dark {
@@ -96,13 +96,13 @@
 
   .capture-status-text {
     &.green {
-      color: var(--green-500);
+      color: var(--green);
     }
     &.yellow {
-      color: var(--yellow-500);
+      color: var(--yellow);
     }
     &.red {
-      color: var(--red-500);
+      color: var(--red);
     }
   }
 
@@ -111,25 +111,25 @@
       border-color: var(--focus-color);
     }
     &.green {
-      --focus-color: var(--green-500);
+      --focus-color: var(--green);
     }
     &.yellow {
-      --focus-color: var(--yellow-500);
+      --focus-color: var(--yellow);
     }
     &.red {
-      --focus-color: var(--red-500);
+      --focus-color: var(--red);
     }
   }
 
   .capture-status-bg {
     &.green {
-      background-color: var(--green-500);
+      background-color: var(--green);
     }
     &.yellow {
-      background-color: var(--yellow-500);
+      background-color: var(--yellow);
     }
     &.red {
-      background-color: var(--red-500);
+      background-color: var(--red);
     }
     &.grey {
       background-color: var(--grey-500);
@@ -142,7 +142,7 @@
 }
 
 .status-gradient-yellow {
-  background: linear-gradient(to right, #fde68a, #fbbf24);
+  background: linear-gradient(to right, #fbbf24, #f59e0b);
 }
 
 .status-gradient-red {
