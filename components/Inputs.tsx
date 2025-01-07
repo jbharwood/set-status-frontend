@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { IProductionRoleCaptureStatus } from "@/types/interfaces";
 import { Input } from "./ui/input";
-import { Button } from "./ui/button";
 import { useUser } from "@clerk/nextjs";
 import { useSelectedStageIDStore } from "@/stores";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";

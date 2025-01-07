@@ -75,7 +75,7 @@ export default function Home() {
         room: selectedStageID,
       });
     }
-  }, [user, selectedStageID]);
+  }, [user, selectedStageID, socket]);
 
   return (
     <main className="font-markProRegular">

@@ -8,7 +8,7 @@ type MessageProps = {
   type: IMessage["type"];
 };
 
-export default function Message({ content, type }: MessageProps) {
+export default function Message({ content }: MessageProps) {
   const {
     last_modified_by,
     notes,

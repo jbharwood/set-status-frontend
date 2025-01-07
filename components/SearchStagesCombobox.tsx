@@ -59,7 +59,7 @@ export default function SearchStagesCombobox() {
         stages.data?.find((stage: IStage) => stage.id === selectedStageID)?.name
       );
     }
-  }, [selectedStageID]);
+  }, [selectedStageID, stages.data]);
 
   function handleSelect(currentValue: string, stage: IStage) {
     socket?.emit("leave_room", selectedStageID);
