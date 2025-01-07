@@ -8,14 +8,14 @@ export async function getProductionRoleCaptureStatuses(params?: { company_id?: n
   if (params?.is_active !== undefined) queryParams.append("is_active", params.is_active.toString());
 
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/productionRoleCaptureStatuses?${queryParams.toString()}`
+    `${process.env.NEXT_PUBLIC_API_URL}/productionRoleCaptureStatuses?${queryParams.toString()}`
   );
   return response.data;
 }
 
 export async function getProductionRoleCaptureStatusById(id: number) {
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/productionRoleCaptureStatuses/${id.toString()}`
+    `${process.env.NEXT_PUBLIC_API_URL}/productionRoleCaptureStatuses/${id.toString()}`
   );
   return response.data;
 }
@@ -28,7 +28,7 @@ export async function getProductionRoleCaptureStatusesHistory(params: { company_
   queryParams.append("stage_id", stage_id.toString());
          
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/productionrolecapturestatuseshistory?${queryParams.toString()}`
+    `${process.env.NEXT_PUBLIC_API_URL}/productionrolecapturestatuseshistory?${queryParams.toString()}`
   );
   return response.data;
 }
@@ -38,7 +38,7 @@ export async function getStages(company_id?: number) {
   if (company_id) queryParams.append("company_id", company_id.toString());
 
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stages?${queryParams.toString()}`
+    `${process.env.NEXT_PUBLIC_API_URL}/stages?${queryParams.toString()}`
   );
   return response.data;
 }
@@ -49,7 +49,7 @@ export async function getStageCaptureStatus(stage_id: number, company_id: number
   queryParams.append("company_id", company_id.toString());
 
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stageCaptureStatuses?${queryParams.toString()}`
+    `${process.env.NEXT_PUBLIC_API_URL}/stageCaptureStatuses?${queryParams.toString()}`
   );
   return response.data;
 }
@@ -58,7 +58,7 @@ export async function updateProductionRoleCaptureStatus(
   productionRoleCaptureStatus: IProductionRoleCaptureStatus
 ) {
   const response = await axios.put(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/productionRoleCaptureStatuses/${productionRoleCaptureStatus.id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/productionRoleCaptureStatuses/${productionRoleCaptureStatus.id}`,
     productionRoleCaptureStatus
   );
   return response.data;
