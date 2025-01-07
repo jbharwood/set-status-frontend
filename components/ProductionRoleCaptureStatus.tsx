@@ -55,6 +55,7 @@ export default function ProductionRoleCaptureStatus({
         queryKey: [
           ["productionRoleCaptureStatuses", "list"],
           ["productionRoleCaptureStatusesHistory", "list"],
+          ["stageCaptureStatus", "single"],
         ],
       });
     },

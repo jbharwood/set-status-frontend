@@ -44,6 +44,7 @@ export default function Inputs() {
         queryKey: [
           ["productionRoleCaptureStatuses", "list"],
           ["productionRoleCaptureStatusesHistory", "list"],
+          ["stageCaptureStatus", "single"],
         ],
       });
     },
