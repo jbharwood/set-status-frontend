@@ -60,6 +60,7 @@ export default function Home() {
     if (stageCaptureStatus.data) {
       return `status-gradient-${stageCaptureStatus.data.status}`;
     } else {
+      //test
       // return "bg-gradient-to-r from-[#0f172a] to-[#334155]";
       // bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-[#57534e] via-[#a8a29e] to-[#e7e5e4]
     }
