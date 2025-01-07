@@ -65,7 +65,7 @@ export function AppSidebar() {
             className={`font-bold font-markProHeavy flex gap-1 text-2xl items-center`}
           >
             <Film height={30} width={30} />
-            Stage Status
+            Set Status
           </div>
         </SidebarHeader>
         <SidebarSeparator />
