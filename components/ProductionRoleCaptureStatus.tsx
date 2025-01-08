@@ -94,7 +94,7 @@ export default function ProductionRoleCaptureStatus({
     productionRoleCaptureStatus: IProductionRoleCaptureStatus
   ) {
     setNotifyModalEvent({
-      eventName: `Hide ${productionRole.name}`,
+      eventName: `Hide ${productionRole.abbreviation}`,
       eventPrompt: `Are you sure you want to hide ${productionRole.name}?`,
       cb: () => {
         const temp = { ...productionRoleCaptureStatus };
