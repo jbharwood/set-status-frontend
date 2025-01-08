@@ -21,7 +21,7 @@ import { useSearchParams } from "next/navigation";
 
 export default function Stages() {
   const stages = useQuery({
-    queryKey: ["stages", "list", { company_id: 1 }],
+    queryKey: ["stages", "list", { companyId: 1 }],
     queryFn: () => getStages(1),
   });
   const selectedStageID = useSelectedStageIDStore(

@@ -4,7 +4,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 interface IconWithTooltipProps {
   icon: LucideIcon;
   tooltipText: string;
-  color?: string; // New prop for color
+  color?: string;
 }
 
 export default function IconWithTooltip({

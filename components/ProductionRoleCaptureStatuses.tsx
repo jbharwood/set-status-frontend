@@ -14,14 +14,14 @@ export default function ProductionRoleCaptureStatuses() {
     queryKey: [
       "productionRoleCaptureStatuses",
       "list",
-      { company_id: 1, stage_id: selectedStageID, is_active: true },
+      { companyId: 1, stageId: selectedStageID, isActive: true },
     ],
     queryFn: () =>
       selectedStageID !== null
         ? getProductionRoleCaptureStatuses({
-            company_id: 1,
-            stage_id: selectedStageID,
-            is_active: true,
+            companyId: 1,
+            stageId: selectedStageID,
+            isActive: true,
           })
         : Promise.resolve([]),
   });

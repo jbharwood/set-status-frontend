@@ -1,11 +1,11 @@
 import { IProductionRoleCaptureStatus } from "@/types/interfaces";
 import axios from "axios";
 
-export async function getProductionRoleCaptureStatuses(params?: { company_id?: number, stage_id?: number, is_active?: boolean }) {
+export async function getProductionRoleCaptureStatuses(params?: { companyId?: number, stageId?: number, isActive?: boolean }) {
   const queryParams = new URLSearchParams();
-  if (params?.company_id) queryParams.append("company_id", params.company_id.toString());
-  if (params?.stage_id) queryParams.append("stage_id", params.stage_id.toString());
-  if (params?.is_active !== undefined) queryParams.append("is_active", params.is_active.toString());
+  if (params?.companyId) queryParams.append("companyId", params.companyId.toString());
+  if (params?.stageId) queryParams.append("stageId", params.stageId.toString());
+  if (params?.isActive !== undefined) queryParams.append("isActive", params.isActive.toString());
 
   const response = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/api/v1/productionRoleCaptureStatuses?${queryParams.toString()}`
@@ -20,12 +20,12 @@ export async function getProductionRoleCaptureStatusById(id: number) {
   return response.data;
 }
 
-export async function getProductionRoleCaptureStatusesHistory(params: { company_id: number, stage_id: number }) {
+export async function getProductionRoleCaptureStatusesHistory(params: { companyId: number, stageId: number }) {
   const queryParams = new URLSearchParams();
-  const { company_id, stage_id } = params;
+  const { companyId, stageId } = params;
 
-  queryParams.append("company_id", company_id.toString());
-  queryParams.append("stage_id", stage_id.toString());
+  queryParams.append("companyId", companyId.toString());
+  queryParams.append("stageId", stageId.toString());
          
   const response = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/api/v1/productionrolecapturestatuseshistory?${queryParams.toString()}`
@@ -33,9 +33,9 @@ export async function getProductionRoleCaptureStatusesHistory(params: { company_
   return response.data;
 }
 
-export async function getStages(company_id?: number) {
+export async function getStages(companyId?: number) {
   const queryParams = new URLSearchParams();
-  if (company_id) queryParams.append("company_id", company_id.toString());
+  if (companyId) queryParams.append("companyId", companyId.toString());
 
   const response = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stages?${queryParams.toString()}`
@@ -43,10 +43,10 @@ export async function getStages(company_id?: number) {
   return response.data;
 }
 
-export async function getStageCaptureStatus(stage_id: number, company_id: number) {
+export async function getStageCaptureStatus(stageId: number, companyId: number) {
   const queryParams = new URLSearchParams();
-  queryParams.append("stage_id", stage_id.toString());
-  queryParams.append("company_id", company_id.toString());
+  queryParams.append("stageId", stageId.toString());
+  queryParams.append("companyId", companyId.toString());
 
   const response = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stageCaptureStatuses?${queryParams.toString()}`

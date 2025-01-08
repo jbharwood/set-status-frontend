@@ -97,7 +97,7 @@ export function AppSidebar() {
                 />
               </SidebarGroupAction>
               <SidebarGroupLabel asChild>
-                <CollapsibleTrigger className="font-markProMedium">
+                <CollapsibleTrigger className="font-markProMedium text-slate-500">
                   Stages
                   <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
                 </CollapsibleTrigger>

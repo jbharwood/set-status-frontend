@@ -48,7 +48,7 @@ export default function Home() {
     queryKey: [
       "stageCaptureStatus",
       "single",
-      { stage_id: selectedStageID, company_id: 1 },
+      { stageId: selectedStageID, companyId: 1 },
     ],
     queryFn: () =>
       selectedStageID !== null

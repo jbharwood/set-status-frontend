@@ -16,6 +16,7 @@ import { X } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateProductionRoleCaptureStatus } from "@/apiRequests";
 import { Badge } from "./ui/badge";
+import { useUser } from "@clerk/nextjs";
 
 type ProductionCaptureStatusProps = {
   productionRoleCaptureStatus: IProductionRoleCaptureStatus;
@@ -28,12 +29,7 @@ export default function ProductionRoleCaptureStatus({
   isFirst = false,
   isLast = false,
 }: ProductionCaptureStatusProps) {
-  const {
-    production_role_abbreviation,
-    production_role_name,
-    capture_status_id,
-    notes,
-  } = productionRoleCaptureStatus;
+  const { productionRole, captureStatus, notes } = productionRoleCaptureStatus;
   const isNotesEnabled = useIsNotesEnabledStore(
     (state) => state.isNotesEnabled
   );
@@ -46,6 +42,7 @@ export default function ProductionRoleCaptureStatus({
   const setEditModalEvent = useEditModalEventStore(
     (state) => state.setEditModalEvent
   );
+  const { user } = useUser();
 
   const queryClient = useQueryClient();
   const productionRoleCaptureStatusMutation = useMutation({
@@ -61,25 +58,29 @@ export default function ProductionRoleCaptureStatus({
     },
   });
 
-  function handleCaptureStatusClick(captureStatus: CaptureStatus) {
-    if (!isEditMode || !captureStatus) return;
+  function handleCaptureStatusClick(status: CaptureStatus) {
+    if (!isEditMode || !status) return;
 
     const temp = { ...productionRoleCaptureStatus };
 
+    if (user?.fullName) {
+      temp.lastModifiedBy = user.fullName;
+    }
+
     if (!isNotesEnabled) {
-      temp.capture_status_id = captureStatusIdMap[captureStatus];
+      temp.captureStatusId = captureStatusIdMap[status];
       temp.notes = `Production Role Capture Status updated`;
       productionRoleCaptureStatusMutation.mutate(temp);
     } else {
       temp.notes =
-        capture_status_id === captureStatusIdMap[captureStatus] &&
+        captureStatus.id === captureStatusIdMap[status] &&
         notes !== "Production Role Capture Status updated"
           ? notes
           : "";
 
       setEditModalEvent({
         productionRoleCaptureStatus: temp,
-        captureStatus: captureStatus,
+        captureStatus: status,
         cb: (prcs) => {
           if (prcs) {
             productionRoleCaptureStatusMutation.mutate(prcs);
@@ -93,34 +94,35 @@ export default function ProductionRoleCaptureStatus({
     productionRoleCaptureStatus: IProductionRoleCaptureStatus
   ) {
     setNotifyModalEvent({
-      eventName: `Hide ${production_role_name}`,
-      eventPrompt: `Are you sure you want to hide ${production_role_name}?`,
+      eventName: `Hide ${productionRole.name}`,
+      eventPrompt: `Are you sure you want to hide ${productionRole.name}?`,
       cb: () => {
         const temp = { ...productionRoleCaptureStatus };
-        temp.is_active = false;
+        temp.isActive = false;
         temp.notes = "Production Role Capture Status is hidden";
+        if (user?.fullName) {
+          temp.lastModifiedBy = user.fullName;
+        }
         productionRoleCaptureStatusMutation.mutate(temp);
       },
     });
   }
 
-  const capture_status_name =
-    captureStatusNameMap[
-      capture_status_id as keyof typeof captureStatusNameMap
-    ];
+  const captureStatusName =
+    captureStatusNameMap[captureStatus.id as keyof typeof captureStatusNameMap];
 
   if (!isWebView) {
     return (
       <div className={`flex flex-row w-full`}>
         <div
-          className={`w-full h-32 flex capture-status-bg ${capture_status_name.toLowerCase()} border-2 border-black rounded`}
+          className={`w-full h-32 flex capture-status-bg ${captureStatusName.toLowerCase()} border-2 border-black rounded`}
         >
           <div className="flex w-full h-full ml-auto p-2 justify-center items-center text-black">
             <div className="truncate text-9xl">
-              {production_role_abbreviation}
+              {productionRole.abbreviation}
             </div>{" "}
             <Badge className="h-full w-52 text-9xl ml-auto justify-center items-center">
-              {capture_status_name[0]}
+              {captureStatusName[0]}
             </Badge>
           </div>
         </div>
@@ -135,13 +137,13 @@ export default function ProductionRoleCaptureStatus({
           className={`${isFirst ? "rounded-tl" : ""} ${isLast ? "rounded-tr" : ""} border border-black bg-slate-700 ${isWebView ? "h-[7.5%]" : "h-[30%]"} w-full flex items-center justify-center truncate flex-nowrap`}
         >
           <div className={`text-white truncate ${isEditMode ? "ml-1" : ""}`}>
-            {production_role_abbreviation}
+            {productionRole.abbreviation}
           </div>
           {isEditMode && (
             <div className="ml-auto mt-0.5 justify-center">
               <ButtonWithTooltip
                 icon={X}
-                tooltipText={`Hide ${production_role_abbreviation}`}
+                tooltipText={`Hide ${productionRole.abbreviation}`}
                 className="h-full w-1"
                 variant={"destructive"}
                 onClick={() => handleHide(productionRoleCaptureStatus)}
@@ -150,15 +152,15 @@ export default function ProductionRoleCaptureStatus({
           )}
         </div>
         <div
-          className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${capture_status_id === 2 ? "bg-green-500" : "bg-slate-500"} h-[30%] w-full hover:bg-green-400`}
+          className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${captureStatus.id === 2 ? "bg-green-500" : "bg-slate-500"} h-[30%] w-full hover:bg-green-400`}
           onClick={() => handleCaptureStatusClick("Green")}
         />
         <div
-          className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${capture_status_id === 3 ? "bg-amber-500" : "bg-slate-500"} h-[30%] w-full hover:bg-amber-400`}
+          className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${captureStatus.id === 3 ? "bg-amber-500" : "bg-slate-500"} h-[30%] w-full hover:bg-amber-400`}
           onClick={() => handleCaptureStatusClick("Yellow")}
         />
         <div
-          className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${capture_status_id === 4 ? "bg-red-500" : "bg-slate-500"} h-[30%] w-full hover:bg-red-400`}
+          className={`border ${isEditMode ? "cursor-pointer" : "cursor-default"} border-black ${captureStatus.id === 4 ? "bg-red-500" : "bg-slate-500"} h-[30%] w-full hover:bg-red-400`}
           onClick={() => handleCaptureStatusClick("Red")}
         />
         <div

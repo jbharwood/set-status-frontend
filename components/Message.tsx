@@ -10,24 +10,25 @@ type MessageProps = {
 
 export default function Message({ content }: MessageProps) {
   const {
-    last_modified_by,
+    lastModifiedBy,
     notes,
-    formatted_last_modified_time,
-    capture_status_name,
-    production_role_abbreviation,
+    lastModifiedTime,
+    captureStatus,
+    productionRole,
   } = content;
+  const { name: captureStatusName } = captureStatus;
+  const { abbreviation } = productionRole;
+  const localTime = new Date(lastModifiedTime).toLocaleString();
 
   return (
     <div className="bg-slate-200/80 dark:bg-black/50 border-slate-200 rounded-md break-words mt-1">
       <div className="flex gap-2 p-1">
         <div
-          className={`capture-status-bg ${capture_status_name?.toLowerCase()} rounded-full h-6 w-6`}
+          className={`capture-status-bg ${captureStatusName?.toLowerCase()} rounded-full h-6 w-6`}
         />
-        <span className="text-gray-600 dark:text-gray-300">
-          {formatted_last_modified_time}
-        </span>{" "}
+        <span className="text-gray-600 dark:text-gray-300">{localTime}</span>{" "}
         {""}
-        {last_modified_by} ({production_role_abbreviation}): {notes}
+        {lastModifiedBy} ({abbreviation}): {notes}
       </div>
     </div>
   );

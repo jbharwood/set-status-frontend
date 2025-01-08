@@ -44,7 +44,7 @@ export default function EditModal() {
   function onSubmit(data: { notes: string }) {
     if (captureStatus && productionRoleCaptureStatus) {
       const temp = { ...productionRoleCaptureStatus };
-      temp.capture_status_id = captureStatusIdMap[captureStatus];
+      temp.captureStatusId = captureStatusIdMap[captureStatus];
       temp.notes = data.notes
         ? data.notes
         : "Production Role Capture Status updated";
@@ -74,7 +74,7 @@ export default function EditModal() {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>
-            Edit {productionRoleCaptureStatus?.production_role_name}{" "}
+            Edit {productionRoleCaptureStatus?.productionRole.name}{" "}
             <span
               className={`capture-status-text ${captureStatus?.toLowerCase()}`}
             >

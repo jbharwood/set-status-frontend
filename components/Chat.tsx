@@ -17,13 +17,13 @@ export default function Chat() {
     queryKey: [
       "productionRoleCaptureStatusesHistory",
       "list",
-      { company_id: 1, stage_id: selectedStageID },
+      { companyId: 1, stageId: selectedStageID },
     ],
     queryFn: () =>
       selectedStageID !== null
         ? getProductionRoleCaptureStatusesHistory({
-            company_id: 1,
-            stage_id: selectedStageID,
+            companyId: 1,
+            stageId: selectedStageID,
           })
         : Promise.resolve([]),
   });

@@ -21,18 +21,19 @@ export default function Inputs() {
   );
 
   const queryClient = useQueryClient();
+
   const productionRoleCaptureStatuses = useQuery({
     queryKey: [
       "productionRoleCaptureStatuses",
       "list",
-      { company_id: 1, stage_id: selectedStageID, is_active: false },
+      { companyId: 1, stageId: selectedStageID, isActive: false },
     ],
     queryFn: () =>
       selectedStageID !== null
         ? getProductionRoleCaptureStatuses({
-            company_id: 1,
-            stage_id: selectedStageID,
-            is_active: false,
+            companyId: 1,
+            stageId: selectedStageID,
+            isActive: false,
           })
         : Promise.resolve([]),
   });
@@ -55,10 +56,13 @@ export default function Inputs() {
       const productionRoleCaptureStatus =
         productionRoleCaptureStatuses.data?.find(
           (prcs: IProductionRoleCaptureStatus) =>
-            prcs.production_role_name === "Server"
+            prcs.productionRole.name === "Server"
         );
       const temp = { ...productionRoleCaptureStatus };
       temp.notes = input;
+      if (user?.fullName) {
+        temp.lastModifiedBy = user.fullName;
+      }
 
       productionRoleCaptureStatusMutation.mutate(temp);
       setInput("");

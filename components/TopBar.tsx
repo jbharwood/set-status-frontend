@@ -30,6 +30,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { IProductionRoleCaptureStatus } from "@/types/interfaces";
 import { useSearchParams } from "next/navigation";
 import { Separator } from "./ui/separator";
+import { useUser } from "@clerk/nextjs";
 
 export default function TobBar() {
   const selectedStageID = useSelectedStageIDStore(
@@ -53,6 +54,7 @@ export default function TobBar() {
   const setIsFilterModalOpen = useIsFilterModalOpenStore(
     (state) => state.setIsFilterModalOpen
   );
+  const { user } = useUser();
   const searchParams = useSearchParams();
 
   const queryClient = useQueryClient();
@@ -73,14 +75,14 @@ export default function TobBar() {
     queryKey: [
       "productionRoleCaptureStatuses",
       "list",
-      { company_id: 1, stage_id: selectedStageID, is_active: true },
+      { companyId: 1, stageId: selectedStageID, isActive: true },
     ],
     queryFn: () =>
       selectedStageID !== null
         ? getProductionRoleCaptureStatuses({
-            company_id: 1,
-            stage_id: selectedStageID,
-            is_active: true,
+            companyId: 1,
+            stageId: selectedStageID,
+            isActive: true,
           })
         : Promise.resolve([]),
   });
@@ -95,7 +97,10 @@ export default function TobBar() {
           (prcs: IProductionRoleCaptureStatus) => {
             const temp = { ...prcs };
             temp.notes = "Production Role Capture Statuses reset";
-            temp.capture_status_id = 3;
+            temp.captureStatusId = 3;
+            if (user?.fullName) {
+              temp.lastModifiedBy = user.fullName;
+            }
             productionRoleCaptureStatusMutation.mutate(temp);
           }
         );

@@ -18,6 +18,7 @@ import {
   getProductionRoleCaptureStatusById,
   updateProductionRoleCaptureStatus,
 } from "@/apiRequests/stageStatus";
+import { useUser } from "@clerk/nextjs";
 
 export default function FilterModal() {
   const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
@@ -30,6 +31,7 @@ export default function FilterModal() {
   const setIsFilterModalOpen = useIsFilterModalOpenStore(
     (state) => state.setIsFilterModalOpen
   );
+  const { user } = useUser();
 
   const queryClient = useQueryClient();
   const productionRoleCaptureStatusMutation = useMutation({
@@ -49,14 +51,14 @@ export default function FilterModal() {
     queryKey: [
       "productionRoleCaptureStatuses",
       "list",
-      { company_id: 1, stage_id: selectedStageID, is_active: true },
+      { companyId: 1, stageId: selectedStageID, isActive: true },
     ],
     queryFn: () =>
       selectedStageID !== null
         ? getProductionRoleCaptureStatuses({
-            company_id: 1,
-            stage_id: selectedStageID,
-            is_active: true,
+            companyId: 1,
+            stageId: selectedStageID,
+            isActive: true,
           })
         : Promise.resolve([]),
   });
@@ -65,21 +67,21 @@ export default function FilterModal() {
     queryKey: [
       "productionRoleCaptureStatuses",
       "list",
-      { company_id: 1, stage_id: selectedStageID },
+      { companyId: 1, stageId: selectedStageID },
     ],
     queryFn: () =>
       selectedStageID !== null
         ? getProductionRoleCaptureStatuses({
-            company_id: 1,
-            stage_id: selectedStageID,
+            companyId: 1,
+            stageId: selectedStageID,
           })
         : Promise.resolve([]),
     select: (data) => {
       const options = data.map(
         (prod: IProductionRoleCaptureStatus): Option => ({
           value: prod.id?.toString() || "",
-          label: prod.production_role_abbreviation,
-          is_active: prod.is_active,
+          label: prod.productionRole.abbreviation,
+          isActive: prod.isActive,
         })
       );
       return options;
@@ -119,15 +121,18 @@ export default function FilterModal() {
 
   async function updateIsActive(id: string, notes: string) {
     const status = await getProductionRoleCaptureStatusById(parseInt(id));
-    status.is_active = !status.is_active;
+    status.isActive = !status.isActive;
     status.notes = notes;
     status.capture_status_id = 3;
+    if (user?.fullName) {
+      status.lastModifiedBy = user.fullName;
+    }
     productionRoleCaptureStatusMutation.mutate(status);
   }
 
   useEffect(() => {
     const activeData = productionRoleCaptureStatusesOptions.data?.filter(
-      (prcs: IProductionRoleCaptureStatus) => prcs.is_active
+      (prcs: IProductionRoleCaptureStatus) => prcs.isActive
     );
     setSelectedOptions(activeData);
   }, [productionRoleCaptureStatusesOptions.data]);
