@@ -49,7 +49,7 @@ export async function getStageCaptureStatus(stageId: number, companyId: number) 
   queryParams.append("companyId", companyId.toString());
 
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stageCaptureStatuses?${queryParams.toString()}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/stageCaptureStatus?${queryParams.toString()}`
   );
   return response.data;
 }

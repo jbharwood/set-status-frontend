@@ -28,8 +28,6 @@ export interface IProductionRoleCaptureStatus {
 export interface IProductionRoleCaptureStatusesHistory extends IProductionRoleCaptureStatus {
   id: number;
   productionRoleCaptureStatusId: number;
-  historyTime: string;
-  formattedLastModifiedTime: string;
 }
 
 export interface IProductionRole {
