@@ -7,8 +7,8 @@ import useIsWebViewStore from "@/stores/useIsWebViewStore";
 
 export default function useSearchParamsHandler() {
   const searchParams = useSearchParams();
-  const stageID = searchParams.get("stageID");
-  const isWebView = searchParams.get("isWebView");
+  const stageID = searchParams.get("stage");
+  const isWebView = searchParams.get("web");
   const setSelectedStageID = useSelectedStageIDStore(
     (state) => state.setSelectedStageID
   );
@@ -19,7 +19,7 @@ export default function useSearchParamsHandler() {
       setSelectedStageID(parseInt(stageID));
     } else {
       const newSearchParams = new URLSearchParams(searchParams.toString());
-      newSearchParams.delete("stageID");
+      newSearchParams.delete("stage");
       const newSearchString = newSearchParams.toString();
       const newUrl = newSearchString
         ? `?${newSearchString}`
@@ -35,7 +35,7 @@ export default function useSearchParamsHandler() {
       setIsWebView(false);
     } else {
       const newSearchParams = new URLSearchParams(searchParams.toString());
-      newSearchParams.delete("isWebView");
+      newSearchParams.delete("web");
       const newSearchString = newSearchParams.toString();
       const newUrl = newSearchString
         ? `?${newSearchString}`

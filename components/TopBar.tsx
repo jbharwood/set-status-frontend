@@ -110,7 +110,7 @@ export default function TobBar() {
 
   function handleWebView() {
     const newSearchParams = new URLSearchParams(searchParams.toString());
-    newSearchParams.set("isWebView", (!isWebView).toString());
+    newSearchParams.set("web", (!isWebView).toString());
     window.history.replaceState(null, "", `?${newSearchParams.toString()}`);
     setIsWebView(!isWebView);
   }

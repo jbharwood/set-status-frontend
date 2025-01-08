@@ -35,7 +35,7 @@ export default function Stages() {
   function handleClick(stageID: number) {
     const newSearchParams = new URLSearchParams(searchParams.toString());
     setSelectedStageID(stageID);
-    newSearchParams.set("stageID", stageID.toString());
+    newSearchParams.set("stage", stageID.toString());
     window.history.replaceState(null, "", `?${newSearchParams.toString()}`);
   }
 

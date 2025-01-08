@@ -68,12 +68,12 @@ export default function SearchStagesCombobox() {
     if (currentValue === value) {
       setValue("");
       setSelectedStageID(null);
-      newSearchParams.delete("stageID");
+      newSearchParams.delete("stage");
       window.history.replaceState(null, "", `?${newSearchParams.toString()}`);
     } else {
       setValue(currentValue);
       setSelectedStageID(stage.id);
-      newSearchParams.set("stageID", stage.id.toString());
+      newSearchParams.set("stage", stage.id.toString());
       window.history.replaceState(null, "", `?${newSearchParams.toString()}`);
     }
     setOpen(false);
