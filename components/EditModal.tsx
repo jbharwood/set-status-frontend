@@ -92,9 +92,9 @@ export default function EditModal() {
           setStatus(null);
         }}
       >
-        <DialogContent className="!max-w-[80vw] h-[80vh]">
+        <DialogContent className="!max-w-[80vw]">
           <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className="h-[px]">
               Edit {productionRoleCaptureStatus?.productionRole.name}{" "}
               <span
                 className={`capture-status-text ${captureStatus?.toLowerCase()}`}
