@@ -77,13 +77,18 @@ export default function FilterModal() {
           })
         : Promise.resolve([]),
     select: (data) => {
-      const options = data.map(
-        (prod: IProductionRoleCaptureStatus): Option => ({
-          value: prod.id?.toString() || "",
-          label: prod.productionRole.abbreviation,
-          isActive: prod.isActive,
-        })
-      );
+      const options = data
+        .filter(
+          (prod: IProductionRoleCaptureStatus) =>
+            prod.productionRole.name !== "Server"
+        )
+        .map(
+          (prod: IProductionRoleCaptureStatus): Option => ({
+            value: prod.id?.toString() || "",
+            label: prod.productionRole.abbreviation,
+            isActive: prod.isActive,
+          })
+        );
       return options;
     },
   });
@@ -146,7 +151,7 @@ export default function FilterModal() {
             setIsFilterModalOpen(false);
           }}
         >
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-[425px] mt-[-100px]">
             <DialogHeader>
               <DialogTitle>Filter Production Roles</DialogTitle>
             </DialogHeader>

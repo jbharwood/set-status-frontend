@@ -144,7 +144,7 @@ export default function ProductionRoleCaptureStatus({
             <div className="truncate text-9xl">
               {productionRole.abbreviation}
             </div>{" "}
-            <Badge className="h-full w-52 text-9xl ml-auto justify-center items-center">
+            <Badge className="h-full w-52 text-9xl text-black bg-white ml-auto justify-center items-center">
               {captureStatusName[0]}
             </Badge>
           </div>

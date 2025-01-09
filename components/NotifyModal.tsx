@@ -26,7 +26,7 @@ export default function NotifyModal() {
         setNotifyModalEvent({ eventName: "", eventPrompt: "", cb: () => {} });
       }}
     >
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] mt-[-100px]">
         <DialogHeader>
           <DialogTitle>{eventName}</DialogTitle>
         </DialogHeader>

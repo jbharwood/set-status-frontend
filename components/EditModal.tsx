@@ -179,7 +179,7 @@ export default function EditModal() {
         reset();
       }}
     >
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] mt-[-100px]">
         <DialogHeader>
           <DialogTitle>
             Edit {productionRoleCaptureStatus?.productionRole.name}{" "}
