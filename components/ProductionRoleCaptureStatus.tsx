@@ -59,7 +59,23 @@ export default function ProductionRoleCaptureStatus({
   });
 
   function handleCaptureStatusClick(status: CaptureStatus) {
-    if (!isEditMode || !status) return;
+    if (!isEditMode) return;
+
+    if (!isWebView) {
+      setEditModalEvent({
+        productionRoleCaptureStatus: productionRoleCaptureStatus,
+        captureStatus: status,
+        cb: (prcs) => {
+          if (prcs) {
+            productionRoleCaptureStatusMutation.mutate(prcs);
+          }
+        },
+      });
+
+      return;
+    }
+
+    if (!status) return;
 
     const temp = { ...productionRoleCaptureStatus };
 
@@ -113,7 +129,14 @@ export default function ProductionRoleCaptureStatus({
 
   if (!isWebView) {
     return (
-      <div className={`flex flex-row w-full`}>
+      <div
+        className={`flex flex-row w-full ${!isWebView ? "cursor-pointer" : "cursor-default"}`}
+        onClick={() =>
+          handleCaptureStatusClick(
+            productionRoleCaptureStatus.captureStatus.name
+          )
+        }
+      >
         <div
           className={`w-full h-32 flex capture-status-bg ${captureStatusName.toLowerCase()} border-2 border-black rounded`}
         >
