@@ -130,7 +130,7 @@ export default function ProductionRoleCaptureStatus({
   if (!isWebView) {
     return (
       <div
-        className={`flex flex-row w-full ${!isWebView ? "cursor-pointer" : "cursor-default"}`}
+        className={`flex flex-row w-full ${isEditMode ? "cursor-pointer" : "cursor-default"}`}
         onClick={() =>
           handleCaptureStatusClick(
             productionRoleCaptureStatus.captureStatus.name
