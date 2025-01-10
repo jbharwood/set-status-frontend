@@ -95,7 +95,6 @@ export default function FilterModal() {
 
   async function handleFilterChange(data: Option[]) {
     if (data.length === 0) {
-      console.log(selectedOptions);
       selectedOptions.forEach((prcs: Option) => {
         updateIsActive(
           prcs.value.toString() || "",

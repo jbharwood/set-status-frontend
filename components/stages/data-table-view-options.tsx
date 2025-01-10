@@ -15,12 +15,10 @@ import {
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;
-  labelProp?: string;
 }
 
 export function DataTableViewOptions<TData>({
   table,
-  labelProp = "id",
 }: DataTableViewOptionsProps<TData>) {
   return (
     <DropdownMenu>
