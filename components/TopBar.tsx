@@ -116,7 +116,7 @@ export default function TobBar() {
   }
 
   return (
-    <div className="bg-white dark:bg-sidebar shadow h-10 w-full">
+    <header className="bg-white dark:bg-sidebar shadow h-10 w-full">
       <div className="flex gap-2 ml-4">
         <div className="w-full flex-1 md:w-auto md:flex-none mt-1">
           <SearchStagesCombobox />
@@ -193,6 +193,6 @@ export default function TobBar() {
           </div>
         )}
       </div>
-    </div>
+    </header>
   );
 }

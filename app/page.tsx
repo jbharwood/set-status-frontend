@@ -24,6 +24,7 @@ import { useSocketHandler, useSearchParamsHandler } from "@/hooks";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getStageCaptureStatus } from "@/apiRequests/stageStatus";
+import StageTable from "@/components/stages/page";
 
 export default function Home() {
   const { isSignedIn, user } = useUser();
@@ -59,10 +60,6 @@ export default function Home() {
   const getStatusGradientClass = () => {
     if (stageCaptureStatus.data) {
       return `status-gradient-${stageCaptureStatus.data.status}`;
-    } else {
-      //test
-      // return "bg-gradient-to-r from-[#0f172a] to-[#334155]";
-      // bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-[#57534e] via-[#a8a29e] to-[#e7e5e4]
     }
   };
 
@@ -84,8 +81,17 @@ export default function Home() {
         <div
           className={`${stageCaptureStatus ? getStatusGradientClass() : ""} h-screen w-[98.5vw] xl:w-[98vw] flex flex-col`}
         >
-          <div className={`${!isWebView ? "hidden-in-fullscreen" : ""}`}>
-            <TopBar />
+          <div className={!selectedStageID ? "flex flex-col flex-1" : ""}>
+            <div className={`${!isWebView ? "hidden-in-fullscreen" : ""}`}>
+              <TopBar />
+            </div>
+            {!selectedStageID && (
+              <div className="flex flex-1 flex-col gap-4 p-4 pt-0 mt-3">
+                <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
+                  <StageTable />
+                </div>
+              </div>
+            )}
           </div>
           {selectedStageID && (
             <>

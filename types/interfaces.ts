@@ -25,7 +25,8 @@ export interface IProductionRoleCaptureStatus {
   captureStatus: ICaptureStatus;
 }
 
-export interface IProductionRoleCaptureStatusesHistory extends IProductionRoleCaptureStatus {
+export interface IProductionRoleCaptureStatusesHistory
+  extends IProductionRoleCaptureStatus {
   id: number;
   productionRoleCaptureStatusId: number;
 }
@@ -40,8 +41,5 @@ export interface IStage {
   id: number;
   name: string;
   companyId: number;
-  streetAddress: string;
-  city: string;
-  state: string;
-  country: string;
+  status: CaptureStatus;
 }
