@@ -94,6 +94,17 @@ export default function FilterModal() {
   });
 
   async function handleFilterChange(data: Option[]) {
+    if (data.length === 0) {
+      console.log(selectedOptions);
+      selectedOptions.forEach((prcs: Option) => {
+        updateIsActive(
+          prcs.value.toString() || "",
+          "Production Role Capture Status is hidden"
+        );
+      });
+      return;
+    }
+
     setSelectedOptions(data);
 
     const nonMatchingValue = data.filter(
@@ -128,7 +139,7 @@ export default function FilterModal() {
     const status = await getProductionRoleCaptureStatusById(parseInt(id));
     status.isActive = !status.isActive;
     status.notes = notes;
-    status.capture_status_id = 3;
+    status.captureStatusId = 3;
     if (user?.fullName) {
       status.lastModifiedBy = user.fullName;
     }
@@ -156,9 +167,7 @@ export default function FilterModal() {
               <DialogTitle>Filter Production Roles</DialogTitle>
             </DialogHeader>
             <VisuallyHidden>
-              <DialogDescription>
-                Edit Production Role Capture Status
-              </DialogDescription>
+              <DialogDescription>Filter Production Roles</DialogDescription>
             </VisuallyHidden>
             <div className="w-full">
               <MultipleSelector
