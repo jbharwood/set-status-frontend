@@ -3,7 +3,6 @@
 import { getStages } from "@/apiRequests";
 import { Button } from "@/components/ui/button";
 import { Check, ChevronsUpDown } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 import {
   Command,
@@ -18,7 +17,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
 import {
   useIsSearchModalOpenStore,
   useSelectedStageIDStore,

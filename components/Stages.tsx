@@ -16,8 +16,8 @@ import {
 import { Delete, Edit, MoreHorizontal } from "lucide-react";
 import { getStages } from "@/apiRequests";
 import { useQuery } from "@tanstack/react-query";
-import { useSelectedStageIDStore } from "@/stores";
-import { useSearchParams } from "next/navigation";
+import { useSelectedStageIDStore, useSocketStore } from "@/stores";
+import { useSelectedStage } from "@/hooks";
 
 export default function Stages() {
   const stages = useQuery({
@@ -30,13 +30,13 @@ export default function Stages() {
   const setSelectedStageID = useSelectedStageIDStore(
     (state) => state.setSelectedStageID
   );
-  const searchParams = useSearchParams();
+  const socket = useSocketStore((state) => state.socket);
+
+  useSelectedStage();
 
   function handleClick(stageID: number) {
-    const newSearchParams = new URLSearchParams(searchParams.toString());
+    socket?.emit("leave_room", selectedStageID);
     setSelectedStageID(stageID);
-    newSearchParams.set("stage", stageID.toString());
-    window.history.replaceState(null, "", `?${newSearchParams.toString()}`);
   }
 
   return (

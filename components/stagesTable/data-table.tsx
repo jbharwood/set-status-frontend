@@ -23,12 +23,9 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { useSelectedStageIDStore } from "@/stores";
-import { useSearchParams } from "next/navigation";
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableViewOptions } from "./data-table-view-options";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
-import { useQuery } from "@tanstack/react-query";
-import { getStageCaptureStatuses } from "@/apiRequests/stageStatus";
 import { captureStatusOptions } from "@/lib/helpers";
 
 interface DataTableProps<TData, TValue> {
@@ -50,7 +47,6 @@ export function DataTable<TData, TValue>({
   const setSelectedStageID = useSelectedStageIDStore(
     (state) => state.setSelectedStageID
   );
-  const searchParams = useSearchParams();
 
   const table = useReactTable({
     data,
@@ -70,13 +66,6 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   });
-
-  function onRowClick(row: any) {
-    setSelectedStageID(parseInt(row.getValue("stageId")));
-    const newSearchParams = new URLSearchParams(searchParams.toString());
-    newSearchParams.set("stage", row.getValue("stageId"));
-    window.history.replaceState(null, "", `?${newSearchParams.toString()}`);
-  }
 
   return (
     <div>
@@ -131,7 +120,9 @@ export function DataTable<TData, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                   className="cursor-zoom-in"
-                  onClick={() => onRowClick(row)}
+                  onClick={() =>
+                    setSelectedStageID(parseInt(row.getValue("stageId")))
+                  }
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

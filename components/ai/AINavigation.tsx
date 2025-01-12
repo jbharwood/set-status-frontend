@@ -2,8 +2,7 @@
 
 import { useEffect } from "react";
 import { BotCard } from "@/components/index";
-import { useSearchParams } from "next/navigation";
-import useSelectedStageIDStore from "@/stores/useSelectedStageIDStore";
+import { useSelectedStageIDStore, useSocketStore } from "@/stores";
 
 type AINavigationProps = {
   stageId: number;
@@ -17,13 +16,14 @@ export default function AINavigation({
   const setSelectedStageID = useSelectedStageIDStore(
     (state) => state.setSelectedStageID
   );
-  const searchParams = useSearchParams();
-  const newSearchParams = new URLSearchParams(searchParams.toString());
+  const selectedStageID = useSelectedStageIDStore(
+    (state) => state.selectedStageID
+  );
+  const socket = useSocketStore((state) => state.socket);
 
   useEffect(() => {
+    socket?.emit("leave_room", selectedStageID);
     setSelectedStageID(stageId);
-    newSearchParams.set("stage", stageId.toString());
-    window.history.replaceState(null, "", `?${newSearchParams.toString()}`);
   }, [stageId, setSelectedStageID]);
 
   return <BotCard>Opened {stageName}</BotCard>;
