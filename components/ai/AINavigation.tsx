@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { BotCard } from "@/components/index";
 import { useSelectedStageIDStore, useSocketStore } from "@/stores";
+import { useSelectedStage } from "@/hooks";
 
 type AINavigationProps = {
   stageId: number;
@@ -20,6 +21,8 @@ export default function AINavigation({
     (state) => state.selectedStageID
   );
   const socket = useSocketStore((state) => state.socket);
+
+  useSelectedStage();
 
   useEffect(() => {
     socket?.emit("leave_room", selectedStageID);
