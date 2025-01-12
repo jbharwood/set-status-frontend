@@ -7,10 +7,6 @@ import {
 import { BotCard, BotMessage } from "@/components/index";
 import { captureStatusNameMap } from "@/lib/helpers";
 import { IProductionRoleCaptureStatus } from "@/types/interfaces";
-// import { Price } from "@ai-rsc/components/llm-crypto/price";
-// import { PriceSkeleton } from "@ai-rsc/components/llm-crypto/price-skeleton";
-// import { Stats } from "@ai-rsc/components/llm-crypto/stats";
-// import { StatsSkeleton } from "@ai-rsc/components/llm-crypto/stats-skeleton";
 import { openai } from "@ai-sdk/openai";
 import type { CoreMessage, ToolInvocation } from "ai";
 import { createAI, getMutableAIState, streamUI } from "ai/rsc";
@@ -92,11 +88,11 @@ export async function sendMessage(message: string): Promise<{
           stageName: string;
           notes?: string;
         }) {
-          console.log("captureStatusId", captureStatusId);
-          console.log("productionRoleName", productionRoleName.toLowerCase());
-          console.log("stageName", stageName.toLowerCase());
-          console.log("notes", notes);
-          yield <BotCard>Loading...</BotCard>;
+          yield (
+            <BotCard>
+              <Loader2 className="h-5 w-5 animate-spin stroke-zinc-900" />
+            </BotCard>
+          );
 
           const productionRoleCaptureStatuses =
             await getProductionRoleCaptureStatuses({
@@ -118,17 +114,18 @@ export async function sendMessage(message: string): Promise<{
             match.notes = notes;
 
             await updateProductionRoleCaptureStatus(match);
+            const content = `${productionRoleName} updated to ${captureStatusNameMap[captureStatusId as keyof typeof captureStatusNameMap]} on ${stageName}`;
 
             history.done([
               ...history.get(),
               {
                 role: "assistant",
                 name: "updateProductionRoleCaptureStatus",
-                content: `[${productionRoleName} updated to ${captureStatusNameMap[captureStatusId as keyof typeof captureStatusNameMap]} on ${stageName}]`,
+                content,
               },
             ]);
 
-            return <BotCard>Done!</BotCard>;
+            return <BotCard>{content}</BotCard>;
           } else {
             history.done([
               ...history.get(),
