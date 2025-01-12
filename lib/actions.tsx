@@ -2,11 +2,12 @@
 
 import {
   getProductionRoleCaptureStatuses,
+  getStages,
   updateProductionRoleCaptureStatus,
 } from "@/apiRequests";
-import { BotCard, BotMessage } from "@/components/index";
+import { AINavigation, BotCard, BotMessage } from "@/components/index";
 import { captureStatusNameMap } from "@/lib/helpers";
-import { IProductionRoleCaptureStatus } from "@/types/interfaces";
+import { IProductionRoleCaptureStatus, IStage } from "@/types/interfaces";
 import { openai } from "@ai-sdk/openai";
 import type { CoreMessage, ToolInvocation } from "ai";
 import { createAI, getMutableAIState, streamUI } from "ai/rsc";
@@ -23,6 +24,8 @@ const content = `\
   Format will likely be something like: update PA to red on stage 1 or update Pa on stage 1 to red. 
   PA is the production role name. Red is the color name. Stage 1 is the stage name.
   If the user wants anything else tell just chat with them.
+
+  If the user wants to go to a stage, call setSelectedStageID, they will says something like go to stage 1 or go to east stage.
 `;
 
 export async function sendMessage(message: string): Promise<{
@@ -141,6 +144,45 @@ export async function sendMessage(message: string): Promise<{
           }
         },
       },
+      setSelectedStageID: {
+        description: "Go to the selected stage that the user asks for.",
+        parameters: z.object({
+          captureStatusId: z
+            .number()
+            .describe(
+              "The user provides a stage name by saying something like `go to east stage`."
+            ),
+          stageName: z.string().describe("The stage name of the user."),
+        }),
+        generate: async function* ({ stageName }: { stageName: string }) {
+          yield (
+            <BotCard>
+              <Loader2 className="h-5 w-5 animate-spin stroke-zinc-900" />
+            </BotCard>
+          );
+
+          const stages = await getStages(1);
+
+          const match = stages?.find(
+            (stage: IStage) =>
+              stage.name.toLowerCase() === stageName.toLowerCase()
+          );
+
+          if (match) {
+            return <AINavigation stageId={match.id} stageName={stageName} />;
+          } else {
+            history.done([
+              ...history.get(),
+              {
+                role: "assistant",
+                content: `No matching stage found.`,
+              },
+            ]);
+
+            return <BotCard>No matching stage found.</BotCard>;
+          }
+        },
+      },
     },
     temperature: 0,
   });
@@ -154,7 +196,7 @@ export async function sendMessage(message: string): Promise<{
 
 export type AIState = Array<{
   id?: number;
-  name?: "updateProductionRoleCaptureStatus";
+  name?: "updateProductionRoleCaptureStatus" | "setSelectedStageID";
   role: "user" | "assistant" | "system";
   content: string;
 }>;
