@@ -53,9 +53,8 @@ export default function ChatBot() {
   if (!isChatBotOpen) return null;
 
   return (
-    <div className="fixed right-4 z-50 flex bg-background rounded h-[90vh] w-[40%] mt-10">
+    <div className="fixed right-4 z-50 flex bg-sidebar rounded h-[90vh] w-[40%] mt-10">
       <div className="w-full h-full flex flex-col justify-between">
-        {/* <h1>Chat Bot</h1> */}
         <div className=" p-2 overflow-auto">
           <AIChat messages={messages} />
           <ChatScrollAnchor trackVisibility={true} />
@@ -64,13 +63,13 @@ export default function ChatBot() {
         <div className="w-full mx-auto sm:max-w-2xl sm:px-4">
           {/* <div className="px-4 flex justify-center flex-col py-2 space-y-4 border-t shadow-lg bg-background sm:rounded-xl sm:border md:py-4 bg-white"> */}
           <form ref={formRef} onSubmit={form.handleSubmit(submitHandler)}>
-            <div className="relative flex flex-col w-full overflow-hidden max-h-60 grow">
-              <div className="flex sm:rounded-3xl w-[80%]">
+            <div className="relative flex gap-2 w-full overflow-hidden pb-2 max-h-60 grow">
+              <div className="flex sm:rounded-3xl w-full">
                 <TextareaAutosize
                   tabIndex={0}
                   onKeyDown={onKeyDown}
                   placeholder="Send a message."
-                  className="min-h-[60px] w-full rounded-3xl resize-none pl-4 pr-16 py-[1.3rem] focus-within:outline-none sm:text-sm"
+                  className="min-h-[60px] w-full bg-secondary rounded-3xl resize-none pl-4 pr-16 py-[1.3rem] focus-within:outline-none sm:text-sm"
                   autoFocus
                   spellCheck={false}
                   autoComplete="off"
@@ -79,7 +78,7 @@ export default function ChatBot() {
                   {...form.register("message")}
                 />
               </div>
-              <div className="absolute right-0 top-4 sm:right-4">
+              <div className="mt-3">
                 <Button
                   type="submit"
                   size="icon"

@@ -18,7 +18,7 @@ export default function AIButton() {
       <ButtonWithTooltip
         icon={Bot}
         tooltipText="Ask AI"
-        className="w-1 h-5"
+        className="w-1 h-7"
         variant="secondary"
         onClick={() => setIsChatBotOpen(!isChatBotOpen)}
       />

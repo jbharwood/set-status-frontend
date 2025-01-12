@@ -2,7 +2,7 @@
 
 import { IStage } from "@/types/interfaces";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { Delete, Edit, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -94,12 +94,15 @@ export const columns: ColumnDef<IStage>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem>
+              <Edit className="text-muted-foreground" />
+              Edit Stage
+            </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(stage.id.toString())}
             >
-              Delete Stage
+              <Delete className="text-muted-foreground" /> Delete Stage
             </DropdownMenuItem>
-            <DropdownMenuItem>Edit Stage</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

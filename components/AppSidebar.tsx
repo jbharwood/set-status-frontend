@@ -109,7 +109,7 @@ export function AppSidebar() {
                 </CollapsibleTrigger>
               </SidebarGroupLabel>
               <CollapsibleContent>
-                <SidebarGroupContent className="font-markProRegular text-slate-500">
+                <SidebarGroupContent className="font-markProRegular text-muted-foreground">
                   <Suspense fallback={<StagesSkeleton />}>
                     <Stages />
                   </Suspense>
