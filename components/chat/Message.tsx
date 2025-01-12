@@ -1,7 +1,7 @@
 import {
   IMessage,
   IProductionRoleCaptureStatusesHistory,
-} from "../types/interfaces";
+} from "../../types/interfaces";
 
 type MessageProps = {
   content: IProductionRoleCaptureStatusesHistory;

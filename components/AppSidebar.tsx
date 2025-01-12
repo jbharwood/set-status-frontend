@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Bot,
   ChevronRight,
   ChevronsUpDown,
   Film,
@@ -48,6 +49,11 @@ const items = [
     title: "Home",
     url: "/",
     icon: Home,
+  },
+  {
+    title: "Ask AI",
+    url: "/",
+    icon: Bot,
   },
 ];
 
@@ -97,13 +103,13 @@ export function AppSidebar() {
                 />
               </SidebarGroupAction>
               <SidebarGroupLabel asChild>
-                <CollapsibleTrigger className="font-markProMedium text-slate-500">
+                <CollapsibleTrigger className="font-markProMedium text-black dark:text-white">
                   Stages
                   <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
                 </CollapsibleTrigger>
               </SidebarGroupLabel>
               <CollapsibleContent>
-                <SidebarGroupContent className="font-markProRegular">
+                <SidebarGroupContent className="font-markProRegular text-slate-500">
                   <Suspense fallback={<StagesSkeleton />}>
                     <Stages />
                   </Suspense>

@@ -11,6 +11,7 @@ import {
   Notebook,
   Laptop,
   Clapperboard,
+  Bot,
 } from "lucide-react";
 import { ButtonWithTooltip, SearchStagesCombobox } from "@/components/index";
 import {
@@ -21,6 +22,7 @@ import {
   useIsNotesEnabledStore,
   useIsFilterModalOpenStore,
   useIsWebViewStore,
+  useIsChatBotOpenStore,
 } from "@/stores/index";
 import {
   getProductionRoleCaptureStatuses,
@@ -189,7 +191,6 @@ export default function TobBar() {
                 />
               </>
             )}
-            <div className="mb-5"></div>
           </div>
         )}
       </div>

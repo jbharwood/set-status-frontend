@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { IProductionRoleCaptureStatus } from "@/types/interfaces";
-import { Input } from "./ui/input";
+import { Input } from "@/components/ui/input";
 import { useUser } from "@clerk/nextjs";
 import { useSelectedStageIDStore } from "@/stores";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -11,7 +11,7 @@ import {
   updateProductionRoleCaptureStatus,
 } from "@/apiRequests";
 import { SendHorizonal } from "lucide-react";
-import ButtonWithTooltip from "./ButtonWithTooltip";
+import ButtonWithTooltip from "@/components/ButtonWithTooltip";
 
 export default function Inputs() {
   const [input, setInput] = useState("");

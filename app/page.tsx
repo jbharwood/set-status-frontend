@@ -7,6 +7,8 @@ import {
   EditModal,
   TopBar,
   FilterModal,
+  StageTable,
+  ChatBot,
 } from "@/components/index";
 import { useUser } from "@clerk/nextjs";
 import {
@@ -15,16 +17,14 @@ import {
   useIsShowChatStore,
   useSelectedStageIDStore,
   useEditModalEventStore,
-  useSocketStore,
   useIsFilterModalOpenStore,
   useIsWebViewStore,
+  useIsChatBotOpenStore,
 } from "@/stores/index";
-import NotifyModal from "@/components/NotifyModal";
+import NotifyModal from "@/components/modals/NotifyModal";
 import { useSocketHandler, useSearchParamsHandler } from "@/hooks";
-import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getStageCaptureStatus } from "@/apiRequests/stageStatus";
-import StageTable from "@/components/stages/page";
 
 export default function Home() {
   const { isSignedIn, user } = useUser();
@@ -34,6 +34,7 @@ export default function Home() {
   const isShowChat = useIsShowChatStore((state) => state.isShowChat);
   const isEditMode = useIsEditModeStore((state) => state.isEditMode);
   const isWebView = useIsWebViewStore((state) => state.isWebView);
+  const isChatBotOpen = useIsChatBotOpenStore((state) => state.isChatBotOpen);
   const notifyModalEvent = useNotifyModalEventStore(
     (state) => state.notifyModalEvent
   );
@@ -43,7 +44,6 @@ export default function Home() {
   const isFilterModalOpen = useIsFilterModalOpenStore(
     (state) => state.isFilterModalOpen
   );
-  const socket = useSocketStore((state) => state.socket);
 
   const stageCaptureStatus = useQuery({
     queryKey: [
@@ -66,20 +66,11 @@ export default function Home() {
   useSocketHandler();
   useSearchParamsHandler();
 
-  useEffect(() => {
-    if (user && selectedStageID) {
-      socket?.emit("join_room", {
-        user: user.fullName,
-        room: selectedStageID,
-      });
-    }
-  }, [user, selectedStageID, socket]);
-
   return (
     <main className="font-markProRegular">
       {isSignedIn && user && (
         <div
-          className={`${stageCaptureStatus ? getStatusGradientClass() : ""} h-screen w-[98.5vw] xl:w-[98vw] flex flex-col`}
+          className={`${stageCaptureStatus ? getStatusGradientClass() : ""} h-screen w-[97.25vw] xl:w-[98vw] flex flex-col`}
         >
           <div className={!selectedStageID ? "flex flex-col flex-1" : ""}>
             <div className={`${!isWebView ? "hidden-in-fullscreen" : ""}`}>
@@ -111,6 +102,7 @@ export default function Home() {
               {isFilterModalOpen && <FilterModal />}
             </>
           )}
+          {isChatBotOpen && <ChatBot />}
         </div>
       )}
     </main>

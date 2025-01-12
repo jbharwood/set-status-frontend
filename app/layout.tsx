@@ -7,9 +7,15 @@ import {
 import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/index";
+import { AIButton, AppSidebar } from "@/components/index";
 import { cookies } from "next/headers";
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
+import { Metadata } from "next";
+import { AI } from "../lib/actions";
+
+export const metadata: Metadata = {
+  title: "Set Status",
+};
 
 export default async function RootLayout({
   children,
@@ -30,16 +36,19 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <ReactQueryProvider>
-              <SignedOut>
-                <RedirectToSignIn />
-              </SignedOut>
-              <SignedIn>
-                <SidebarProvider defaultOpen={defaultOpen}>
-                  <AppSidebar />
-                  <SidebarTrigger />
-                  {children}
-                </SidebarProvider>
-              </SignedIn>
+              <AI>
+                <SignedOut>
+                  <RedirectToSignIn />
+                </SignedOut>
+                <SignedIn>
+                  <SidebarProvider defaultOpen={defaultOpen}>
+                    <AppSidebar />
+                    <SidebarTrigger />
+                    <AIButton />
+                    {children}
+                  </SidebarProvider>
+                </SignedIn>
+              </AI>
             </ReactQueryProvider>
           </ThemeProvider>
         </body>

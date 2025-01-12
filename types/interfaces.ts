@@ -23,6 +23,7 @@ export interface IProductionRoleCaptureStatus {
   lastModifiedTime: string;
   productionRole: IProductionRole;
   captureStatus: ICaptureStatus;
+  stage: IStage;
 }
 
 export interface IProductionRoleCaptureStatusesHistory
@@ -38,6 +39,7 @@ export interface IProductionRole {
 }
 
 export interface IStage {
+  stageId: number;
   id: number;
   name: string;
   companyId: number;
