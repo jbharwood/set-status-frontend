@@ -12,6 +12,7 @@ import { useEnterSubmit } from "@/hooks/useEnterSubmit";
 import { UserMessage } from "./AIMessage";
 import { AI } from "@/lib/actions";
 import { useIsChatBotOpenStore } from "@/stores";
+import { use, useEffect } from "react";
 
 export default function ChatBot() {
   const [messages, setMessages] = useUIState<typeof AI>();
@@ -26,6 +27,7 @@ export default function ChatBot() {
   const { formRef, onKeyDown } = useEnterSubmit();
 
   const submitHandler: SubmitHandler<ChatInputs> = async (data) => {
+    console.log("submithandler");
     const value = data.message.trim();
     formRef.current?.reset();
     if (!value) return;
@@ -49,6 +51,10 @@ export default function ChatBot() {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    setMessages([]);
+  }, [isChatBotOpen]);
 
   if (!isChatBotOpen) return null;
 

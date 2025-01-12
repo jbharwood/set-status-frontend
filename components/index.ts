@@ -23,7 +23,6 @@ import StageTable from "@/components/stagesTable/page";
 import ChatScrollAnchor from "@/components/ChatScrollAnchor";
 import ChatBot from "@/components/ai/ChatBot";
 import AIButton from "@/components/ai/AIButton";
-import AINavigation from "@/components/ai/AINavigation";
 
 export {
   Chat,
@@ -49,5 +48,4 @@ export {
   ChatScrollAnchor,
   ChatBot,
   AIButton,
-  AINavigation,
 };
