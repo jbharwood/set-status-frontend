@@ -59,23 +59,7 @@ export default function ProductionRoleCaptureStatus({
   });
 
   function handleCaptureStatusClick(status: CaptureStatus) {
-    if (!isEditMode) return;
-
-    if (!isWebView) {
-      setEditModalEvent({
-        productionRoleCaptureStatus: productionRoleCaptureStatus,
-        captureStatus: status,
-        cb: (prcs) => {
-          if (prcs) {
-            productionRoleCaptureStatusMutation.mutate(prcs);
-          }
-        },
-      });
-
-      return;
-    }
-
-    if (!status) return;
+    if (!isEditMode || !status) return;
 
     const temp = { ...productionRoleCaptureStatus };
 
@@ -83,11 +67,7 @@ export default function ProductionRoleCaptureStatus({
       temp.lastModifiedBy = user.fullName;
     }
 
-    if (!isNotesEnabled) {
-      temp.captureStatusId = captureStatusIdMap[status];
-      temp.notes = `Production Role Capture Status updated`;
-      productionRoleCaptureStatusMutation.mutate(temp);
-    } else {
+    if (!isWebView || isNotesEnabled) {
       temp.notes =
         captureStatus.id === captureStatusIdMap[status] &&
         notes !== "Production Role Capture Status updated"
@@ -103,6 +83,14 @@ export default function ProductionRoleCaptureStatus({
           }
         },
       });
+
+      return;
+    }
+
+    temp.captureStatusId = captureStatusIdMap[status];
+    temp.notes = `Production Role Capture Status updated`;
+    if (productionRoleCaptureStatus.captureStatus.name !== status) {
+      productionRoleCaptureStatusMutation.mutate(temp);
     }
   }
 

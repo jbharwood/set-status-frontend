@@ -154,8 +154,10 @@ export default function EditModal() {
               <Button
                 type="submit"
                 disabled={
-                  productionRoleCaptureStatus?.notes !== "" &&
-                  watchedNotes === productionRoleCaptureStatus?.notes
+                  (productionRoleCaptureStatus?.notes !== "" &&
+                    watchedNotes === productionRoleCaptureStatus?.notes) ||
+                  (status?.toLowerCase() === captureStatus?.toLowerCase() &&
+                    watchedNotes === productionRoleCaptureStatus?.notes)
                 }
               >
                 Save
@@ -225,8 +227,11 @@ export default function EditModal() {
             <Button
               type="submit"
               disabled={
-                productionRoleCaptureStatus?.notes !== "" &&
-                watchedNotes === productionRoleCaptureStatus?.notes
+                (productionRoleCaptureStatus?.notes !== "" &&
+                  watchedNotes === productionRoleCaptureStatus?.notes) ||
+                (productionRoleCaptureStatus?.captureStatus.name?.toLowerCase() ===
+                  captureStatus?.toLowerCase() &&
+                  watchedNotes === productionRoleCaptureStatus?.notes)
               }
             >
               Save
