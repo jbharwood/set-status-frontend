@@ -2,7 +2,7 @@
 
 import { useIsChatBotOpenStore } from "@/stores";
 import { Bot } from "lucide-react";
-import ButtonWithTooltip from "@/components/ButtonWithTooltip";
+import { Button } from "../ui/button";
 
 export default function AIButton() {
   const isChatBotOpen = useIsChatBotOpenStore((state) => state.isChatBotOpen);
@@ -12,13 +12,13 @@ export default function AIButton() {
 
   return (
     <div>
-      <ButtonWithTooltip
-        icon={Bot}
-        tooltipText="Ask AI"
+      <Button
         className="w-1 h-7"
         variant="secondary"
         onClick={() => setIsChatBotOpen(!isChatBotOpen)}
-      />
+      >
+        <Bot />
+      </Button>
     </div>
   );
 }

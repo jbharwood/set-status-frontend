@@ -11,7 +11,7 @@ import {
   updateProductionRoleCaptureStatus,
 } from "@/apiRequests";
 import { SendHorizonal } from "lucide-react";
-import ButtonWithTooltip from "@/components/ButtonWithTooltip";
+import { Button } from "../ui/button";
 
 export default function Inputs() {
   const [input, setInput] = useState("");
@@ -78,12 +78,12 @@ export default function Inputs() {
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && sendMessage()}
       />
-      <ButtonWithTooltip
+      <Button
         onClick={sendMessage}
-        tooltipText="Send Message"
-        icon={SendHorizonal}
         className="w-full px-3 bg-blue-400 font-fold rounded-md text-xl md:w-12 md:text-2xl"
-      />
+      >
+        <SendHorizonal />
+      </Button>
     </div>
   );
 }
