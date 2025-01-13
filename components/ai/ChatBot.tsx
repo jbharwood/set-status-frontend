@@ -25,7 +25,7 @@ export default function ChatBot() {
   const isChatBotOpen = useIsChatBotOpenStore((state) => state.isChatBotOpen);
   const { text } = useRecordVoice();
   const voiceText = useVoiceTextStore((state) => state.voiceText);
-  const setVoiceChatText = useVoiceTextStore((state) => state.setVoiceText);
+  const setVoiceText = useVoiceTextStore((state) => state.setVoiceText);
   const setIsChatBotOpen = useIsChatBotOpenStore(
     (state) => state.setIsChatBotOpen
   );
@@ -44,17 +44,21 @@ export default function ChatBot() {
     formRef.current?.reset();
     if (!value) return;
 
+    postMessage(value);
+  };
+
+  async function postMessage(message: string) {
     setMessages((currentMessages: any) => [
       ...currentMessages,
       {
         id: Date.now(),
         role: "user",
-        display: <UserMessage>{value}</UserMessage>,
+        display: <UserMessage>{message}</UserMessage>,
       },
     ]);
 
     try {
-      const responseMessage = await sendMessage(value);
+      const responseMessage = await sendMessage(message);
       setMessages((currentMessages: any) => [
         ...currentMessages,
         responseMessage,
@@ -62,19 +66,19 @@ export default function ChatBot() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }
 
   function handleReset(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     setMessages([]);
-    setVoiceChatText("");
+    setVoiceText("");
     form.reset({ message: "" });
   }
 
   function handleClose(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     setMessages([]);
-    setVoiceChatText("");
+    setVoiceText("");
     form.reset({ message: "" });
     setIsChatBotOpen(false);
   }
@@ -84,10 +88,12 @@ export default function ChatBot() {
   }, [isChatBotOpen]);
 
   useEffect(() => {
-    if (voiceText) {
-      form.setValue("message", voiceText);
+    if (voiceText !== "") {
+      console.log("voiceText", voiceText);
+      postMessage(voiceText);
+      setVoiceText("");
     }
-  }, [voiceText, form]);
+  }, [voiceText]);
 
   useEffect(() => {
     if (messages.length === 0) {
