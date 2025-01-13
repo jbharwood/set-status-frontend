@@ -2,7 +2,7 @@
 
 import TextareaAutosize from "react-textarea-autosize";
 import { Button } from "@/components/ui/button";
-import { RefreshCcw, SendHorizonal } from "lucide-react";
+import { RefreshCcw, SendHorizonal, X } from "lucide-react";
 import { useActions, useUIState } from "ai/rsc";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ChatInputs } from "@/lib/chatSchema";
@@ -25,6 +25,9 @@ export default function ChatBot() {
   const { text } = useRecordVoice();
   const voiceText = useVoiceTextStore((state) => state.voiceText);
   const setVoiceChatText = useVoiceTextStore((state) => state.setVoiceText);
+  const setIsChatBotOpen = useIsChatBotOpenStore(
+    (state) => state.setIsChatBotOpen
+  );
   const { reset } = useForm();
 
   const form = useForm<ChatInputs>({
@@ -87,7 +90,7 @@ export default function ChatBot() {
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <Microphone />
+                    <Microphone iconClassName="w-5 h-5" size="icon" />
                     <Button
                       size="icon"
                       className=" bg-secondary text-primary hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -99,6 +102,19 @@ export default function ChatBot() {
                       }}
                     >
                       <RefreshCcw className="w-5 h-5" />
+                    </Button>
+                    <Button
+                      size="icon"
+                      className=" bg-secondary border-none text-primary hover:bg-gray-200 dark:hover:bg-gray-700"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setMessages([]);
+                        setVoiceChatText("");
+                        form.reset({ message: "" });
+                        setIsChatBotOpen(false);
+                      }}
+                    >
+                      <X className="w-5 h-5" />
                     </Button>
                   </div>
                   <div className="flex gap-2">

@@ -31,7 +31,7 @@ export default function ProductionRoleCaptureStatuses() {
       className={
         isWebView
           ? "flex items-center justify-center w-full h-full p-2"
-          : "flex-row items-center justify-center w-full h-full p-10"
+          : "flex-row w-full h-full p-10"
       }
     >
       {productionRoleCaptureStatuses?.data?.map(

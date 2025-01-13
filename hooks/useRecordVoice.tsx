@@ -13,7 +13,7 @@ export default function useRecordVoice() {
   const chunks = useRef<Blob[]>([]);
 
   const startRecording = () => {
-    if (mediaRecorder) {
+    if (mediaRecorder && mediaRecorder.state !== "recording") {
       isRecording.current = true;
       mediaRecorder.start();
       setRecording(true);

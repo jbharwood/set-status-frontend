@@ -11,7 +11,7 @@ export default function StickyContainer() {
     <div
       className={`flex gap-2 ${!isWebView ? "hidden-in-fullscreen" : ""} fixed top-[7.5px] right-3 lg:right-4 xl:right-4 z-[1000]`}
     >
-      <Microphone />
+      <Microphone buttonClassName="w-1 h-7" />
       <AIButton />
     </div>
   );

@@ -5,8 +5,19 @@ import { Mic } from "lucide-react";
 import { Button } from "./ui/button";
 import { useEffect } from "react";
 import { useIsChatBotOpenStore, useVoiceTextStore } from "@/stores";
+import { cn } from "@/lib/utils";
 
-const Microphone = () => {
+type MicrophoneProps = {
+  buttonClassName?: string;
+  iconClassName?: string;
+  size?: "default" | "sm" | "lg" | "icon" | null | undefined;
+};
+
+const Microphone = ({
+  buttonClassName,
+  iconClassName,
+  size,
+}: MicrophoneProps) => {
   const { startRecording, stopRecording, text } = useRecordVoice();
   const setVoiceText = useVoiceTextStore((state) => state.setVoiceText);
   const setIsChatBotOpen = useIsChatBotOpenStore(
@@ -24,14 +35,18 @@ const Microphone = () => {
 
   return (
     <Button
+      size={size}
       onMouseDown={startRecording} // Start recording when mouse is pressed
       onMouseUp={onStopRecording} // Stop recording when mouse is released
       onTouchStart={startRecording} // Start recording when touch begins on a touch device
       onTouchEnd={onStopRecording} // Stop recording when touch ends on a touch device
-      className="border-none bg-secondary text-primary w-1 h-7 hover:bg-destructive"
+      className={cn(
+        `border-none bg-secondary text-primary hover:bg-destructive`,
+        buttonClassName
+      )}
       onClick={(e) => e.preventDefault()}
     >
-      <Mic />
+      <Mic className={iconClassName} />
     </Button>
   );
 };
