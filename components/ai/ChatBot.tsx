@@ -63,6 +63,21 @@ export default function ChatBot() {
     }
   };
 
+  function handleReset(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    setMessages([]);
+    setVoiceChatText("");
+    form.reset({ message: "" });
+  }
+
+  function handleClose(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    setMessages([]);
+    setVoiceChatText("");
+    form.reset({ message: "" });
+    setIsChatBotOpen(false);
+  }
+
   useEffect(() => {
     reset({ message: "" });
   }, [isChatBotOpen]);
@@ -94,25 +109,14 @@ export default function ChatBot() {
                     <Button
                       size="icon"
                       className=" bg-secondary text-primary hover:bg-gray-200 dark:hover:bg-gray-700"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setMessages([]);
-                        setVoiceChatText("");
-                        form.reset({ message: "" });
-                      }}
+                      onClick={handleReset}
                     >
                       <RefreshCcw className="w-5 h-5" />
                     </Button>
                     <Button
                       size="icon"
                       className=" bg-secondary border-none text-primary hover:bg-gray-200 dark:hover:bg-gray-700"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setMessages([]);
-                        setVoiceChatText("");
-                        form.reset({ message: "" });
-                        setIsChatBotOpen(false);
-                      }}
+                      onClick={handleClose}
                     >
                       <X className="w-5 h-5" />
                     </Button>
