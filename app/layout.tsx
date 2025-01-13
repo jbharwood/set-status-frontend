@@ -7,7 +7,7 @@ import {
 import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AIButton, AppSidebar } from "@/components/index";
+import { AppSidebar, StickyContainer } from "@/components/index";
 import { cookies } from "next/headers";
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
 import { Metadata } from "next";
@@ -44,7 +44,7 @@ export default async function RootLayout({
                   <SidebarProvider defaultOpen={defaultOpen}>
                     <AppSidebar />
                     <SidebarTrigger />
-                    <AIButton />
+                    <StickyContainer />
                     {children}
                   </SidebarProvider>
                 </SignedIn>

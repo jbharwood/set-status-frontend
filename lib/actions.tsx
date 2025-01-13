@@ -23,6 +23,7 @@ const content = `\
   Then tell them if it updated successfully. 
   Format will likely be something like: update PA to red on stage 1 or update Pa on stage 1 to red. 
   PA is the production role name. Red is the color name. Stage 1 is the stage name.
+  Convert number words to numbers.
   If the user wants anything else tell just chat with them.
 `;
 

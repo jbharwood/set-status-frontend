@@ -73,7 +73,7 @@ export default function Inputs() {
     <div className="flex gap-2">
       <Input
         type="text"
-        className="focus:outline-none focus:ring focus:border-blue-300"
+        className="focus:outline-none focus:ring focus:border-blue-500"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && sendMessage()}

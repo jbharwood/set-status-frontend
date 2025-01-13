@@ -23,6 +23,8 @@ import StageTable from "@/components/stagesTable/page";
 import ChatScrollAnchor from "@/components/ChatScrollAnchor";
 import ChatBot from "@/components/ai/ChatBot";
 import AIButton from "@/components/ai/AIButton";
+import Microphone from "@/components/Microphone";
+import StickyContainer from "@/components/StickyContainer";
 
 export {
   Chat,
@@ -48,4 +50,6 @@ export {
   ChatScrollAnchor,
   ChatBot,
   AIButton,
+  Microphone,
+  StickyContainer,
 };

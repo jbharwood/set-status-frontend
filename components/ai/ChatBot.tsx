@@ -1,33 +1,41 @@
 "use client";
 
-import ChatScrollAnchor from "../ChatScrollAnchor";
-import AIChat from "./AIChat";
 import TextareaAutosize from "react-textarea-autosize";
 import { Button } from "@/components/ui/button";
-import { SendHorizonal } from "lucide-react";
+import { RefreshCcw, SendHorizonal } from "lucide-react";
 import { useActions, useUIState } from "ai/rsc";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ChatInputs } from "@/lib/chatSchema";
 import { useEnterSubmit } from "@/hooks/useEnterSubmit";
-import { UserMessage } from "./AIMessage";
 import { AI } from "@/lib/actions";
-import { useIsChatBotOpenStore } from "@/stores";
-import { use, useEffect } from "react";
+import { useIsChatBotOpenStore, useVoiceTextStore } from "@/stores";
+import { useEffect } from "react";
+import {
+  Microphone,
+  ChatScrollAnchor,
+  AIChat,
+  UserMessage,
+} from "@/components/index";
+import { useRecordVoice } from "@/hooks";
 
 export default function ChatBot() {
   const [messages, setMessages] = useUIState<typeof AI>();
   const { sendMessage } = useActions<typeof AI>();
   const isChatBotOpen = useIsChatBotOpenStore((state) => state.isChatBotOpen);
+  const { text } = useRecordVoice();
+  const voiceText = useVoiceTextStore((state) => state.voiceText);
+  const setVoiceChatText = useVoiceTextStore((state) => state.setVoiceText);
+  const { reset } = useForm();
 
   const form = useForm<ChatInputs>({
     defaultValues: {
-      message: "",
+      message: text || "",
     },
   });
+
   const { formRef, onKeyDown } = useEnterSubmit();
 
   const submitHandler: SubmitHandler<ChatInputs> = async (data) => {
-    console.log("submithandler");
     const value = data.message.trim();
     formRef.current?.reset();
     if (!value) return;
@@ -53,8 +61,14 @@ export default function ChatBot() {
   };
 
   useEffect(() => {
-    setMessages([]);
+    reset({ message: "" });
   }, [isChatBotOpen]);
+
+  useEffect(() => {
+    if (voiceText) {
+      form.setValue("message", voiceText);
+    }
+  }, [voiceText, form]);
 
   if (!isChatBotOpen) return null;
 
@@ -65,17 +79,44 @@ export default function ChatBot() {
           <AIChat messages={messages} />
           <ChatScrollAnchor trackVisibility={true} />
         </div>
-        {/* <div className="mb-2 w-full from-muted/30 from-0% to-muted/30 to-50% duration-300 ease-in-out animate-in dark:from-background/10 dark:from-10% dark:to-background/80 peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]"> */}
         <div className="w-full mx-auto sm:max-w-2xl sm:px-4">
-          {/* <div className="px-4 flex justify-center flex-col py-2 space-y-4 border-t shadow-lg bg-background sm:rounded-xl sm:border md:py-4 bg-white"> */}
           <form ref={formRef} onSubmit={form.handleSubmit(submitHandler)}>
             <div className="relative flex gap-2 w-full overflow-hidden pb-2 max-h-60 grow">
-              <div className="flex sm:rounded-3xl w-full">
+              <div
+                className={`flex sm:rounded w-full flex-col-reverse bg-secondary border ${form.watch("message") ? "border-blue-500" : ""} focus-within:border-blue-500`}
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Microphone />
+                    <Button
+                      size="icon"
+                      className=" bg-secondary text-primary hover:bg-gray-200 dark:hover:bg-gray-700"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setMessages([]);
+                        setVoiceChatText("");
+                        form.reset({ message: "" });
+                      }}
+                    >
+                      <RefreshCcw className="w-5 h-5" />
+                    </Button>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      type="submit"
+                      size="icon"
+                      disabled={form.watch("message") === ""}
+                      className=" bg-secondary text-primary hover:bg-gray-200 dark:hover:bg-gray-700"
+                    >
+                      <SendHorizonal className="w-5 h-5" />
+                    </Button>
+                  </div>
+                </div>
                 <TextareaAutosize
                   tabIndex={0}
                   onKeyDown={onKeyDown}
                   placeholder="Send a message."
-                  className="min-h-[60px] w-full bg-secondary rounded-3xl resize-none pl-4 pr-16 py-[1.3rem] focus-within:outline-none sm:text-sm"
+                  className="min-h-[40px] w-full bg-secondary rounded-3xl resize-none pl-2 pr-2 py-[0.8rem] sm:text-sm !outline-none"
                   autoFocus
                   spellCheck={false}
                   autoComplete="off"
@@ -84,33 +125,9 @@ export default function ChatBot() {
                   {...form.register("message")}
                 />
               </div>
-              <div className="mt-3">
-                <Button
-                  type="submit"
-                  size="icon"
-                  disabled={form.watch("message") === ""}
-                >
-                  <SendHorizonal className="w-5 h-5" />
-                  <span className="sr-only">Send message</span>
-                </Button>
-              </div>
             </div>
           </form>
-          {/* <Button
-            variant="outline"
-            size="lg"
-            className="p-4 mt-4 rounded-full bg-background"
-            onClick={(e) => {
-              e.preventDefault();
-              setMessages([]);
-            }}
-          >
-            <PlusIcon className="w-5 h-5" />
-            <span>New Chat</span>
-          </Button> */}
-          {/* </div> */}
         </div>
-        {/* </div> */}
       </div>
     </div>
   );

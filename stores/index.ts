@@ -9,6 +9,7 @@ import useEditModalEventStore from "./useEditModalEventStore";
 import useIsFilterModalOpenStore from "./useIsFilterModalOpen";
 import useIsWebViewStore from "./useIsWebViewStore";
 import useIsChatBotOpenStore from "./useIsChatBotOpenStore";
+import useVoiceTextStore from "./useVoiceText";
 
 export {
   useIsSearchModalOpenStore,
@@ -22,4 +23,5 @@ export {
   useIsFilterModalOpenStore,
   useIsWebViewStore,
   useIsChatBotOpenStore,
+  useVoiceTextStore,
 };
