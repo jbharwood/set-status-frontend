@@ -15,6 +15,7 @@ import {
   ChatScrollAnchor,
   AIChat,
   UserMessage,
+  BotMessage,
 } from "@/components/index";
 import { useRecordVoice } from "@/hooks";
 
@@ -87,6 +88,18 @@ export default function ChatBot() {
       form.setValue("message", voiceText);
     }
   }, [voiceText, form]);
+
+  useEffect(() => {
+    if (messages.length === 0) {
+      setMessages([
+        {
+          id: Date.now(),
+          role: "assistant",
+          display: <BotMessage>{"Hi, how can I help you?"}</BotMessage>,
+        },
+      ]);
+    }
+  }, []);
 
   if (!isChatBotOpen) return null;
 
