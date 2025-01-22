@@ -13,7 +13,7 @@ export default function AIButton() {
   return (
     <div>
       <Button
-        className="w-1 h-7"
+        className="w-1 h-7 bg-blue-500 hover:bg-blue-600"
         variant="secondary"
         onClick={() => setIsChatBotOpen(!isChatBotOpen)}
       >
