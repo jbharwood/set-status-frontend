@@ -1,8 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
-import fs from "fs";
+import fs from "fs/promises";
+import { createReadStream } from "fs";
 import * as dotenv from "dotenv";
 import OpenAI from "openai";
 import path from "path";
+import os from "os";
 
 dotenv.config();
 
@@ -25,14 +27,13 @@ export async function POST(req: NextRequest) {
   const audio = Buffer.from(base64Audio, "base64");
 
   // Define the file path for storing the temporary WAV file
-  const filePath = path.join(process.cwd(), "tmp", "input.wav");
+  const filePath = path.join(os.tmpdir(), "input.wav");
 
   try {
     // Write the audio data to a temporary WAV file synchronously
-    fs.writeFileSync(filePath, audio);
+    await fs.writeFile(filePath, audio);
 
-    // Create a readable stream from the temporary WAV file
-    const readStream = fs.createReadStream(filePath);
+    const readStream = createReadStream(filePath);
 
     const data = await openai.audio.transcriptions.create({
       file: readStream,
@@ -40,7 +41,7 @@ export async function POST(req: NextRequest) {
     });
 
     // Remove the temporary file after successful processing
-    fs.unlinkSync(filePath);
+    await fs.unlink(filePath);
 
     return NextResponse.json(data);
   } catch (error) {
